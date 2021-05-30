@@ -37,7 +37,7 @@ public class ApplicationTest {
         TankDeployEnum.initDefaultEnv();
     }
 
-
+    // unity编辑器运行游戏
     @Test
     public void startApplication() {
         var context = new ClassPathXmlApplicationContext("application.xml");
@@ -50,7 +50,7 @@ public class ApplicationTest {
         ThreadUtils.sleep(Long.MAX_VALUE);
     }
 
-
+    // 在浏览器中运行游戏
     @Test
     public void startWebsocketApplication() {
         var context = new ClassPathXmlApplicationContext("application.xml");

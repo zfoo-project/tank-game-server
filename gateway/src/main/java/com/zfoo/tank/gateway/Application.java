@@ -70,10 +70,8 @@ public class Application {
         context.registerShutdownHook();
 
         // websocket网关
-        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), DEFAULT_PORT), Application.packetFilter);
+        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), DEFAULT_PORT), packetFilter);
         gateway.start();
-
-        ThreadUtils.sleep(Long.MAX_VALUE);
     }
 
 }
