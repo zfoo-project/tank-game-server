@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:net="http://www.zfoo.com/schema/net"
+       xmlns:storage="http://www.zfoo.com/schema/storage"
+       xmlns:orm="http://www.zfoo.com/schema/orm"
+       xmlns:event="http://www.zfoo.com/schema/event"
+       xmlns:scheduler="http://www.zfoo.com/schema/scheduler"
+       xmlns="http://www.springframework.org/schema/beans"
+
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+
+    http://www.zfoo.com/schema/net
+    http://www.zfoo.com/schema/net-1.0.xsd
+
+    http://www.zfoo.com/schema/storage
+    http://www.zfoo.com/schema/storage-1.0.xsd
+
+    http://www.zfoo.com/schema/orm
+    http://www.zfoo.com/schema/orm-1.0.xsd
+
+    http://www.zfoo.com/schema/event
+    http://www.zfoo.com/schema/event-1.0.xsd
+
+    http://www.zfoo.com/schema/scheduler
+    http://www.zfoo.com/schema/scheduler-1.0.xsd">
+
+    <context:property-placeholder location="classpath:deploy-${spring.profiles.active}.properties"/>
+
+    <context:component-scan base-package="com.zfoo.tank.cache"/>
+
+    <event:event id="eventBus"/>
+
+    <scheduler:scheduler id="schedulerManager"/>
+
+    <storage:storage id="resourceManager">
+        <storage:scan package="${storage.excel.scan}"/>
+        <storage:resource location="${storage.excel.location}" suffix="${storage.excel.suffix}"/>
+    </storage:storage>
+
+
+    <net:config id="tankHome" protocol-location="protocol.xml" generate-cs-protocol="${net.generate.cs.protocol}"
+                fold-protocol="${net.fold.protocol}">
+
+        <net:registry center="${registry.center}" user="${registry.user}" password="${registry.password}">
+            <net:address name="${registry.address.name}" url="${registry.address.url}"/>
+        </net:registry>
+
+        <net:provider dispatch="consistent-hash">
+            <net:module name="tankHome"/>
+        </net:provider>
+
+        <net:consumer load-balancer="consistent-hash">
+            <net:module name="tankCache"/>
+        </net:consumer>
+
+    </net:config>
+
+    <orm:config id="mongodbConfig" entity-package="com.zfoo.tank.common.**.entity">
+
+        <orm:host database="${mongodb.database}" user="${mongodb.user}" password="${mongodb.password}">
+            <orm:address name="${mongodb.address.name}" url="${mongodb.address.url}"/>
+        </orm:host>
+
+        <!-- 缓存策略 -->
+        <orm:caches>
+            <orm:cache strategy="ten" size="10" expire-millisecond="600000"/>
+            <orm:cache strategy="hundred" size="100" expire-millisecond="600000"/>
+            <orm:cache strategy="thousand" size="1000" expire-millisecond="600000"/>
+            <orm:cache strategy="threeThousand" size="3000" expire-millisecond="600000"/>
+            <orm:cache strategy="tenThousand" size="10000" expire-millisecond="600000"/>
+        </orm:caches>
+
+        <!-- 持久化策略 -->
+        <orm:persisters>
+            <orm:persister strategy="cronDefault" type="cron" config="0,30 * * * * ?"/>
+            <orm:persister strategy="cron3s" type="cron" config="0/3 * * * * ?"/>
+            <orm:persister strategy="cron15s" type="cron" config="0/15 * * * * ?"/>
+            <orm:persister strategy="cron30s" type="cron" config="0/30 * * * * ?"/>
+            <orm:persister strategy="cron1m" type="cron" config="0 0/30 * * * ?"/>
+            <orm:persister strategy="time30s" type="time" config="30000"/>
+        </orm:persisters>
+    </orm:config>
+</beans>

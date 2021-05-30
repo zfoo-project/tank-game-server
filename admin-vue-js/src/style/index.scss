@@ -1,0 +1,31 @@
+// 自定义video的样式
+
+// 给.video-js设置字体大小以统一各浏览器样式表现，因为video.js采用的是em单位
+.video-js{
+  font-size: 14px;
+}
+
+
+// 视频暂停时显示播放按钮
+.vjs-paused .vjs-big-play-button,
+.vjs-paused.vjs-has-started .vjs-big-play-button {
+  display: block;
+}
+
+// 视频加载出错时隐藏播放按钮
+.video-js.vjs-error .vjs-big-play-button{
+  display: none;
+}
+
+.video-js .vjs-time-control{
+  display:block;
+}
+.video-js .vjs-remaining-time{
+  display: none;
+}
+
+// 控制中间播放按钮的大小
+.video-js .vjs-big-play-button{
+  font-size: 2em;
+  border-radius: 0.2em;
+}

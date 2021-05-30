@@ -1,0 +1,16 @@
+{
+"companyName": "zfoo",
+"productName": "进击的坦克",
+"productVersion": "1.0",
+"dataUrl": "Target.data.unityweb",
+"wasmCodeUrl": "Target.wasm.code.unityweb",
+"wasmFrameworkUrl": "Target.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.0f1"
+}
