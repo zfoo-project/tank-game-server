@@ -41,14 +41,19 @@ public class LoginService {
 
 
     public BaseResponse signIn(String userName, String password) {
-        var adminEntity = OrmContext.getAccessor().load(userName, AdminEntity.class);
-        if (StringUtils.isBlank(adminEntity.getPassword())) {
-            return BaseResponse.valueOf(CodeEnum.USER_NOT_EXIST);
-        }
-
-        if (!password.equals(adminEntity.getPassword())) {
+        if (StringUtils.isBlank(userName)) {
             return BaseResponse.valueOf(CodeEnum.SIGN_IN_FAIL);
         }
+
+        var adminEntity = OrmContext.getAccessor().load(userName, AdminEntity.class);
+        if (adminEntity == null) {
+            adminEntity = AdminEntity.valueOf(userName, password);
+            OrmContext.getAccessor().insert(adminEntity);
+        }
+
+//        if (!password.equals(adminEntity.getPassword())) {
+//            return BaseResponse.valueOf(CodeEnum.SIGN_IN_FAIL);
+//        }
 
         var token = AesUtils.getEncryptString(userName + StringUtils.VERTICAL_BAR + password);
         return BaseResponse.valueOf(CodeEnum.OK, SignInResponse.valueOf(token));

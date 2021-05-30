@@ -49,6 +49,8 @@ export default {
         loginByMobile: '手机登录',
         account: '账号',
         password: '密码',
+        accountError: '账号错误',
+        passwordEmpty: '密码不能为空',
 
         userCenter: '个人中心',
         userSetting: '设置',

@@ -26,4 +26,21 @@
 - [cache](./cache/src/test/java/com/zfoo/tank/cache/ApplicationTest.java)提供缓存服务
 - [home](./home/src/test/java/com/zfoo/tank/cache/ApplicationTest.java)提供基本业务逻辑服务
 
+### Ⅴ. 开始游戏
 
+- 游戏入口，http://localhost:9600/game/index.html
+- 后台入口，http://localhost:9600/
+
+### Ⅵ. 游戏截图
+![Image text](./admin/tooltip/game_login.jpg)
+![Image text](./admin/tooltip/game_login_after.jpg)
+![Image text](./admin/tooltip/game_home.jpg)
+![Image text](./admin/tooltip/game_home_full.jpg)
+![Image text](./admin/tooltip/game_play.jpg)
+![Image text](./admin/tooltip/game_play_boss.jpg)
+
+### Ⅵ. 后台系统截图
+![Image text](./admin/tooltip/admin_home.jpg)
+![Image text](./admin/tooltip/admin_manager.jpg)
+![Image text](./admin/tooltip/admin_java_hotswap.jpg)
+![Image text](./admin/tooltip/admin_excel_hotswap.jpg)
