@@ -17,7 +17,8 @@
 - [single](./single/src/test/java/com/zfoo/tank/single/ApplicationTest.java)为单服游戏服务器
 
 ```
-注意在浏览器中运行游戏使用websocket的服务器启动入口
+1. 在浏览器中运行游戏使用websocket的服务器启动入口，即ApplicationTest.startWebsocketApplication()
+2. 在untiy种运行使用tcp的服务器启动入口，即ApplicationTest.startApplication()
 ```
 
 ### Ⅳ. 分布式运行
