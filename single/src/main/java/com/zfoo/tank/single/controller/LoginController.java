@@ -15,13 +15,10 @@ package com.zfoo.tank.single.controller;
 
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.net.NetContext;
-import com.zfoo.net.core.gateway.model.AuthUidToGatewayCheck;
-import com.zfoo.net.core.gateway.model.AuthUidToGatewayConfirm;
 import com.zfoo.net.dispatcher.model.anno.PacketReceiver;
 import com.zfoo.net.packet.common.Error;
 import com.zfoo.net.packet.common.Ping;
 import com.zfoo.net.packet.common.Pong;
-import com.zfoo.net.packet.model.GatewayPacketAttachment;
 import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.OrmContext;
@@ -86,9 +83,7 @@ public class LoginController {
             return;
         }
 
-        var uid = (long) session.getAttribute(AttributeType.UID);
         var sid = session.getSid();
-        logger.info("c[{}][{}]玩家登录[account:{}][password:{}]", uid, sid, account, password);
 
         EventBus.asyncExecute().execute(new Runnable() {
             @Override
@@ -118,7 +113,10 @@ public class LoginController {
                     }
                 }
 
-                session.putAttribute(AttributeType.UID, uid);
+                var uid = accountEntity.getUid();
+                logger.info("c[{}][{}]玩家登录[account:{}][password:{}]", uid, sid, account, password);
+
+                session.putAttribute(AttributeType.UID, accountEntity.getUid());
 
                 var player = playerEntityCaches.load(uid);
                 player.setLastLoginTime(TimeUtils.now());
