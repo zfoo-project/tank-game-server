@@ -18,11 +18,10 @@ import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.protocol.IPacket;
 import com.zfoo.protocol.util.JsonUtils;
-import com.zfoo.util.ThreadUtils;
-import com.zfoo.util.net.HostAndPort;
-import com.zfoo.util.net.NetUtils;
 import com.zfoo.tank.common.protocol.login.GetPlayerInfoRequest;
 import com.zfoo.tank.common.protocol.login.LoginRequest;
+import com.zfoo.util.net.HostAndPort;
+import com.zfoo.util.net.NetUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -36,9 +35,17 @@ import java.util.function.BiFunction;
  */
 public class Application {
 
-    public static final int DEFAULT_PORT = 18000;
+    /**
+     * tcp服务器的默认端口
+     */
+    public static final int TCP_SERVER_PORT = 16000;
 
-    public static final HostAndPort GATEWAY_HOST_AND_PORT = HostAndPort.valueOf(NetUtils.getLocalhostStr(), DEFAULT_PORT);
+    /**
+     * websocket服务器的默认端口
+     */
+    public static final int WEBSOCKET_SERVER_PORT = 18000;
+
+    public static final HostAndPort GATEWAY_HOST_AND_PORT = HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT);
     public static final String GATEWAY_HOST_AND_PORT_STR = GATEWAY_HOST_AND_PORT.toHostAndPortStr();
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
@@ -70,7 +77,7 @@ public class Application {
         context.registerShutdownHook();
 
         // websocket网关
-        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), DEFAULT_PORT), packetFilter);
+        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT), packetFilter);
         gateway.start();
     }
 

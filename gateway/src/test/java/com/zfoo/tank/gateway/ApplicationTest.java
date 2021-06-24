@@ -13,9 +13,9 @@
 
 package com.zfoo.tank.gateway;
 
-import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.net.core.gateway.GatewayServer;
 import com.zfoo.net.core.gateway.WebsocketGatewayServer;
+import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.util.ThreadUtils;
 import com.zfoo.util.net.HostAndPort;
 import com.zfoo.util.net.NetUtils;
@@ -42,7 +42,7 @@ public class ApplicationTest {
         context.registerShutdownHook();
 
         // tcp网关
-        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.DEFAULT_PORT), Application.packetFilter);
+        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT), Application.packetFilter);
         gateway.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);
@@ -55,7 +55,7 @@ public class ApplicationTest {
         context.registerShutdownHook();
 
         // websocket网关
-        var gateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.DEFAULT_PORT), Application.packetFilter);
+        var gateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT), Application.packetFilter);
         gateway.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);

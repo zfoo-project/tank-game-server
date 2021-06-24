@@ -12,6 +12,7 @@
  */
 
 package com.zfoo.tank.single;
+
 import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.util.net.HostAndPort;
@@ -25,14 +26,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class Application {
 
-    public static final int DEFAULT_PORT = 18000;
+    /**
+     * tcp服务器的默认端口
+     */
+    public static final int TCP_SERVER_PORT = 16000;
+
+    /**
+     * websocket服务器的默认端口
+     */
+    public static final int WEBSOCKET_SERVER_PORT = 18000;
 
     public static void main(String[] args) {
         var context = new ClassPathXmlApplicationContext("application.xml");
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
 
-        var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), DEFAULT_PORT));
+        var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
         tcpServer.start();
     }
 

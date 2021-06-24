@@ -14,7 +14,6 @@
 package com.zfoo.tank.single;
 
 import com.zfoo.event.model.event.AppStartEvent;
-import com.zfoo.net.core.gateway.WebsocketGatewayServer;
 import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.net.core.websocket.WebsocketServer;
 import com.zfoo.tank.common.constant.TankDeployEnum;
@@ -44,7 +43,7 @@ public class ApplicationTest {
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
 
-        var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.DEFAULT_PORT));
+        var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT));
         tcpServer.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);
@@ -57,7 +56,7 @@ public class ApplicationTest {
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
 
-        var tcpServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.DEFAULT_PORT));
+        var tcpServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.WEBSOCKET_SERVER_PORT));
         tcpServer.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);
