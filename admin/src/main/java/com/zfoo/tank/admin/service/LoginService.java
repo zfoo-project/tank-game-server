@@ -15,14 +15,14 @@ package com.zfoo.tank.admin.service;
 
 
 import com.zfoo.orm.OrmContext;
-import com.zfoo.protocol.collection.CollectionUtils;
+import com.zfoo.protocol.collection.ArrayUtils;
 import com.zfoo.protocol.util.AssertionUtils;
 import com.zfoo.protocol.util.StringUtils;
-import com.zfoo.util.security.AesUtils;
 import com.zfoo.tank.admin.model.SignInResponse;
 import com.zfoo.tank.admin.model.entity.AdminEntity;
 import com.zfoo.tank.common.result.BaseResponse;
 import com.zfoo.tank.common.result.CodeEnum;
+import com.zfoo.util.security.AesUtils;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,7 +75,7 @@ public class LoginService {
     public AdminEntity adminUserInfo(HttpServletRequest request) {
         // 读取cookie
         var cookies = request.getCookies();
-        if (CollectionUtils.isEmpty(cookies)) {
+        if (ArrayUtils.isEmpty(cookies)) {
             return null;
         }
         var adminCookie = Arrays.stream(cookies).filter(it -> it.getName().equals(ZGAME_ADMIN_TOKEN)).findFirst();

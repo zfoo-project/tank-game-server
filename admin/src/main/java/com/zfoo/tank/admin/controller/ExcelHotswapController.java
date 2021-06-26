@@ -13,7 +13,7 @@
 package com.zfoo.tank.admin.controller;
 
 import com.zfoo.net.NetContext;
-import com.zfoo.protocol.collection.CollectionUtils;
+import com.zfoo.protocol.collection.ArrayUtils;
 import com.zfoo.protocol.util.AssertionUtils;
 import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.IOUtils;
@@ -57,7 +57,7 @@ public class ExcelHotswapController {
         var adminEntity = loginService.adminUserInfo(request);
         AssertionUtils.notNull(adminEntity);
 
-        if (CollectionUtils.isEmpty(files)) {
+        if (ArrayUtils.isEmpty(files)) {
             return BaseResponse.valueOf(CodeEnum.FAIL, "上传的excel文件是空的");
         }
 
