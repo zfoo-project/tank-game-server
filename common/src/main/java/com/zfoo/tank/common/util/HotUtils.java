@@ -15,6 +15,7 @@ package com.zfoo.tank.common.util;
 
 import com.zfoo.hotswap.util.HotSwapUtils;
 import com.zfoo.net.NetContext;
+import com.zfoo.protocol.collection.ArrayUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.StorageContext;
 import com.zfoo.storage.model.vo.Storage;
@@ -37,7 +38,9 @@ public abstract class HotUtils {
     private static final Logger logger = LoggerFactory.getLogger(HotUtils.class);
 
     public static Map<String, Class<?>> configSimpleClazzNameMap() {
-        Map<String, Class<?>> clazzSimpleNameMap = StorageContext.getStorageManager().allStorageClassSet()
+        Map<String, Class<?>> clazzSimpleNameMap = StorageContext.getStorageManager()
+                .allStorageUsableMap()
+                .keySet()
                 .stream()
                 .collect(Collectors.toMap(key -> key.getSimpleName(), value -> value));
         return clazzSimpleNameMap;
@@ -52,7 +55,7 @@ public abstract class HotUtils {
                     return;
                 }
 
-                if (bytes == null) {
+                if (ArrayUtils.isEmpty(bytes)) {
                     logger.info("zk收到path[{}]更新length[{}]", path, 0);
                     return;
                 }
@@ -62,6 +65,12 @@ public abstract class HotUtils {
                 var configName = StringUtils.substringAfterLast(path, StringUtils.SLASH);
                 var clazzSimpleNameMap = HotUtils.configSimpleClazzNameMap();
                 var clazz = clazzSimpleNameMap.get(configName);
+
+                // 如果该excel在当前项目中没有被使用，则不必解析配置表，也不用去更新了
+                if (!StorageContext.getStorageManager().allStorageUsableMap().get(clazz)) {
+                    return;
+                }
+
                 Storage<?, ?> storage = new Storage<>();
                 storage.init(new ByteArrayInputStream(bytes), clazz);
                 StorageContext.getStorageManager().updateStorage(clazz, storage);
@@ -80,7 +89,7 @@ public abstract class HotUtils {
                     return;
                 }
 
-                if (bytes == null) {
+                if (ArrayUtils.isEmpty(bytes)) {
                     logger.info("zk收到path[{}]更新length[{}]", path, 0);
                     return;
                 }
