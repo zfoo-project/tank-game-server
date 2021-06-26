@@ -65,7 +65,7 @@ public abstract class HotUtils {
                 Storage<?, ?> storage = new Storage<>();
                 storage.init(new ByteArrayInputStream(bytes), clazz);
                 StorageContext.getStorageManager().updateStorage(clazz, storage);
-                StorageContext.injectResource();
+                StorageContext.getStorageManager().inject();
             }
         }, null);
     }
