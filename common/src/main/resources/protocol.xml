@@ -6,7 +6,7 @@
     <module id="1" name="native" minId="0" maxId="100" version="99.99.999">
         <protocol id="0" location="com.zfoo.net.packet.model.SignalPacketAttachment"/>
         <protocol id="1" location="com.zfoo.net.packet.model.GatewayPacketAttachment"/>
-        <protocol id="2" location="com.zfoo.net.packet.model.NoAnswerAttachment"/>
+        <protocol id="3" location="com.zfoo.net.packet.model.NoAnswerAttachment"/>
 
 
         <protocol id="20" location="com.zfoo.net.core.gateway.model.AuthUidToGatewayCheck"/>

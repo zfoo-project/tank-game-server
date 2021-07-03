@@ -55,7 +55,7 @@ public class ApplicationTest {
         context.registerShutdownHook();
 
         // websocket网关
-        var gateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT), Application.packetFilter);
+        var gateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.WEBSOCKET_SERVER_PORT), Application.packetFilter);
         gateway.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);
