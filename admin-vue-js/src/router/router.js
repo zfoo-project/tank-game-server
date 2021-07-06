@@ -49,6 +49,24 @@ const router = new Router({
                 auth: false
             },
             component: () => import('@/view/hotswap/ExcelHotSwap.vue')
+        },
+
+        {
+            path: '/currency',
+            name: 'Currency',
+            meta: {
+                auth: false
+            },
+            component: () => import('@/view/gm/Currency.vue')
+        },
+
+        {
+            path: '/playerLevel',
+            name: 'PlayerLevel',
+            meta: {
+                auth: false
+            },
+            component: () => import('@/view/gm/PlayerLevel.vue')
         }
     ]
 });

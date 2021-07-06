@@ -24,6 +24,15 @@ export default {
         searchContent: '输入玩家名称'
     },
 
+    gm: {
+        level: '等级修改',
+        levelInput: '输入等级',
+        goldInput: '输入金币',
+        gemInput: '输入钻石',
+        energyInput: '输入能量',
+        expInput: '输入经验',
+        currency: '货币修改'
+    },
 
     setting: {
         app: '系统设置',

@@ -117,7 +117,9 @@ export default {
             { icon: 'mdi-home-outline', text: 'home.main', to: '/' },
             { icon: 'mdi-account-alert-outline', text: 'player.title', to: '/player' },
             { icon: 'mdi-language-java', text: 'javaHotswap', to: '/javaHotSwap' },
-            { icon: 'mdi-file-excel-outline', text: 'excelHotswap', to: '/excelHotSwap' }
+            { icon: 'mdi-file-excel-outline', text: 'excelHotswap', to: '/excelHotSwap' },
+            { icon: 'mdi-currency-btc', text: 'gm.currency', to: '/currency' },
+            { icon: 'mdi-account-convert', text: 'gm.level', to: '/playerLevel' }
 
         ]
     }),
