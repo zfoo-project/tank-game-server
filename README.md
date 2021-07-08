@@ -48,3 +48,5 @@
 ![Image text](./admin/tooltip/admin_manager.jpg)
 ![Image text](./admin/tooltip/admin_java_hotswap.jpg)
 ![Image text](./admin/tooltip/admin_excel_hotswap.jpg)
+![Image text](./admin/tooltip/admin_level.jpg)
+![Image text](./admin/tooltip/admin_currency.jpg)
