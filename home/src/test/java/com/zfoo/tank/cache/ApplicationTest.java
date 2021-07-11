@@ -32,7 +32,21 @@ public class ApplicationTest {
 
 
     @Test
-    public void startApplication() {
+    public void startApplication1() {
+        Application.main(null);
+
+        ThreadUtils.sleep(Long.MAX_VALUE);
+    }
+
+    @Test
+    public void startApplication2() {
+        Application.main(null);
+
+        ThreadUtils.sleep(Long.MAX_VALUE);
+    }
+
+    @Test
+    public void startApplication3() {
         Application.main(null);
 
         ThreadUtils.sleep(Long.MAX_VALUE);

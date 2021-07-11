@@ -14,7 +14,6 @@
 package com.zfoo.tank.single.service;
 
 import com.zfoo.event.model.event.AppStartEvent;
-import com.zfoo.tank.common.util.HotUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +27,6 @@ public class SystemService implements ApplicationListener<AppStartEvent> {
 
     @Override
     public void onApplicationEvent(AppStartEvent event) {
-        HotUtils.startHotSwapJava();
-        HotUtils.startHotSwapConfig();
     }
 
 }

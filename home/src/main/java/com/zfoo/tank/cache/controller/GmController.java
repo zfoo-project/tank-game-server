@@ -52,7 +52,7 @@ public class GmController {
     }
 
     @PacketReceiver
-    public void atAdminPlayerLevelAsk(Session session, AdminCurrencyAsk ask) {
+    public void atAdminCurrencyAsk(Session session, AdminCurrencyAsk ask) {
         var userId = ask.getUserId();
 
         var gold = ask.getGold();
@@ -67,5 +67,7 @@ public class GmController {
         playerEntityCaches.update(userEntity);
 
         SendUtils.sendToPlayer(userEntity, CurrencyUpdateNotice.valueOf(userEntity.getCurrencyPo().toCurrencyVO()));
+
+        NetContext.getDispatcher().send(session, Message.valueOf(ask, 1, null));
     }
 }

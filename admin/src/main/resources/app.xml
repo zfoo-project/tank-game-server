@@ -49,6 +49,9 @@
             <net:address name="${registry.address.name}" url="${registry.address.url}"/>
         </net:registry>
 
+        <net:consumer load-balancer="consistent-hash">
+            <net:module name="tankHome"/>
+        </net:consumer>
     </net:config>
 
     <orm:config id="mongodbConfig" entity-package="com.zfoo.tank.admin.**.entity">

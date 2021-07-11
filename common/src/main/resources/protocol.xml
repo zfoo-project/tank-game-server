@@ -54,6 +54,8 @@
 
         <protocol id="1200" location="com.zfoo.tank.common.protocol.admin.AdminPlayerLevelAsk"/>
         <protocol id="1201" location="com.zfoo.tank.common.protocol.admin.AdminCurrencyAsk"/>
+        <protocol id="1300" location="com.zfoo.tank.common.protocol.TestRequest"/>
+        <protocol id="1301" location="com.zfoo.tank.common.protocol.TestResponse"/>
     </module>
 
     <module id="4" name="tankCache" minId="3000" maxId="4000" version="1.0.0">

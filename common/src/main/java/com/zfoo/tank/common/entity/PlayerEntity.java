@@ -48,6 +48,8 @@ public class PlayerEntity implements IEntity<Long> {
     // 货币钱包，直接new出来给个默认值，可以防止空指针异常
     private CurrencyPo currencyPo = new CurrencyPo();
 
+    private String message;
+
 
     public static PlayerEntity valueOf(long id, String name, int level, long lastLoginTime, long registerTime) {
         var entity = new PlayerEntity();
@@ -153,5 +155,13 @@ public class PlayerEntity implements IEntity<Long> {
 
     public void setCurrencyPo(CurrencyPo currencyPo) {
         this.currencyPo = currencyPo;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

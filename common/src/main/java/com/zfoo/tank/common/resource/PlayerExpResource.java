@@ -33,6 +33,8 @@ public class PlayerExpResource {
 
     private int gold;
 
+    private int diamond;
+
     public int getPlayerLevel() {
         return playerLevel;
     }
@@ -47,5 +49,9 @@ public class PlayerExpResource {
 
     public int getGold() {
         return gold;
+    }
+
+    public int getDiamond() {
+        return diamond;
     }
 }
