@@ -33,6 +33,7 @@ public enum I18nEnum {
     error_protocol_parse("无法解析，请联系客服，我们会尽快解决"),
     error_account_not_exist("账号不存在"),
     error_account_password("账号或密码错误"),
+    error_account_sensitive_word("账号含有铭感词"),
 
     fail("请求失败"),
     ok("请求成功"),

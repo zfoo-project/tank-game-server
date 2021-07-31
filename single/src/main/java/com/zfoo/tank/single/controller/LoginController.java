@@ -36,8 +36,10 @@ import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.login.*;
 import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.util.TokenUtils;
+import com.zfoo.tank.single.service.SystemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -60,6 +62,9 @@ public class LoginController {
     @Value("${spring.profiles.active}")
     private TankDeployEnum deployEnum;
 
+    @Autowired
+    private SystemService systemService;
+
     @PacketReceiver
     public void atLogoutRequest(Session session, LogoutRequest request) {
         var uid = (long) session.getAttribute(AttributeType.UID);
@@ -80,6 +85,11 @@ public class LoginController {
 
         if (StringUtils.isBlank(account)) {
             NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
+            return;
+        }
+
+        if (systemService.hasSensitiveWord(account)) {
+            NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_sensitive_word.toString()));
             return;
         }
 
