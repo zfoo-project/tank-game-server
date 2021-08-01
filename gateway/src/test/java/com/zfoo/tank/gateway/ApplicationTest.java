@@ -42,8 +42,8 @@ public class ApplicationTest {
         context.registerShutdownHook();
 
         // tcp网关
-        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT), Application.packetFilter);
-        gateway.start();
+        var tcpGateway = new GatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT), Application.packetFilter);
+        tcpGateway.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);
     }
@@ -55,8 +55,8 @@ public class ApplicationTest {
         context.registerShutdownHook();
 
         // websocket网关
-        var gateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.WEBSOCKET_SERVER_PORT), Application.packetFilter);
-        gateway.start();
+        var websocketGateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.WEBSOCKET_SERVER_PORT), Application.packetFilter);
+        websocketGateway.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);
     }

@@ -56,8 +56,8 @@ public class ApplicationTest {
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
 
-        var tcpServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.WEBSOCKET_SERVER_PORT));
-        tcpServer.start();
+        var websocketServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.WEBSOCKET_SERVER_PORT));
+        websocketServer.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);
     }
