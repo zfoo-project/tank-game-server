@@ -14,7 +14,7 @@
 package com.zfoo.tank.single;
 
 import com.zfoo.event.model.event.AppStartEvent;
-import com.zfoo.net.core.tcp.TcpServer;
+import com.zfoo.net.core.websocket.WebsocketServer;
 import com.zfoo.util.net.HostAndPort;
 import com.zfoo.util.net.NetUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -41,8 +41,13 @@ public class Application {
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
 
-        var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
-        tcpServer.start();
+        // tcp服务器
+//        var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
+//        tcpServer.start();
+
+        // websocket服务器
+        var websocketServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT));
+        websocketServer.start();
     }
 
 }

@@ -31,6 +31,12 @@ public enum TankDeployEnum {
      */
     pro,
 
+
+    /**
+     * zfoo.net环境
+     */
+    zfoo,
+
     ;
 
     public static void initDefaultEnv() {

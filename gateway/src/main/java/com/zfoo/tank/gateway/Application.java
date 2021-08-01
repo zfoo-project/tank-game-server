@@ -78,7 +78,8 @@ public class Application {
 
         // tcp网关
 //        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT), packetFilter);
-        var gateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT), packetFilter);
+        // websocket网关
+        var gateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT), packetFilter);
         gateway.start();
     }
 

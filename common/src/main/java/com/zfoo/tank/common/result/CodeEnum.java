@@ -46,6 +46,7 @@ public enum CodeEnum {
     PARAMETER_EMPTY_TWO(17, "极度空的请求参数"),
     PARAMETER_NOT_MATCH(20, "参数无法匹配"),
     PARAMETER_URL_ERROR(25, "url不合法"),
+    PARAMETER_ENV_ERROR(26, "为了安全，此zfoo环境暂时屏蔽热更新，你自己的正式环境中可以打开"),
 
     PARAMETER_WORD_FILTER_ERROR(30, "检测到敏感字符"),
 

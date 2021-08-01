@@ -21,11 +21,13 @@ import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.model.vo.Storage;
 import com.zfoo.tank.admin.service.LoginService;
 import com.zfoo.tank.common.constant.GameConstant;
+import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.tank.common.result.BaseResponse;
 import com.zfoo.tank.common.result.CodeEnum;
 import com.zfoo.tank.common.util.HotUtils;
 import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +52,9 @@ public class ExcelHotswapController {
     @Autowired
     private LoginService loginService;
 
+    @Value("${spring.profiles.active}")
+    private TankDeployEnum deployEnum;
+
     /**
      * Excel热更新
      */
@@ -61,6 +66,11 @@ public class ExcelHotswapController {
 
         if (ArrayUtils.isEmpty(files)) {
             return BaseResponse.valueOf(CodeEnum.FAIL, "上传的excel文件是空的");
+        }
+
+
+        if (deployEnum == TankDeployEnum.zfoo) {
+            return BaseResponse.valueOf(CodeEnum.PARAMETER_ENV_ERROR);
         }
 
         var clazzSimpleNameMap = HotUtils.configSimpleClazzNameMap();

@@ -20,10 +20,12 @@ import com.zfoo.protocol.util.IOUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.tank.admin.service.LoginService;
 import com.zfoo.tank.common.constant.GameConstant;
+import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.tank.common.result.BaseResponse;
 import com.zfoo.tank.common.result.CodeEnum;
 import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +48,10 @@ public class JavaHotswapController {
     @Autowired
     private LoginService loginService;
 
+    @Value("${spring.profiles.active}")
+    private TankDeployEnum deployEnum;
+
+
     /**
      * java服务器class文件热更新
      */
@@ -57,6 +63,10 @@ public class JavaHotswapController {
 
         if (ArrayUtils.isEmpty(files)) {
             return BaseResponse.valueOf(CodeEnum.FAIL, "上传的java文件是空的");
+        }
+
+        if (deployEnum == TankDeployEnum.zfoo) {
+            return BaseResponse.valueOf(CodeEnum.PARAMETER_ENV_ERROR);
         }
 
         // 先检查文件的格式

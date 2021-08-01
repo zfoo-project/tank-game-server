@@ -11,6 +11,7 @@ export default {
     code_enum_17: '极度空的请求参数',
     code_enum_20: '参数无法匹配',
     code_enum_25: 'url不合法',
+    code_enum_26: '为了安全，此zfoo环境暂时屏蔽热更新，你自己的正式环境中可以打开',
 
     code_enum_30: '检测到敏感字符',
 
