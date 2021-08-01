@@ -15,7 +15,6 @@ package com.zfoo.tank.admin.service;
 
 
 import com.zfoo.orm.OrmContext;
-import com.zfoo.protocol.collection.ArrayUtils;
 import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.protocol.util.AssertionUtils;
 import com.zfoo.protocol.util.StringUtils;
@@ -29,7 +28,6 @@ import com.zfoo.util.security.AesUtils;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 
 /**
  * @author jaysunxiao
@@ -76,18 +74,7 @@ public class LoginService {
     }
 
     public AdminEntity adminUserInfo(HttpServletRequest request) {
-        // 读取cookie
-        var cookies = request.getCookies();
-        if (ArrayUtils.isEmpty(cookies)) {
-            return null;
-        }
-        var adminCookie = Arrays.stream(cookies).filter(it -> it.getName().equals(ZGAME_ADMIN_TOKEN)).findFirst();
-
-        if (adminCookie.isEmpty()) {
-            return null;
-        }
-
-        var adminToken = adminCookie.get().getValue();
+        var adminToken = request.getHeader(ZGAME_ADMIN_TOKEN);
 
         if (StringUtils.isBlank(adminToken)) {
             return null;

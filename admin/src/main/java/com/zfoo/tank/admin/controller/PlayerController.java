@@ -24,6 +24,7 @@ import com.zfoo.tank.common.result.BaseResponse;
 import com.zfoo.tank.common.result.CodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +40,7 @@ import java.util.regex.Pattern;
  * @since 2021-04-12 18:14
  */
 @Controller
+@CrossOrigin
 public class PlayerController {
 
     @Autowired

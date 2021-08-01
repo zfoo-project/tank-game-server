@@ -14,9 +14,9 @@
 package com.zfoo.tank.common.protocol.login;
 
 
-import com.zfoo.tank.common.util.TokenUtils;
 import com.zfoo.net.core.gateway.IGatewayLoadBalancer;
 import com.zfoo.protocol.IPacket;
+import com.zfoo.tank.common.util.TokenUtils;
 
 /**
  * @author jaysunxiao

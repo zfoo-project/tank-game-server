@@ -11,8 +11,6 @@
 package com.zfoo.tank.single.util;
 
 import com.zfoo.net.NetContext;
-import com.zfoo.net.packet.model.GatewayPacketAttachment;
-import com.zfoo.net.session.manager.SessionManager;
 import com.zfoo.net.util.SessionUtils;
 import com.zfoo.protocol.IPacket;
 import com.zfoo.tank.common.entity.PlayerEntity;

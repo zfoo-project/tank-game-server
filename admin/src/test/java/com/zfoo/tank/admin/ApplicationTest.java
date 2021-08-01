@@ -14,8 +14,8 @@
 package com.zfoo.tank.admin;
 
 
-import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.util.ThreadUtils;
 import org.junit.Ignore;
 import org.junit.Test;

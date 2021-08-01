@@ -27,6 +27,7 @@ import com.zfoo.tank.common.util.HotUtils;
 import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
  * @since 2021-04-13 11:02
  */
 @Controller
+@CrossOrigin
 public class ExcelHotswapController {
 
 

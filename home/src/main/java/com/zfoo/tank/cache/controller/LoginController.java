@@ -87,19 +87,12 @@ public class LoginController {
             @Override
             public void run() {
                 var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
-                if (deployEnum != TankDeployEnum.pro) {
-                    if (accountEntity == null) {
-                        var id = MongoIdUtils.getIncrementIdFromMongoDefault(PlayerEntity.class);
-
-                        OrmContext.getAccessor().insert(PlayerEntity.valueOf(id, account, 1, TimeUtils.now(), TimeUtils.now()));
-                        accountEntity = AccountEntity.valueOf(account, account, password, id);
-                        OrmContext.getAccessor().insert(accountEntity);
-                    }
-                }
-
                 if (accountEntity == null) {
-                    NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()), gatewayAttachment);
-                    return;
+                    var id = MongoIdUtils.getIncrementIdFromMongoDefault(PlayerEntity.class);
+
+                    OrmContext.getAccessor().insert(PlayerEntity.valueOf(id, account, 1, TimeUtils.now(), TimeUtils.now()));
+                    accountEntity = AccountEntity.valueOf(account, account, password, id);
+                    OrmContext.getAccessor().insert(accountEntity);
                 }
 
                 if (deployEnum == TankDeployEnum.pro) {

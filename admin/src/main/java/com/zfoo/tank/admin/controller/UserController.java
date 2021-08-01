@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2021-02-04 17:27
  */
 @Controller
+@CrossOrigin
 public class UserController {
 
     @Autowired

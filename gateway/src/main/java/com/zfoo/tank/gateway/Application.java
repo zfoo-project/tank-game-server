@@ -13,7 +13,7 @@
 
 package com.zfoo.tank.gateway;
 
-import com.zfoo.net.core.gateway.GatewayServer;
+import com.zfoo.net.core.gateway.WebsocketGatewayServer;
 import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.protocol.IPacket;
@@ -76,8 +76,9 @@ public class Application {
         var context = new ClassPathXmlApplicationContext("application.xml");
         context.registerShutdownHook();
 
-        // websocket网关
-        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT), packetFilter);
+        // tcp网关
+//        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT), packetFilter);
+        var gateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT), packetFilter);
         gateway.start();
     }
 

@@ -23,6 +23,7 @@ import com.zfoo.tank.common.result.BaseResponse;
 import com.zfoo.tank.common.result.CodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2021-03-04 19:50
  */
 @Controller
+@CrossOrigin
 public class SettingController {
 
     @Autowired

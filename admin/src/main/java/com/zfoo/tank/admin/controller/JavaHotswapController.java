@@ -25,6 +25,7 @@ import com.zfoo.tank.common.result.CodeEnum;
 import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +40,7 @@ import java.io.IOException;
  * @since 2021-04-12 18:12
  */
 @Controller
+@CrossOrigin
 public class JavaHotswapController {
 
     @Autowired

@@ -13,8 +13,8 @@
 
 package com.zfoo.tank.admin.model;
 
-import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.scheduler.util.TimeUtils;
+import com.zfoo.tank.common.entity.PlayerEntity;
 
 /**
  * @author jaysunxiao

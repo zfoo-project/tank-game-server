@@ -13,8 +13,8 @@
 
 package com.zfoo.tank.cache.service;
 
-import com.zfoo.tank.common.util.HotUtils;
 import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.tank.common.util.HotUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
