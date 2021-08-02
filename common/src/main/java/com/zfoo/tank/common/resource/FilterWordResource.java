@@ -33,16 +33,8 @@ public class FilterWordResource {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getFilter() {
         return filter;
-    }
-
-    public void setFilter(String filter) {
-        this.filter = filter;
     }
 
 }
