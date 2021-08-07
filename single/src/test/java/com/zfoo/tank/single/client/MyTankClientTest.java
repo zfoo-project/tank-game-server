@@ -41,18 +41,18 @@ public class MyTankClientTest {
     public void tankClient() {
         var context = new ClassPathXmlApplicationContext("application.xml");
 
-        var tcpClient = new TcpClient(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT));
-        var clientSession = tcpClient.start();
+        var myTankClient = new TcpClient(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT));
+        var myTankSession = myTankClient.start();
 
         // 模拟客户端，发送一个登录请求
         var loginRequest = LoginRequest.valueOf("tank1", "tank1");
-        NetContext.getDispatcher().send(clientSession, loginRequest);
+        NetContext.getDispatcher().send(myTankSession, loginRequest);
         ThreadUtils.sleep(2 * TimeUtils.MILLIS_PER_SECOND);
 
 
         // 发送一个获取分数排行榜的信息
         var scoreRankRequest = ScoreRankRequest.valueOf();
-        NetContext.getDispatcher().send(clientSession, scoreRankRequest);
+        NetContext.getDispatcher().send(myTankSession, scoreRankRequest);
         ThreadUtils.sleep(2 * TimeUtils.MILLIS_PER_SECOND);
     }
 
