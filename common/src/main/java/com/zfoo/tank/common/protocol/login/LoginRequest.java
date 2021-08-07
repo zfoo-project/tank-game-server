@@ -28,10 +28,12 @@ public class LoginRequest implements IPacket {
     private String account;
     private String password;
 
-    public static short getProtocolId() {
-        return PROTOCOL_ID;
+    public static LoginRequest valueOf(String account, String password) {
+        var request = new LoginRequest();
+        request.account = account;
+        request.password = password;
+        return request;
     }
-
 
     @Override
     public short protocolId() {
