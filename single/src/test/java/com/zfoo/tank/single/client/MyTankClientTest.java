@@ -54,8 +54,6 @@ public class MyTankClientTest {
         var scoreRankRequest = ScoreRankRequest.valueOf();
         NetContext.getDispatcher().send(clientSession, scoreRankRequest);
         ThreadUtils.sleep(2 * TimeUtils.MILLIS_PER_SECOND);
-
-
     }
 
 }
