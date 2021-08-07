@@ -27,9 +27,9 @@ import org.springframework.stereotype.Component;
  * @version 3.0
  */
 @Component
-public class TankClientController {
+public class MyTankClientController {
 
-    private static final Logger logger = LoggerFactory.getLogger(TankClientController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyTankClientController.class);
 
 
     @PacketReceiver
