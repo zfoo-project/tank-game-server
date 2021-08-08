@@ -39,7 +39,7 @@ public class MyTankClientTest {
 
     @Test
     public void tankClient() {
-        var context = new ClassPathXmlApplicationContext("application.xml");
+        var context = new ClassPathXmlApplicationContext("my-tank-application.xml");
 
         var myTankClient = new TcpClient(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT));
         var myTankSession = myTankClient.start();
