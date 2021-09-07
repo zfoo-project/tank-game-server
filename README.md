@@ -14,7 +14,8 @@
 ### Ⅲ. 本地单服运行
 
 - [admin](./admin/src/test/java/com/zfoo/tank/admin/ApplicationTest.java)为web资源服务器提供游戏入口和后台管理系统
-- [single](./single/src/test/java/com/zfoo/tank/single/ApplicationTest.java)为单服游戏服务器
+- [single](./single/src/test/java/com/zfoo/tank/single/ApplicationTest.java)为单服游戏服务器，single-boot是用了spring
+  boot自动化配置的single，代码一致
 
 ```
 1. 在浏览器中运行游戏使用websocket的服务器启动入口，即ApplicationTest.startWebsocketApplication()

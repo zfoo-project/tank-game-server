@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="false" debug="false">
+
+    <contextName>com.zfoo.tank.single.boot</contextName>
+
+    <property name="LOG_HOME" value="log/"/>
+    <property name="PATTERN_FILE"
+              value="%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
+    <property name="PATTERN_CONSOLE"
+              value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%-5level)] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
+    <!-- 负责写日志,控制台日志，会打印所有的包的所有级别日志 -->
+    <appender name="zfoo_console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN_CONSOLE}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- debug日志，只有一个文件，只收集debug级别日志，每次启动会覆盖以前的debug日志 -->
+    <appender name="zfoo_debug" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_HOME}/debug.log</file>
+        <!-- append: true,日志被追加到文件结尾; false,清空现存文件;默认是true -->
+        <append>false</append>
+        <encoder>
+            <pattern>${PATTERN_FILE}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>debug</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- info，warn，error级别的日志都会添加在info.log日志中 -->
+    <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 -->
+    <appender name="zfoo_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/info.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_HOME}/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- each file should be at most 100MB, keep 30 days worth of history, but at most 40GB -->
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>40GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <Pattern>${PATTERN_FILE}</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+    </appender>
+
+    <!-- 异步输出 -->
+    <appender name="zfoo_async_info" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>512</queueSize>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="zfoo_info"/>
+    </appender>
+
+    <!-- 只收集error级别的日志 -->
+    <appender name="zfoo_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/error.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <Pattern>${PATTERN_FILE}</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 根logger -->
+    <root level="info">
+        <appender-ref ref="zfoo_debug"/>
+        <appender-ref ref="zfoo_async_info"/>
+        <appender-ref ref="zfoo_error"/>
+    </root>
+
+    <logger name="ch.qos.logback" level="info"/>
+    <logger name="org.springframework" level="info"/>
+    <logger name="io.netty" level="info"/>
+</configuration>

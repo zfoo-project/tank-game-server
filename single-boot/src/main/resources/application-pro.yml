@@ -1,0 +1,59 @@
+storage:
+  id: storageManager
+  scan:
+    package: com.zfoo.tank.common.**.resource
+  resource:
+    location: classpath:/excel
+    suffix: xlsx
+
+net:
+  id: netConfig
+  protocol-location: protocol.xml
+  generate-cs-protocol: false
+  fold-protocol: false
+
+orm:
+  id: mongodbConfig
+  entity-package: com.zfoo.tank.common.**.entity
+  host:
+    database: tank
+    user:
+    password:
+    address:
+      - 127.0.0.1:27017
+  caches:
+    - strategy: ten
+      size: 10
+      expire-millisecond: 600000
+    - strategy: hundred
+      size: 100
+      expire-millisecond: 600000
+    - strategy: thousand
+      size: 1000
+      expire-millisecond: 600000
+    - strategy: threeThousand
+      size: 3000
+      expire-millisecond: 600000
+    - strategy: tenThousand
+      size: 10000
+      expire-millisecond: 600000
+  persisters:
+    - strategy: cronDefault
+      type: cron
+      config: 0,30 * * * * ?
+    - strategy: cron3s
+      type: cron
+      config: 0/3 * * * * ?
+    - strategy: cron15s
+      type: cron
+      config: 0/15 * * * * ?
+    - strategy: cron30s
+      type: cron
+      config: 0/30 * * * * ?
+    - strategy: cron1m
+      type: cron
+      config: 0 0/30 * * * ?
+    - strategy: time30s
+      type: time
+      config: 30000
+

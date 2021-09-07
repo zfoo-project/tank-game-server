@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zfoo.tank</groupId>
-    <artifactId>common</artifactId>
+    <artifactId>single-boot</artifactId>
     <version>1.0</version>
 
     <packaging>jar</packaging>
@@ -106,45 +106,27 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zfoo.tank</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.zfoo</groupId>
-            <artifactId>event</artifactId>
-            <version>${zfoo.event.version}</version>
+            <artifactId>boot</artifactId>
+            <version>${zfoo.boot.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.zfoo</groupId>
             <artifactId>hotswap</artifactId>
             <version>${zfoo.hotswap.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zfoo</groupId>
-            <artifactId>net</artifactId>
-            <version>${zfoo.net.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zfoo</groupId>
-            <artifactId>scheduler</artifactId>
-            <version>${zfoo.scheduler.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zfoo</groupId>
-            <artifactId>storage</artifactId>
-            <version>${zfoo.storage.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zfoo</groupId>
-            <artifactId>orm</artifactId>
-            <version>${zfoo.orm.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zfoo</groupId>
-            <artifactId>util</artifactId>
-            <version>${zfoo.util.version}</version>
         </dependency>
 
         <dependency>
@@ -160,6 +142,23 @@
         <testSourceDirectory>src/test/java</testSourceDirectory>
 
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.zfoo.tank.single.boot.Application</mainClass>
+                    <layout>ZIP</layout>
+                </configuration>
+            </plugin>
+
             <!-- 清理插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -178,6 +177,7 @@
                     <encoding>${file.encoding}</encoding>
                 </configuration>
             </plugin>
+
 
             <!-- resource资源管理插件 -->
             <plugin>
@@ -218,12 +218,8 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin.version}</version>
-            </plugin>
         </plugins>
     </build>
+
 
 </project>
