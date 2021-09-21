@@ -44,7 +44,7 @@ public class ApplicationTest {
     public void startApplication() {
         var context = SpringApplication.run(ApplicationTest.class);
         System.out.println(context.getBean(EventContext.class));
-        ;
+
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
 
