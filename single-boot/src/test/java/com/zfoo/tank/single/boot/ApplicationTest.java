@@ -13,7 +13,6 @@
 
 package com.zfoo.tank.single.boot;
 
-import com.zfoo.event.EventContext;
 import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.net.core.websocket.WebsocketServer;
@@ -43,7 +42,6 @@ public class ApplicationTest {
     @Test
     public void startApplication() {
         var context = SpringApplication.run(ApplicationTest.class);
-        System.out.println(context.getBean(EventContext.class));
 
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
