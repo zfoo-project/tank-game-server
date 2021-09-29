@@ -33,14 +33,17 @@ public class ScoreRankEntity implements IEntity<Long> {
     @Index(ascending = false, unique = false)
     private long playerId;
 
+    private long time;
+
     // 对应的分数
     @Index(ascending = true, unique = false)
     private int score;
 
-    public static ScoreRankEntity valueOf(long id, long playerId, int score) {
+    public static ScoreRankEntity valueOf(long id, long playerId, long time, int score) {
         var entity = new ScoreRankEntity();
         entity.id = id;
         entity.playerId = playerId;
+        entity.time = time;
         entity.score = score;
         return entity;
     }
@@ -64,6 +67,14 @@ public class ScoreRankEntity implements IEntity<Long> {
 
     public void setPlayerId(long playerId) {
         this.playerId = playerId;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public int getScore() {

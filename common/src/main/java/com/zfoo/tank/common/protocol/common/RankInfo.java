@@ -25,11 +25,14 @@ public class RankInfo implements IPacket {
 
     private PlayerInfo playerInfo;
 
+    private long time;
+
     private int score;
 
-    public static RankInfo valueOf(PlayerInfo playerInfo, int score) {
+    public static RankInfo valueOf(PlayerInfo playerInfo, long time, int score) {
         var packet = new RankInfo();
         packet.playerInfo = playerInfo;
+        packet.time = time;
         packet.score = score;
         return packet;
     }
@@ -45,6 +48,14 @@ public class RankInfo implements IPacket {
 
     public void setPlayerInfo(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public int getScore() {

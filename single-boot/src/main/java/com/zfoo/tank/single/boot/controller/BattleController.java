@@ -11,7 +11,6 @@
 package com.zfoo.tank.single.boot.controller;
 
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.event.model.event.AppStartEvent;
@@ -82,7 +81,6 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
                     .getCollection(ScoreRankEntity.class)
                     .find()
                     .sort(Sorts.descending("score"))
-                    .projection(Projections.include("_id", "playerId", "score"))
                     .limit(RANK_SIZE)
                     .forEach(it -> rankList.add(it));
 
@@ -94,7 +92,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
 
             var list = new ArrayList<RankInfo>();
             for (var rankEntity : rankList) {
-                list.add(RankInfo.valueOf(playerInfoMap.get(rankEntity.getPlayerId()), rankEntity.getScore()));
+                list.add(RankInfo.valueOf(playerInfoMap.get(rankEntity.getPlayerId()), rankEntity.getTime(), rankEntity.getScore()));
             }
 
             if (CollectionUtils.isNotEmpty(list)) {
@@ -148,7 +146,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
         // 获取一个分布式自增唯一id
         var id = MongoIdUtils.getIncrementIdFromMongoDefault(ScoreRankEntity.class);
         // 插入数据库
-        OrmContext.getAccessor().insert(ScoreRankEntity.valueOf(id, playerId, score));
+        OrmContext.getAccessor().insert(ScoreRankEntity.valueOf(id, playerId, TimeUtils.now(), score));
         return true;
     }
 

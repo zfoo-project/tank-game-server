@@ -146,16 +146,16 @@ public class LoginController {
     public void atGetPlayerInfoRequest(Session session, GetPlayerInfoRequest request) {
         var token = request.getToken();
 
+        if (StringUtils.isBlank(token)) {
+            NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_protocol_param.toString()));
+            return;
+        }
+
         var triple = TokenUtils.get(token);
         var uid = triple.getLeft();
         var sid = session.getSid();
 
         logger.info("c[{}][{}]玩家信息[token:{}]", uid, sid, token);
-
-        if (StringUtils.isBlank(token)) {
-            NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_protocol_param.toString()));
-            return;
-        }
 
         var player = playerEntityCaches.load(uid);
 
