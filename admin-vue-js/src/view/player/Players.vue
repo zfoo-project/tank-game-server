@@ -31,18 +31,18 @@
 </template>
 
 <script>
-import {searchApi} from '@/apiHttp/playerApi.js';
+import { searchApi } from '@/apiHttp/playerApi.js';
 
 export default {
-  name: 'PlayerLevel',
-  data: () => ({
+    name: 'PlayerLevel',
+    data: () => ({
 
-    search: '',
-    loading: true,
-    totalRows: 0,
-    options: {
-      page: 1,
-      itemsPerPage: 20
+        search: '',
+        loading: true,
+        totalRows: 0,
+        options: {
+            page: 1,
+            itemsPerPage: 20
         },
         headers: [
             { text: '玩家id', value: 'id' },

@@ -19,7 +19,7 @@
                         </div>
                     </v-card-title>
 
-                    <v-img :src="require('@/asset/home.png')" height="700"/>
+                    <v-img :src="require('@/asset/home.png')" height="700" />
                 </v-card>
             </v-col>
         </v-row>
