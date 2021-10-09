@@ -21,6 +21,7 @@
                     :search="search"
                     :loading="loading"
                     :options.sync="options"
+                    :server-items-length="totalRows"
                     :footer-props="{itemsPerPageOptions: itemsPerPageOptions}"
                     disable-sort
                 />
@@ -30,17 +31,18 @@
 </template>
 
 <script>
-import { searchApi } from '@/apiHttp/playerApi.js';
-export default {
-    name: 'PlayerLevel',
-    data: () => ({
+import {searchApi} from '@/apiHttp/playerApi.js';
 
-        search: '',
-        loading: true,
-        totalRows: 0,
-        options: {
-            page: 1,
-            itemsPerPage: 10
+export default {
+  name: 'PlayerLevel',
+  data: () => ({
+
+    search: '',
+    loading: true,
+    totalRows: 0,
+    options: {
+      page: 1,
+      itemsPerPage: 20
         },
         headers: [
             { text: '玩家id', value: 'id' },
