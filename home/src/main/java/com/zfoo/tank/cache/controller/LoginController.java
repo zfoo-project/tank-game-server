@@ -73,7 +73,7 @@ public class LoginController {
 
     @PacketReceiver
     public void atLoginRequest(Session session, LoginRequest request, GatewayPacketAttachment gatewayAttachment) {
-        var account = request.getAccount();
+        var account = StringUtils.trim(request.getAccount());
         var password = request.getPassword();
 
         if (StringUtils.isBlank(account)) {
