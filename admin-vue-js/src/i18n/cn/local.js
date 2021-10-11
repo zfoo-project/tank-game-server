@@ -56,8 +56,8 @@ export default {
         login: '登录',
         loginByPassword: '密码登录',
         loginByMobile: '手机登录',
-        account: '账号',
-        password: '密码',
+        account: '默认账号：test',
+        password: '默认密码：test',
         accountError: '账号错误',
         passwordEmpty: '密码不能为空',
 
