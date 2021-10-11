@@ -22,7 +22,7 @@
 2. 在untiy种运行使用tcp的服务器启动入口，即ApplicationTest.startApplication()
 
 本地游戏入口，http://localhost:9600/game/index.html
-本地后台入口，账号：a，密码：a，http://localhost:9600/
+本地后台管理入口，http://localhost:9600/
 ```
 
 ### Ⅳ. 本地分布式运行

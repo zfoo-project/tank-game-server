@@ -37,8 +37,8 @@ public class SystemService implements ApplicationListener<AppStartEvent> {
 
 
         // 在数据库初始化一个管理员账号和密码
-        var id = "a";
-        var password = "a";
+        var id = "test";
+        var password = "test";
 
         var results = OrmContext.getQuery().queryFieldEqual("_id", id, AdminEntity.class);
         if (CollectionUtils.isEmpty(results)) {

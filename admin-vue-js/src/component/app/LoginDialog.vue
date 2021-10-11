@@ -59,21 +59,21 @@
 
 
 <script>
-import { mapMutations, mapState } from 'vuex';
-import { email, maxLength, minLength, numeric, required } from 'vuelidate/lib/validators';
-import { loginByAccountApi, logoutApi } from '@/apiHttp/loginApi.js';
-import { removeXToken, setXToken } from '@/util/authUtils.js';
-import { simpleError, simpleSuccess } from '@/util/noticeUtils.js';
+import {mapMutations, mapState} from 'vuex';
+import {email, maxLength, minLength, numeric, required} from 'vuelidate/lib/validators';
+import {loginByAccountApi, logoutApi} from '@/apiHttp/loginApi.js';
+import {removeXToken, setXToken} from '@/util/authUtils.js';
+import {simpleError, simpleSuccess} from '@/util/noticeUtils.js';
 
 export default {
-    name: 'LoginDialog',
+  name: 'LoginDialog',
 
-    validations: {
-        account: {
-            required,
-            email,
-            minLength: minLength(1),
-            maxLength: maxLength(11),
+  validations: {
+    account: {
+      required,
+      email,
+      minLength: minLength(1),
+      maxLength: maxLength(11),
             numeric
         },
 
@@ -93,15 +93,15 @@ export default {
 
     data: () => ({
 
-        tabs: null,
-        loading: false,
+      tabs: null,
+      loading: false,
 
-        showPassword: false,
+      showPassword: false,
 
-        dialog: false,
+      dialog: true,
 
-        account: '',
-        password: ''
+      account: '',
+      password: ''
     }),
     computed: {
         ...mapState('user', ['loggedIn', 'avatar']),
