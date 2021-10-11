@@ -23,5 +23,7 @@
     <logger name="ch.qos.logback" level="info"/>
     <logger name="org.springframework" level="info"/>
     <logger name="io.netty" level="info"/>
+    <logger name="org.mongodb" level="warn"/>
+    <logger name="com.intellij.rt" level="warn"/>
 
 </configuration>
