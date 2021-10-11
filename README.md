@@ -41,7 +41,7 @@
 
 - 具体可参考视频教程
 - 游戏入口 [tank.zfoo.net](http://tank.zfoo.net)
-- 后台入口 [tank-admin.zfoo.net](http://tank-admin.zfoo.net)
+- 后台管理 [tank-admin.zfoo.net](http://tank-admin.zfoo.net)
 
 ```
 单服部署命令：
