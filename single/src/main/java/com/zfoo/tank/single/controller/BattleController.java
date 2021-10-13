@@ -15,7 +15,7 @@ import com.mongodb.client.model.Sorts;
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.NetContext;
-import com.zfoo.net.dispatcher.model.anno.PacketReceiver;
+import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.net.util.SingleCache;
@@ -105,7 +105,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
 
     @PacketReceiver
     public void atScoreRankRequest(Session session, ScoreRankRequest request) {
-        NetContext.getDispatcher().send(session, ScoreRankResponse.valueOf(rankCache.get()));
+        NetContext.getRouter().send(session, ScoreRankResponse.valueOf(rankCache.get()));
     }
 
     @PacketReceiver
@@ -129,8 +129,8 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
 
             playerEntityCaches.update(player);
 
-            NetContext.getDispatcher().send(session, BattleResultResponse.valueOf(score));
-            NetContext.getDispatcher().send(session, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
+            NetContext.getRouter().send(session, BattleResultResponse.valueOf(score));
+            NetContext.getRouter().send(session, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
         }
     }
 

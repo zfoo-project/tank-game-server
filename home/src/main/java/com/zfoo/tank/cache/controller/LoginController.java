@@ -17,9 +17,9 @@ import com.zfoo.event.manager.EventBus;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.core.gateway.model.AuthUidToGatewayCheck;
 import com.zfoo.net.core.gateway.model.AuthUidToGatewayConfirm;
-import com.zfoo.net.dispatcher.model.anno.PacketReceiver;
 import com.zfoo.net.packet.common.Error;
 import com.zfoo.net.packet.model.GatewayPacketAttachment;
+import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
@@ -77,7 +77,7 @@ public class LoginController {
         var password = request.getPassword();
 
         if (StringUtils.isBlank(account)) {
-            NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()), gatewayAttachment);
+            NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()), gatewayAttachment);
             return;
         }
 
@@ -99,12 +99,12 @@ public class LoginController {
                     // 验证密码
                     if (!StringUtils.isBlank(accountEntity.getPassword()) && !accountEntity.getPassword().trim().equals(password.trim())) {
                         logger.info("[id:{}][password:{}]账号或密码错误", accountEntity.getUid(), password);
-                        NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_password.toString()), gatewayAttachment);
+                        NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_password.toString()), gatewayAttachment);
                         return;
                     }
                 }
                 // 授权给网关uid
-                NetContext.getDispatcher().send(session, AuthUidToGatewayCheck.valueOf(accountEntity.getUid()), gatewayAttachment);
+                NetContext.getRouter().send(session, AuthUidToGatewayCheck.valueOf(accountEntity.getUid()), gatewayAttachment);
             }
         });
     }
@@ -124,13 +124,13 @@ public class LoginController {
         player.session = session;
         playerEntityCaches.update(player);
         if (player.id() <= 0) {
-            NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()), gatewayAttachment);
+            NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()), gatewayAttachment);
             return;
         }
 
         var token = TokenUtils.set(uid);
-        NetContext.getDispatcher().send(session, LoginResponse.valueOf(token), gatewayAttachment);
-        NetContext.getDispatcher().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()), gatewayAttachment);
+        NetContext.getRouter().send(session, LoginResponse.valueOf(token), gatewayAttachment);
+        NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()), gatewayAttachment);
     }
 
     @PacketReceiver
@@ -140,7 +140,7 @@ public class LoginController {
         logger.info("c[{}][{}]玩家信息[token:{}]", gatewayAttachment.getUid(), gatewayAttachment.getSid(), token);
 
         if (StringUtils.isBlank(token)) {
-            NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_protocol_param.toString()), gatewayAttachment);
+            NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_protocol_param.toString()), gatewayAttachment);
             return;
         }
 
@@ -148,7 +148,7 @@ public class LoginController {
         var playerId = triple.getLeft();
 
         // 授权给网关uid
-        NetContext.getDispatcher().send(session, AuthUidToGatewayCheck.valueOf(playerId), gatewayAttachment);
+        NetContext.getRouter().send(session, AuthUidToGatewayCheck.valueOf(playerId), gatewayAttachment);
     }
 
 }

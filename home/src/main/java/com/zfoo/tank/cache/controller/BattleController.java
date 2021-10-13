@@ -12,8 +12,8 @@ package com.zfoo.tank.cache.controller;
 
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.net.NetContext;
-import com.zfoo.net.dispatcher.model.anno.PacketReceiver;
 import com.zfoo.net.packet.model.GatewayPacketAttachment;
+import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.model.cache.IEntityCaches;
@@ -72,8 +72,8 @@ public class BattleController {
 
                         playerEntityCaches.update(player);
 
-                        NetContext.getDispatcher().send(session, BattleResultResponse.valueOf(score), gatewayAttachment);
-                        NetContext.getDispatcher().send(session, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()), gatewayAttachment);
+                        NetContext.getRouter().send(session, BattleResultResponse.valueOf(score), gatewayAttachment);
+                        NetContext.getRouter().send(session, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()), gatewayAttachment);
                     }
                 });
     }

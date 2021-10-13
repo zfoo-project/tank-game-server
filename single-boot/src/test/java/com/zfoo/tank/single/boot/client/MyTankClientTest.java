@@ -46,13 +46,13 @@ public class MyTankClientTest {
 
         // 模拟客户端，发送一个登录请求
         var loginRequest = LoginRequest.valueOf("tank1", "tank1");
-        NetContext.getDispatcher().send(myTankSession, loginRequest);
+        NetContext.getRouter().send(myTankSession, loginRequest);
         ThreadUtils.sleep(2 * TimeUtils.MILLIS_PER_SECOND);
 
 
         // 发送一个获取分数排行榜的信息
         var scoreRankRequest = ScoreRankRequest.valueOf();
-        NetContext.getDispatcher().send(myTankSession, scoreRankRequest);
+        NetContext.getRouter().send(myTankSession, scoreRankRequest);
         ThreadUtils.sleep(2 * TimeUtils.MILLIS_PER_SECOND);
     }
 

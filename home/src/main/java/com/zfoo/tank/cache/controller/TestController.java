@@ -14,8 +14,8 @@
 package com.zfoo.tank.cache.controller;
 
 import com.zfoo.net.NetContext;
-import com.zfoo.net.dispatcher.model.anno.PacketReceiver;
 import com.zfoo.net.packet.model.GatewayPacketAttachment;
+import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.model.cache.IEntityCaches;
@@ -64,7 +64,7 @@ public class TestController {
         var response = new TestResponse();
         response.message = "这是服务器的回包";
 
-        NetContext.getDispatcher().send(session, response, gatewayAttachment);
+        NetContext.getRouter().send(session, response, gatewayAttachment);
     }
 
 }

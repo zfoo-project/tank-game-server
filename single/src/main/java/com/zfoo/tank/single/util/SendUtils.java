@@ -35,7 +35,7 @@ public abstract class SendUtils {
             return;
         }
 
-        NetContext.getDispatcher().send(session, packet);
+        NetContext.getRouter().send(session, packet);
     }
 
 }

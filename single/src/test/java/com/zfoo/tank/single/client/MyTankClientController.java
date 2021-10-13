@@ -12,7 +12,7 @@
 
 package com.zfoo.tank.single.client;
 
-import com.zfoo.net.dispatcher.model.anno.PacketReceiver;
+import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.tank.common.protocol.cache.ScoreRankResponse;

@@ -1,8 +1,8 @@
 package com.zfoo.tank.cache.controller;
 
 import com.zfoo.net.NetContext;
-import com.zfoo.net.dispatcher.model.anno.PacketReceiver;
 import com.zfoo.net.packet.common.Message;
+import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.model.cache.IEntityCaches;
@@ -48,7 +48,7 @@ public class GmController {
 
         playerEntityCaches.update(userEntity);
 
-        NetContext.getDispatcher().send(session, Message.valueOf(ask, 1, null));
+        NetContext.getRouter().send(session, Message.valueOf(ask, 1, null));
     }
 
     @PacketReceiver
@@ -68,6 +68,6 @@ public class GmController {
 
         SendUtils.sendToPlayer(userEntity, CurrencyUpdateNotice.valueOf(userEntity.getCurrencyPo().toCurrencyVO()));
 
-        NetContext.getDispatcher().send(session, Message.valueOf(ask, 1, null));
+        NetContext.getRouter().send(session, Message.valueOf(ask, 1, null));
     }
 }

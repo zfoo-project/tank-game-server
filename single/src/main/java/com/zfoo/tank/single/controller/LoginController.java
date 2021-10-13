@@ -15,10 +15,10 @@ package com.zfoo.tank.single.controller;
 
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.net.NetContext;
-import com.zfoo.net.dispatcher.model.anno.PacketReceiver;
 import com.zfoo.net.packet.common.Error;
 import com.zfoo.net.packet.common.Ping;
 import com.zfoo.net.packet.common.Pong;
+import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.OrmContext;
@@ -84,12 +84,12 @@ public class LoginController {
         var password = request.getPassword();
 
         if (StringUtils.isBlank(account)) {
-            NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
+            NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
             return;
         }
 
         if (systemService.hasSensitiveWord(account)) {
-            NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_sensitive_word.toString()));
+            NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_sensitive_word.toString()));
             return;
         }
 
@@ -111,7 +111,7 @@ public class LoginController {
                     // 验证密码
                     if (!StringUtils.isBlank(accountEntity.getPassword()) && !accountEntity.getPassword().trim().equals(password.trim())) {
                         logger.info("[id:{}][password:{}]账号或密码错误", accountEntity.getUid(), password);
-                        NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_password.toString()));
+                        NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_password.toString()));
                         return;
                     }
                 }
@@ -131,13 +131,13 @@ public class LoginController {
 
                 playerEntityCaches.update(player);
                 if (player.id() <= 0) {
-                    NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
+                    NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
                     return;
                 }
 
                 var token = TokenUtils.set(uid);
-                NetContext.getDispatcher().send(session, LoginResponse.valueOf(token));
-                NetContext.getDispatcher().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
+                NetContext.getRouter().send(session, LoginResponse.valueOf(token));
+                NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
             }
         });
     }
@@ -147,7 +147,7 @@ public class LoginController {
         var token = request.getToken();
 
         if (StringUtils.isBlank(token)) {
-            NetContext.getDispatcher().send(session, Error.valueOf(I18nEnum.error_protocol_param.toString()));
+            NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_protocol_param.toString()));
             return;
         }
 
@@ -163,13 +163,13 @@ public class LoginController {
         player.sid = sid;
         player.session = session;
         session.putAttribute(AttributeType.UID, uid);
-        NetContext.getDispatcher().send(session, LoginResponse.valueOf(token));
-        NetContext.getDispatcher().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
+        NetContext.getRouter().send(session, LoginResponse.valueOf(token));
+        NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
     }
 
     @PacketReceiver
     public void atPing(Session session, Ping request) {
-        NetContext.getDispatcher().send(session, Pong.valueOf(TimeUtils.now()));
+        NetContext.getRouter().send(session, Pong.valueOf(TimeUtils.now()));
     }
 
 }

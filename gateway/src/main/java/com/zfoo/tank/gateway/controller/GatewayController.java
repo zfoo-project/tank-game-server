@@ -41,7 +41,7 @@ public class GatewayController {
         // 玩家登出
         var gatewayAttachment = new GatewayPacketAttachment(sid, uid);
         gatewayAttachment.setClient(true);
-        NetContext.getDispatcher().send(consumerSession, packet, gatewayAttachment);
+        NetContext.getRouter().send(consumerSession, packet, gatewayAttachment);
     }
 
 }

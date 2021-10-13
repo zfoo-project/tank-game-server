@@ -17,8 +17,8 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.NetContext;
-import com.zfoo.net.dispatcher.model.anno.PacketReceiver;
 import com.zfoo.net.packet.model.GatewayPacketAttachment;
+import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.net.util.SingleCache;
 import com.zfoo.orm.OrmContext;
@@ -88,7 +88,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
 
     @PacketReceiver
     public void atScoreRankRequest(Session session, ScoreRankRequest request, GatewayPacketAttachment gatewayAttachment) {
-        NetContext.getDispatcher().send(session, ScoreRankResponse.valueOf(rankCache.get()), gatewayAttachment);
+        NetContext.getRouter().send(session, ScoreRankResponse.valueOf(rankCache.get()), gatewayAttachment);
     }
 
     @PacketReceiver
@@ -98,7 +98,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
 
         // 如果没有上榜，直接返回；上榜，则将当前成绩插入数据库
         if (score <= minScore && rankLimit >= RANK_SIZE) {
-            NetContext.getDispatcher().send(session, BattleScoreAnswer.valueOf(false));
+            NetContext.getRouter().send(session, BattleScoreAnswer.valueOf(false));
             return;
         }
 
@@ -106,7 +106,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
         var id = MongoIdUtils.getIncrementIdFromMongoDefault(ScoreRankEntity.class);
         // 插入数据库
         OrmContext.getAccessor().insert(ScoreRankEntity.valueOf(id, playerId, TimeUtils.now(), score));
-        NetContext.getDispatcher().send(session, BattleScoreAnswer.valueOf(true));
+        NetContext.getRouter().send(session, BattleScoreAnswer.valueOf(true));
     }
 
 }

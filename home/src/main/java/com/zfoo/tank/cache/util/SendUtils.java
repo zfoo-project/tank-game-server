@@ -37,7 +37,7 @@ public abstract class SendUtils {
         }
 
         var gatewayAttachment = new GatewayPacketAttachment(sid, uid);
-        NetContext.getDispatcher().send(session, packet, gatewayAttachment);
+        NetContext.getRouter().send(session, packet, gatewayAttachment);
     }
 
 }
