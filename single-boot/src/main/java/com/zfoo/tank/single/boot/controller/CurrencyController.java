@@ -11,7 +11,7 @@
 package com.zfoo.tank.single.boot.controller;
 
 import com.zfoo.event.model.anno.EventReceiver;
-import com.zfoo.net.task.TaskManager;
+import com.zfoo.net.task.TaskBus;
 import com.zfoo.net.task.model.SafeRunnable;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.model.cache.IEntityCaches;
@@ -78,7 +78,7 @@ public class CurrencyController {
                     return;
                 }
                 // 计算需要在哪一个线程池去执行玩家的逻辑
-                var executor = TaskManager.getInstance().getExecutorByConsistentHash(HashUtils.fnvHash(playerEntity.id()));
+                var executor = TaskBus.executor(HashUtils.fnvHash(playerEntity.id()));
                 var list = map.computeIfAbsent(executor, k -> new ArrayList<>());
                 list.add(playerEntity);
             }
