@@ -18,7 +18,7 @@ import com.zfoo.net.NetContext;
 import com.zfoo.net.core.gateway.model.AuthUidToGatewayCheck;
 import com.zfoo.net.core.gateway.model.AuthUidToGatewayConfirm;
 import com.zfoo.net.packet.common.Error;
-import com.zfoo.net.packet.model.GatewayPacketAttachment;
+import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.OrmContext;
@@ -61,7 +61,7 @@ public class LoginController {
     private TankDeployEnum deployEnum;
 
     @PacketReceiver
-    public void atLogoutRequest(Session session, LogoutRequest request, GatewayPacketAttachment gatewayAttachment) {
+    public void atLogoutRequest(Session session, LogoutRequest request, GatewayAttachment gatewayAttachment) {
         logger.info("c[{}][{}]玩家退出游戏", gatewayAttachment.getUid(), gatewayAttachment.getSid());
 
         var uid = gatewayAttachment.getUid();
@@ -72,7 +72,7 @@ public class LoginController {
     }
 
     @PacketReceiver
-    public void atLoginRequest(Session session, LoginRequest request, GatewayPacketAttachment gatewayAttachment) {
+    public void atLoginRequest(Session session, LoginRequest request, GatewayAttachment gatewayAttachment) {
         var account = StringUtils.trim(request.getAccount());
         var password = request.getPassword();
 
@@ -110,7 +110,7 @@ public class LoginController {
     }
 
     @PacketReceiver
-    public void atAuthUidToGatewayConfirm(Session session, AuthUidToGatewayConfirm confirm, GatewayPacketAttachment gatewayAttachment) {
+    public void atAuthUidToGatewayConfirm(Session session, AuthUidToGatewayConfirm confirm, GatewayAttachment gatewayAttachment) {
         var uid = confirm.getUid();
         var sid = gatewayAttachment.getSid();
         if (uid <= 0) {
@@ -134,7 +134,7 @@ public class LoginController {
     }
 
     @PacketReceiver
-    public void atGetPlayerInfoRequest(Session session, GetPlayerInfoRequest request, GatewayPacketAttachment gatewayAttachment) {
+    public void atGetPlayerInfoRequest(Session session, GetPlayerInfoRequest request, GatewayAttachment gatewayAttachment) {
         var token = request.getToken();
 
         logger.info("c[{}][{}]玩家信息[token:{}]", gatewayAttachment.getUid(), gatewayAttachment.getSid(), token);

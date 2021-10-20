@@ -17,7 +17,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.NetContext;
-import com.zfoo.net.packet.model.GatewayPacketAttachment;
+import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.net.util.SingleCache;
@@ -87,7 +87,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
     }
 
     @PacketReceiver
-    public void atScoreRankRequest(Session session, ScoreRankRequest request, GatewayPacketAttachment gatewayAttachment) {
+    public void atScoreRankRequest(Session session, ScoreRankRequest request, GatewayAttachment gatewayAttachment) {
         NetContext.getRouter().send(session, ScoreRankResponse.valueOf(rankCache.get()), gatewayAttachment);
     }
 

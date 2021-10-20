@@ -11,7 +11,7 @@
 package com.zfoo.tank.cache.util;
 
 import com.zfoo.net.NetContext;
-import com.zfoo.net.packet.model.GatewayPacketAttachment;
+import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.util.SessionUtils;
 import com.zfoo.protocol.IPacket;
 import com.zfoo.tank.common.entity.PlayerEntity;
@@ -36,7 +36,7 @@ public abstract class SendUtils {
             return;
         }
 
-        var gatewayAttachment = new GatewayPacketAttachment(sid, uid);
+        var gatewayAttachment = new GatewayAttachment(sid, uid);
         NetContext.getRouter().send(session, packet, gatewayAttachment);
     }
 

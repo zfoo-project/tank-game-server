@@ -13,7 +13,7 @@ package com.zfoo.tank.gateway.controller;
 import com.zfoo.event.model.anno.EventReceiver;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.core.gateway.model.GatewaySessionInactiveEvent;
-import com.zfoo.net.packet.model.GatewayPacketAttachment;
+import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.tank.common.protocol.login.LogoutRequest;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +39,7 @@ public class GatewayController {
         var consumerSession = loadBalancer.loadBalancer(packet, uid);
 
         // 玩家登出
-        var gatewayAttachment = new GatewayPacketAttachment(sid, uid);
+        var gatewayAttachment = new GatewayAttachment(sid, uid);
         gatewayAttachment.setClient(true);
         NetContext.getRouter().send(consumerSession, packet, gatewayAttachment);
     }

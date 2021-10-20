@@ -12,7 +12,7 @@ package com.zfoo.tank.cache.controller;
 
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.net.NetContext;
-import com.zfoo.net.packet.model.GatewayPacketAttachment;
+import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
@@ -49,7 +49,7 @@ public class BattleController {
     private Storage<Integer, PlayerExpResource> playerExpStorage;
 
     @PacketReceiver
-    public void atBattleResultRequest(Session session, BattleResultRequest request, GatewayPacketAttachment gatewayAttachment) {
+    public void atBattleResultRequest(Session session, BattleResultRequest request, GatewayAttachment gatewayAttachment) {
         var uid = gatewayAttachment.getUid();
         var player = playerEntityCaches.load(uid);
 
