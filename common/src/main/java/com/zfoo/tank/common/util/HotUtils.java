@@ -46,6 +46,9 @@ public abstract class HotUtils {
         return clazzSimpleNameMap;
     }
 
+    /**
+     * 分布式热更新配置表
+     */
     public static void startHotSwapConfig() {
         logger.info("开启Excel配置表热更新");
         NetContext.getConfigManager().getRegistry().addListener(GameConstant.EXCEL_HOTSWAP_ZK_PATH, new BiConsumer<String, byte[]>() {
@@ -80,6 +83,9 @@ public abstract class HotUtils {
     }
 
 
+    /**
+     * 分布式热更新代码
+     */
     public static void startHotSwapJava() {
         logger.info("开启Java文件热更新");
         NetContext.getConfigManager().getRegistry().addListener(GameConstant.JAVA_HOTSWAP_ZK_PATH, new BiConsumer<String, byte[]>() {
