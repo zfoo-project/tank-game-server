@@ -14,6 +14,7 @@
 package com.zfoo.tank.common.protocol.login;
 
 
+import com.zfoo.net.core.gateway.IGatewayLoadBalancer;
 import com.zfoo.protocol.IPacket;
 
 /**
@@ -21,7 +22,7 @@ import com.zfoo.protocol.IPacket;
  * @version 1.0
  * @since 2019-10-15 17:55
  */
-public class LoginRequest implements IPacket {
+public class LoginRequest implements IPacket, IGatewayLoadBalancer {
 
     public static final transient short PROTOCOL_ID = 1000;
 
@@ -33,6 +34,11 @@ public class LoginRequest implements IPacket {
         request.account = account;
         request.password = password;
         return request;
+    }
+
+    @Override
+    public Object loadBalancerConsistentHashObject() {
+        return account;
     }
 
     @Override
@@ -55,4 +61,5 @@ public class LoginRequest implements IPacket {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

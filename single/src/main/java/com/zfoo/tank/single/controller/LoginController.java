@@ -37,6 +37,7 @@ import com.zfoo.tank.common.protocol.login.*;
 import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.util.TokenUtils;
 import com.zfoo.tank.single.service.SystemService;
+import com.zfoo.util.math.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +96,7 @@ public class LoginController {
 
         var sid = session.getSid();
 
-        EventBus.asyncExecute().execute(new Runnable() {
+        EventBus.execute(HashUtils.fnvHash(account)).execute(new Runnable() {
             @Override
             public void run() {
                 var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
