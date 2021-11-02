@@ -7,7 +7,6 @@ import '@/plugin/base.js';
 import '@/plugin/lodash.js';
 import '@/plugin/vuelidate.js';
 import '@/plugin/myPlugin.js';
-import '@/plugin/video.js';
 import '@/plugin/chart.js';
 
 import '@/style/index.scss'; // global css
