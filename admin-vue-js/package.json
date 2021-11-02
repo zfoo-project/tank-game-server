@@ -20,7 +20,6 @@
         "lodash": "^4.17.15",
         "long": "4.0.0",
         "protobufjs": "^6.8.8",
-        "register-service-worker": "^1.7.1",
         "video.js": "^7.6.6",
         "push.js": "^1.0.12",
         "vue": "2.6.11",
@@ -37,7 +36,6 @@
     "devDependencies": {
         "@vue/cli-plugin-babel": "~4.3.0",
         "@vue/cli-plugin-eslint": "~4.3.0",
-        "@vue/cli-plugin-pwa": "^4.3.1",
         "@vue/cli-service": "~4.3.0",
         "@vue/cli-plugin-unit-jest": "~4.3.0",
         "@vue/eslint-config-standard": "^4.0.0",
