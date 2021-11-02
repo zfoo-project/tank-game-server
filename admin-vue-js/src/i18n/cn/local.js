@@ -15,7 +15,7 @@ export default {
         main: '主页',
         titleTop: 'Tank项目的后台管理系统',
         title: '后台管理',
-        description: '性能炸裂，天生异步，Actor设计思想，无锁化设计，基于Spring的MVC式用法的RPC服务器框架'
+        description: '极致性能，天生异步，Actor设计思想，无锁化设计，基于Spring的MVC式用法的RPC服务器框架'
     },
 
     player: {
