@@ -3,6 +3,7 @@ import VueI18n from 'vue-i18n';
 import en from 'vuetify/lib/locale/en.js';
 import cn from 'vuetify/lib/locale/zh-Hans.js';
 import enLocal from './en/local.js';
+import enCodeEnum from './en/codeEnum.js';
 import cnLocal from './cn/local.js';
 import cnCodeEnum from './cn/codeEnum.js';
 
@@ -17,7 +18,8 @@ const messages = {
     },
     en: {
         $vuetify: en,
-        ...enLocal
+        ...enLocal,
+        ...enCodeEnum
     }
 };
 

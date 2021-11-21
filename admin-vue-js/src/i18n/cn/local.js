@@ -1,14 +1,6 @@
 export default {
-    test: '使用中文',
-
     common: {
-        brand: '浊浮',
-        confirm: '确定',
-        confirmEdit: '确定修改',
-        cancel: '取消',
-        edit: '修改',
-        save: '保存',
-        alert: '警告'
+        confirm: '确定'
     },
 
     home: {
@@ -55,7 +47,6 @@ export default {
     user: {
         login: '登录',
         loginByPassword: '密码登录',
-        loginByMobile: '手机登录',
         account: '默认账号：test',
         password: '默认密码：test',
         accountError: '账号错误',
@@ -69,29 +60,15 @@ export default {
     notice: {
         loginSuccess: '登录成功',
         logoutSuccess: '安全退出',
-        loginError: '登录失败',
         loginNameEmptyError: '输入用户名才能登录',
         loginPasswordEmptyError: '请输入密码',
-        loginPhoneCodeEmptyError: '请输入手机验证码',
-        loginRegisterParamEmptyError: '路径参数不存在，请重新登录',
-        loginRegisterParamError: '路径参数不正确',
-        registerNotCompletedError: '请先完成注册',
-        phoneCodeGetSuccess: '获取验证码成功，请在手机上查看',
 
         notSignInError: '请先登录',
         inputFormatError: '输入格式错误',
 
-        passwordResetSuccess: '设置密码成功',
-        passwordResetError: '两次输入的密码不相同',
-        phoneSetSuccess: '成功绑定新的手机号码',
-
         copySuccess: '复制成功',
         copyError: '复制失败',
 
-        settingSuccess: '设置成功',
-
-
-        changeBackgroundSuccess: '修改背景图片成功',
-        changeAvatarSuccess: '修改头像成功'
+        settingSuccess: '设置成功'
     }
 };

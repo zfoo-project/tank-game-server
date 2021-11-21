@@ -243,18 +243,6 @@ export default {
                     this.$router.push({ path: '/' });
                 }
             });
-        },
-
-        showDialog(value) {
-            if (_.startsWith(this.$route.path, '/register')) {
-                simpleError(this.$t('notice.registerNotCompletedError'));
-                return;
-            }
-
-            this.dialog = value;
-            if (this.dialog === true) {
-                this.init();
-            }
         }
     }
 
