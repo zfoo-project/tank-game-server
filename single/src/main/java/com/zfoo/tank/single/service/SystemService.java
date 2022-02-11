@@ -90,11 +90,11 @@ public class SystemService implements ApplicationListener<AppStartEvent> {
             return true;
         }
 
-        if (!StringUtils.isBlank(cnStr)) {
+        if (StringUtils.isNotBlank(cnStr)) {
             result.addAll(wordTree.matchAll(cnStr.toString(), -1, true, true));
         }
 
-        if (!StringUtils.isBlank(enStr)) {
+        if (StringUtils.isNotBlank(enStr)) {
             result.addAll(wordTree.matchAll(enStr.toString(), -1, true, true));
         }
 
