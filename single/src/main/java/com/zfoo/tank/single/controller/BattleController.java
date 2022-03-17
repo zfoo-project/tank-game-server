@@ -66,7 +66,6 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
     private Storage<Integer, PlayerExpResource> playerExpStorage;
 
     private static final int RANK_SIZE = 20;
-
     private volatile int rankLimit = 0;
     private volatile int minScore = 0;
 
@@ -151,7 +150,6 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
     }
 
     public void addPlayerExp(PlayerEntity playerEntity, int playerExp) {
-
         playerEntity.addExp(playerExp);
 
         for (int i = 0; i < playerExpStorage.size(); i++) {
