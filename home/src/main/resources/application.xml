@@ -44,7 +44,7 @@
     </storage:storage>
 
 
-    <net:config id="tankHome" protocol-location="protocol.xml" generate-cs-protocol="${net.generate.cs.protocol}"
+    <net:config id="tankHome" protocol-location="protocol.xml" csharp-protocol="${net.generate.cs.protocol}"
                 fold-protocol="${net.fold.protocol}">
 
         <net:registry center="${registry.center}" user="${registry.user}" password="${registry.password}">

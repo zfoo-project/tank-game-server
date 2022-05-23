@@ -9,7 +9,7 @@ storage:
 net:
   id: netConfig
   protocol-location: protocol.xml
-  generate-cs-protocol: false
+  csharp-protocol: false
   fold-protocol: false
 
 orm:

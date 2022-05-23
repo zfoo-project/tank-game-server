@@ -35,5 +35,5 @@ orm:
 net:
   id: netConfig
   protocol-location: protocol.xml
-  generate-cs-protocol: true
+  csharp-protocol: true
   fold-protocol: true
