@@ -36,4 +36,4 @@ net:
   protocol-location: protocol.xml
   csharp-protocol: false
   javascript-protocol: false
-  fold-protocol: false
+  fold-protocol: true
