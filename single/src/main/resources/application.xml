@@ -44,7 +44,9 @@
     </storage:storage>
 
 
-    <net:config id="tankCache" protocol-location="protocol.xml" csharp-protocol="${net.generate.cs.protocol}"
+    <net:config id="tankCache" protocol-location="protocol.xml"
+                csharp-protocol="${net.generate.cs.protocol}"
+                javascript-protocol="${net.generate.js.protocol}"
                 fold-protocol="${net.fold.protocol}">
 
     </net:config>

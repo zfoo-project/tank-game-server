@@ -6,12 +6,6 @@ storage:
     location: classpath:/excel
     suffix: xlsx
 
-net:
-  id: netConfig
-  protocol-location: protocol.xml
-  csharp-protocol: false
-  fold-protocol: false
-
 orm:
   id: mongodbConfig
   entity-package: com.zfoo.tank.common.**.entity
@@ -36,3 +30,9 @@ orm:
       type: time
       config: 30000
 
+net:
+  id: netConfig
+  protocol-location: protocol.xml
+  csharp-protocol: false
+  javascript-protocol: false
+  fold-protocol: false

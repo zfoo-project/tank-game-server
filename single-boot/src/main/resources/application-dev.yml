@@ -36,4 +36,5 @@ net:
   id: netConfig
   protocol-location: protocol.xml
   csharp-protocol: true
+  javascript-protocol: false
   fold-protocol: true
