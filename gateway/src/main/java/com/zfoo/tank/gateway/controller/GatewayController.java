@@ -38,6 +38,7 @@ public class GatewayController {
         var loadBalancer = NetContext.getConfigManager().consumerLoadBalancer();
         var consumerSession = loadBalancer.loadBalancer(packet, uid);
 
+        // 包的附加包，通过网关转发到home的包会丢失sid和uid，通过这个GatewayAttachment附带到IPacket后面，home就知道哪个玩家发的包了
         // 玩家登出
         var gatewayAttachment = new GatewayAttachment(sid, uid);
         gatewayAttachment.setClient(true);
