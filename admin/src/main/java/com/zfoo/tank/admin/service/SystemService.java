@@ -40,7 +40,7 @@ public class SystemService implements ApplicationListener<AppStartEvent> {
         var id = "test";
         var password = "test";
 
-        var results = OrmContext.getQuery().queryFieldEqual("_id", id, AdminEntity.class);
+        var results = OrmContext.getQuery(AdminEntity.class).eq("_id", id).queryAll();
         if (CollectionUtils.isEmpty(results)) {
             OrmContext.getAccessor().insert(AdminEntity.valueOf(id, password));
         }

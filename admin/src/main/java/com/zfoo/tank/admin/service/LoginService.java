@@ -88,7 +88,7 @@ public class LoginService {
         }
         account = account.trim();
 
-        var list = OrmContext.getQuery().queryFieldEqual("_id", account, AccountEntity.class);
+        var list = OrmContext.getQuery(AccountEntity.class).eq("_id", account).queryAll();
         if (CollectionUtils.isEmpty(list)) {
             if (NumberUtils.isNumeric(account)) {
                 return Long.parseLong(account);
