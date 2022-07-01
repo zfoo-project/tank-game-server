@@ -14,6 +14,8 @@ import com.zfoo.event.model.anno.EventReceiver;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.core.gateway.model.GatewaySessionInactiveEvent;
 import com.zfoo.net.router.attachment.GatewayAttachment;
+import com.zfoo.protocol.ProtocolManager;
+import com.zfoo.protocol.registration.ProtocolModule;
 import com.zfoo.tank.common.protocol.login.LogoutRequest;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +37,7 @@ public class GatewayController {
 
         var packet = LogoutRequest.valueOf();
 
-        var loadBalancer = NetContext.getConfigManager().consumerLoadBalancer();
+        var loadBalancer = NetContext.getConsumer().loadBalancer(ProtocolManager.moduleByProtocolId(packet.protocolId()));
         var consumerSession = loadBalancer.loadBalancer(packet, uid);
 
         // 包的附加包，通过网关转发到home的包会丢失sid和uid，通过这个GatewayAttachment附带到IPacket后面，home就知道哪个玩家发的包了

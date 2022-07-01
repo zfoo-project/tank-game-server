@@ -46,9 +46,9 @@
             <net:address name="${registry.address.name}" url="${registry.address.url}"/>
         </net:registry>
 
-        <net:consumer load-balancer="consistent-hash">
-            <net:module name="tankHome"/>
-            <net:module name="tankCache"/>
-        </net:consumer>
+        <net:consumers>
+            <net:consumer protocol-module="tankHome" load-balancer="consistent-hash" consumer="tankHomeProvider"/>
+            <net:consumer protocol-module="tankCache" load-balancer="consistent-hash" consumer="tankCacheProvider"/>
+        </net:consumers>
     </net:config>
 </beans>
