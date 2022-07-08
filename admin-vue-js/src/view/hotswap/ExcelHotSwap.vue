@@ -15,7 +15,7 @@
                 multiple
                 show-size
                 prepend-icon="mdi-language-java"
-                accept=".xlsx"
+                accept=".xls,.xlsx,.json"
                 color="green lighten-1"
                 :label="$t('excelUploadNotice')"
             />
