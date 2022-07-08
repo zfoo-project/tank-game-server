@@ -36,7 +36,7 @@
 
     <storage:storage id="resourceManager">
         <storage:scan package="com.zfoo.tank.common.**.resource"/>
-        <storage:resource location="excel" suffix="xlsx"/>
+        <storage:resource location="excel"/>
     </storage:storage>
 
 

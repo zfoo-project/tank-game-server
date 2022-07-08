@@ -4,7 +4,6 @@ storage:
     package: com.zfoo.tank.common.**.resource
   resource:
     location: classpath:/excel
-    suffix: xlsx
 
 
 orm:

@@ -16,6 +16,7 @@ package com.zfoo.tank.common.util;
 import com.zfoo.hotswap.util.HotSwapUtils;
 import com.zfoo.net.NetContext;
 import com.zfoo.protocol.collection.ArrayUtils;
+import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.StorageContext;
 import com.zfoo.storage.model.vo.Storage;
@@ -65,9 +66,12 @@ public abstract class HotUtils {
 
                 logger.info("zk收到path[{}]更新length[{}]", path, bytes.length);
 
-                var configName = StringUtils.substringAfterLast(path, StringUtils.SLASH);
+                var fileName = StringUtils.substringAfterLast(path, StringUtils.SLASH);
+                var fileSimpleName = FileUtils.fileSimpleName(fileName);
+                var fileExtName = FileUtils.fileExtName(fileName);
+
                 var clazzSimpleNameMap = HotUtils.configSimpleClazzNameMap();
-                var clazz = clazzSimpleNameMap.get(configName);
+                var clazz = clazzSimpleNameMap.get(fileSimpleName);
 
                 // 如果该excel在当前项目中没有被使用，则不必解析配置表，也不用去更新了
                 if (!StorageContext.getStorageManager().allStorageUsableMap().get(clazz)) {
@@ -75,7 +79,7 @@ public abstract class HotUtils {
                 }
 
                 Storage<?, ?> storage = new Storage<>();
-                storage.init(new ByteArrayInputStream(bytes), clazz);
+                storage.init(new ByteArrayInputStream(bytes), clazz, fileExtName);
                 StorageContext.getStorageManager().updateStorage(clazz, storage);
                 StorageContext.getStorageManager().inject();
             }

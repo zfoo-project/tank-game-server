@@ -40,7 +40,7 @@
 
     <storage:storage id="resourceManager">
         <storage:scan package="${storage.excel.scan}"/>
-        <storage:resource location="${storage.excel.location}" suffix="${storage.excel.suffix}"/>
+        <storage:resource location="${storage.excel.location}"/>
     </storage:storage>
 
     <net:config id="tankAdmin" protocol-location="protocol.xml">

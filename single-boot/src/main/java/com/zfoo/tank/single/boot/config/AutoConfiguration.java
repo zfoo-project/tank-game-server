@@ -33,7 +33,6 @@ public class AutoConfiguration {
         storageConfig.setId(environment.getProperty("storage.storageManager"));
         storageConfig.setScanPackage(environment.getProperty("storage.scan.package"));
         storageConfig.setResourceLocation(environment.getProperty("storage.resource.location"));
-        storageConfig.setResourceSuffix(environment.getProperty("storage.resource.suffix"));
         return storageConfig;
     }
 

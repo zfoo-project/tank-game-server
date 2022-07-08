@@ -18,6 +18,7 @@ import com.zfoo.protocol.util.AssertionUtils;
 import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.IOUtils;
 import com.zfoo.protocol.util.StringUtils;
+import com.zfoo.storage.model.resource.ResourceEnum;
 import com.zfoo.storage.model.vo.Storage;
 import com.zfoo.tank.admin.service.LoginService;
 import com.zfoo.tank.common.constant.GameConstant;
@@ -80,8 +81,8 @@ public class ExcelHotswapController {
         for (var file : files) {
             var fileSimpleName = FileUtils.fileSimpleName(file.getOriginalFilename());
             var fileExtName = FileUtils.fileExtName(file.getOriginalFilename());
-            if (!fileExtName.equals("xlsx")) {
-                return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("excel文件[{}]必须是xlsx格式的", file.getOriginalFilename()));
+            if (!ResourceEnum.containsResourceEnum(fileExtName)) {
+                return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("文件[{}]必须是[{}]格式的", file.getOriginalFilename(), ResourceEnum.typesToString()));
             }
 
             if (clazzSimpleNameMap.containsKey(fileSimpleName)) {
@@ -96,7 +97,8 @@ public class ExcelHotswapController {
                 Storage<?, ?> storage = new Storage<>();
                 var clazz = clazzSimpleNameMap.get(fileSimpleName);
                 var inputStream = file.getInputStream();
-                storage.init(inputStream, clazz);
+                var fileExtName = FileUtils.fileExtName(file.getOriginalFilename());
+                storage.init(inputStream, clazz, fileExtName);
             } catch (Exception e) {
                 return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("excel文件[{}]解析出错[{}]", file.getOriginalFilename(), e.getMessage()));
             }
@@ -105,10 +107,10 @@ public class ExcelHotswapController {
 
         // 将配置表上传的zookeeper中，其它节点会监听配置表的变化
         for (var file : newFiles) {
-            var fileSimpleName = FileUtils.fileSimpleName(file.getOriginalFilename());
+            var fileName = file.getOriginalFilename();
             var inputStream = file.getInputStream();
 
-            var path = StringUtils.format("{}/{}", GameConstant.EXCEL_HOTSWAP_ZK_PATH, fileSimpleName);
+            var path = StringUtils.format("{}/{}", GameConstant.EXCEL_HOTSWAP_ZK_PATH, fileName);
             var bytes = IOUtils.toByteArray(inputStream);
             NetContext.getConfigManager().getRegistry().addData(path, bytes, CreateMode.EPHEMERAL);
         }
