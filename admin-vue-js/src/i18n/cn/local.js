@@ -39,9 +39,9 @@ export default {
     javaHotswap: 'Java热更新',
     excelHotswap: 'Excel热更新',
     javaUploadText: '在线不停服更新全服代码，请注意更新的代码是否正确',
-    excelUploadText: '在线不停机更新全服配置表，只支持excel文件热更新，请注意更新的数据是否正确',
+    excelUploadText: '在线不停机更新全服配置表，只支持excel或者json文件热更新，请注意更新的数据是否正确',
     javaUploadNotice: '请上传一个或者多个class补丁文件',
-    excelUploadNotice: '请上传一个或者多个excel文件',
+    excelUploadNotice: '请上传一个或者多个excel或者json文件',
     upload: '确认上传',
 
     user: {
