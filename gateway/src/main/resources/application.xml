@@ -47,8 +47,8 @@
         </net:registry>
 
         <net:consumers>
-            <net:consumer protocol-module="tankHome" load-balancer="consistent-hash" consumer="tankHomeProvider"/>
-            <net:consumer protocol-module="tankCache" load-balancer="consistent-hash" consumer="tankCacheProvider"/>
+            <net:consumer protocol-module="tankHome" consumer="tankHomeProvider"/>
+            <net:consumer protocol-module="tankCache" consumer="tankCacheProvider"/>
         </net:consumers>
     </net:config>
 </beans>

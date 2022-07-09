@@ -66,18 +66,6 @@ public class LoginController {
     @Autowired
     private SystemService systemService;
 
-    @PacketReceiver
-    public void atLogoutRequest(Session session, LogoutRequest request) {
-        var uid = (long) session.getAttribute(AttributeType.UID);
-        var sid = session.getSid();
-
-        logger.info("c[{}][{}]玩家退出游戏", uid, sid);
-
-        var player = playerEntityCaches.load(uid);
-        player.sid = 0;
-        player.session = null;
-        playerEntityCaches.update(player);
-    }
 
     @PacketReceiver
     public void atLoginRequest(Session session, LoginRequest request) {
@@ -94,52 +82,58 @@ public class LoginController {
             return;
         }
 
+        // 这个是连接上服务器都自动分配的，每次连接上服务器都会分配一个
         var sid = session.getSid();
 
-        EventBus.execute(HashUtils.fnvHash(account)).execute(new Runnable() {
-            @Override
-            public void run() {
-                var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
-                if (accountEntity == null) {
-                    var id = MongoIdUtils.getIncrementIdFromMongoDefault(PlayerEntity.class);
+        // 由于uid还没确定下来，现在只能用account线程去处理
+        EventBus.execute(HashUtils.fnvHash(account)).execute(() -> {
+            var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
+            if (accountEntity == null) {
+                // uid
+                var newUid = MongoIdUtils.getIncrementIdFromMongoDefault(PlayerEntity.class);
 
-                    OrmContext.getAccessor().insert(PlayerEntity.valueOf(id, account, 1, TimeUtils.now(), TimeUtils.now()));
-                    accountEntity = AccountEntity.valueOf(account, account, password, id);
-                    OrmContext.getAccessor().insert(accountEntity);
-                }
+                // 插入AccountEntity(比如：微信登录，没这个微信对应的游戏账号，先生成账号信息)
+                accountEntity = AccountEntity.valueOf(account, account, password, newUid);
+                OrmContext.getAccessor().insert(accountEntity);
 
-                if (deployEnum == TankDeployEnum.pro) {
-                    // 验证密码
-                    if (StringUtils.isNotBlank(accountEntity.getPassword()) && !accountEntity.getPassword().trim().equals(password.trim())) {
-                        logger.info("[id:{}][password:{}]账号或密码错误", accountEntity.getUid(), password);
-                        NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_password.toString()));
-                        return;
-                    }
-                }
+                // 先插入PlayerEntity(这个是游戏内的玩家信息,比如：金币、经验、等级、头像等信息)
+                OrmContext.getAccessor().insert(PlayerEntity.valueOf(newUid, account, 1, TimeUtils.now(), TimeUtils.now()));
+            }
 
-                var uid = accountEntity.getUid();
-                logger.info("c[{}][{}]玩家登录[account:{}][password:{}]", uid, sid, account, password);
-
-                session.putAttribute(AttributeType.UID, accountEntity.getUid());
-
-                var player = playerEntityCaches.load(uid);
-                player.setLastLoginTime(TimeUtils.now());
-
-                // 设置session
-                player.sid = sid;
-                player.session = session;
-                session.putAttribute(AttributeType.UID, uid);
-
-                playerEntityCaches.update(player);
-                if (player.id() <= 0) {
-                    NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
+            if (deployEnum == TankDeployEnum.pro) {
+                // 验证密码
+                if (StringUtils.isNotBlank(accountEntity.getPassword()) && !accountEntity.getPassword().trim().equals(password.trim())) {
+                    logger.info("[id:{}][password:{}]账号或密码错误", accountEntity.getUid(), password);
+                    NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_password.toString()));
                     return;
                 }
-
-                var token = TokenUtils.set(uid);
-                NetContext.getRouter().send(session, LoginResponse.valueOf(token));
-                NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
             }
+
+            var uid = accountEntity.getUid();
+            logger.info("c[{}][{}]玩家登录[account:{}][password:{}]", uid, sid, account, password);
+
+            session.putAttribute(AttributeType.UID, accountEntity.getUid());
+
+            // 由于之前插入过了，这里是肯定可以获取到
+            var player = playerEntityCaches.load(uid);
+            player.setLastLoginTime(TimeUtils.now());
+
+            // 设置sid和session(这2个都是临时的)
+            player.sid = sid;
+            player.session = session;
+
+            session.putAttribute(AttributeType.UID, uid);
+
+            playerEntityCaches.update(player);
+
+            if (player.id() <= 0) {
+                NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
+                return;
+            }
+
+            var token = TokenUtils.set(uid);
+            NetContext.getRouter().send(session, LoginResponse.valueOf(token));
+            NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
         });
     }
 
@@ -164,8 +158,22 @@ public class LoginController {
         player.sid = sid;
         player.session = session;
         session.putAttribute(AttributeType.UID, uid);
+
         NetContext.getRouter().send(session, LoginResponse.valueOf(token));
         NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
+    }
+
+    @PacketReceiver
+    public void atLogoutRequest(Session session, LogoutRequest request) {
+        var uid = (long) session.getAttribute(AttributeType.UID);
+        var sid = session.getSid();
+
+        logger.info("c[{}][{}]玩家退出游戏", uid, sid);
+
+        var player = playerEntityCaches.load(uid);
+        player.sid = 0;
+        player.session = null;
+        playerEntityCaches.update(player);
     }
 
     @PacketReceiver

@@ -61,6 +61,7 @@ public class CurrencyController {
         currencyPo.addGold(playerExpConfig.getGold());
         currencyPo.addGem(playerExpConfig.getGem());
         playerEntityCaches.update(player);
+
         // 推送给客户端
         SendUtils.sendToPlayer(player, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
     }
