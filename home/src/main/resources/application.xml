@@ -51,12 +51,12 @@
             <net:address name="${registry.address.name}" url="${registry.address.url}"/>
         </net:registry>
 
-        <net:providers task-dispatch="consistent-hash">
+        <net:providers>
             <net:provider protocol-module="tankHome" provider="tankHomeProvider"/>
         </net:providers>
 
         <net:consumers>
-            <net:consumer protocol-module="tankCache" load-balancer="consistent-hash" consumer="tankCacheProvider"/>
+            <net:consumer protocol-module="tankCache" consumer="tankCacheProvider"/>
         </net:consumers>
 
     </net:config>
