@@ -37,6 +37,7 @@ import com.zfoo.tank.common.protocol.login.*;
 import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.util.TokenUtils;
 import com.zfoo.tank.single.service.SystemService;
+import com.zfoo.util.SafeRunnable;
 import com.zfoo.util.math.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * @author jaysunxiao
+ * @author godotg
  * @version 1.0
  * @since 2021-01-20 14:43
  */
@@ -86,54 +87,57 @@ public class LoginController {
         var sid = session.getSid();
 
         // 由于uid还没确定下来，现在只能用account线程去处理
-        EventBus.execute(HashUtils.fnvHash(account)).execute(() -> {
-            var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
-            if (accountEntity == null) {
-                // uid
-                var newUid = MongoIdUtils.getIncrementIdFromMongoDefault(PlayerEntity.class);
+        EventBus.execute(HashUtils.fnvHash(account), new SafeRunnable() {
+            @Override
+            public void doRun() {
+                var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
+                if (accountEntity == null) {
+                    // uid
+                    var newUid = MongoIdUtils.getIncrementIdFromMongoDefault(PlayerEntity.class);
 
-                // 插入AccountEntity(比如：微信登录，没这个微信对应的游戏账号，先生成账号信息)
-                accountEntity = AccountEntity.valueOf(account, account, password, newUid);
-                OrmContext.getAccessor().insert(accountEntity);
+                    // 插入AccountEntity(比如：微信登录，没这个微信对应的游戏账号，先生成账号信息)
+                    accountEntity = AccountEntity.valueOf(account, account, password, newUid);
+                    OrmContext.getAccessor().insert(accountEntity);
 
-                // 先插入PlayerEntity(这个是游戏内的玩家信息,比如：金币、经验、等级、头像等信息)
-                OrmContext.getAccessor().insert(PlayerEntity.valueOf(newUid, account, 1, TimeUtils.now(), TimeUtils.now()));
-            }
+                    // 先插入PlayerEntity(这个是游戏内的玩家信息,比如：金币、经验、等级、头像等信息)
+                    OrmContext.getAccessor().insert(PlayerEntity.valueOf(newUid, account, 1, TimeUtils.now(), TimeUtils.now()));
+                }
 
-            if (deployEnum == TankDeployEnum.pro) {
-                // 验证密码
-                if (StringUtils.isNotBlank(accountEntity.getPassword()) && !accountEntity.getPassword().trim().equals(password.trim())) {
-                    logger.info("[id:{}][password:{}]账号或密码错误", accountEntity.getUid(), password);
-                    NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_password.toString()));
+                if (deployEnum == TankDeployEnum.pro) {
+                    // 验证密码
+                    if (StringUtils.isNotBlank(accountEntity.getPassword()) && !accountEntity.getPassword().trim().equals(password.trim())) {
+                        logger.info("[id:{}][password:{}]账号或密码错误", accountEntity.getUid(), password);
+                        NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_password.toString()));
+                        return;
+                    }
+                }
+
+                var uid = accountEntity.getUid();
+                logger.info("c[{}][{}]玩家登录[account:{}][password:{}]", uid, sid, account, password);
+
+                session.putAttribute(AttributeType.UID, accountEntity.getUid());
+
+                // 由于之前插入过了，这里是肯定可以获取到
+                var player = playerEntityCaches.load(uid);
+                player.setLastLoginTime(TimeUtils.now());
+
+                // 设置sid和session(这2个都是临时的)
+                player.sid = sid;
+                player.session = session;
+
+                session.putAttribute(AttributeType.UID, uid);
+
+                playerEntityCaches.update(player);
+
+                if (player.id() <= 0) {
+                    NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
                     return;
                 }
+
+                var token = TokenUtils.set(uid);
+                NetContext.getRouter().send(session, LoginResponse.valueOf(token));
+                NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
             }
-
-            var uid = accountEntity.getUid();
-            logger.info("c[{}][{}]玩家登录[account:{}][password:{}]", uid, sid, account, password);
-
-            session.putAttribute(AttributeType.UID, accountEntity.getUid());
-
-            // 由于之前插入过了，这里是肯定可以获取到
-            var player = playerEntityCaches.load(uid);
-            player.setLastLoginTime(TimeUtils.now());
-
-            // 设置sid和session(这2个都是临时的)
-            player.sid = sid;
-            player.session = session;
-
-            session.putAttribute(AttributeType.UID, uid);
-
-            playerEntityCaches.update(player);
-
-            if (player.id() <= 0) {
-                NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
-                return;
-            }
-
-            var token = TokenUtils.set(uid);
-            NetContext.getRouter().send(session, LoginResponse.valueOf(token));
-            NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
         });
     }
 

@@ -12,7 +12,6 @@ package com.zfoo.tank.single.controller;
 
 import com.zfoo.event.model.anno.EventReceiver;
 import com.zfoo.net.task.TaskBus;
-import com.zfoo.net.task.model.SafeRunnable;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.model.cache.IEntityCaches;
 import com.zfoo.scheduler.model.anno.Scheduler;
@@ -23,6 +22,7 @@ import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.resource.PlayerExpResource;
 import com.zfoo.tank.single.model.PlayerLevelUpEvent;
 import com.zfoo.tank.single.util.SendUtils;
+import com.zfoo.util.SafeRunnable;
 import com.zfoo.util.math.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +31,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.function.BiConsumer;
 
 /**
- * @author jaysunxiao
+ * @author godotg
  * @version 3.0
  */
 @Component
@@ -70,7 +69,7 @@ public class CurrencyController {
     public void cronEnergyScheduler() {
         logger.info("每30秒恢复在线玩家一点能量，定时任务开始执行");
 
-        var map = new HashMap<ExecutorService, List<PlayerEntity>>();
+        var map = new HashMap<Integer, List<PlayerEntity>>();
 
         playerEntityCaches.forEach(new BiConsumer<Long, PlayerEntity>() {
             @Override
@@ -79,13 +78,13 @@ public class CurrencyController {
                     return;
                 }
                 // 计算需要在哪一个线程池去执行玩家的逻辑
-                var executor = TaskBus.executor(HashUtils.fnvHash(playerEntity.id()));
-                var list = map.computeIfAbsent(executor, k -> new ArrayList<>());
+                var executorIndex = TaskBus.executorIndex(HashUtils.fnvHash(playerEntity.id()));
+                var list = map.computeIfAbsent(executorIndex, k -> new ArrayList<>());
                 list.add(playerEntity);
             }
         });
 
-        map.forEach((executorService, players) -> executorService.execute(new SafeRunnable() {
+        map.forEach((executorIndex, players) -> TaskBus.executor(executorIndex, new SafeRunnable() {
             @Override
             public void doRun() {
                 for (var player : players) {

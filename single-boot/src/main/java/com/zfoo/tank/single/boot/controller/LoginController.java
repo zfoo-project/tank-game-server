@@ -37,6 +37,7 @@ import com.zfoo.tank.common.protocol.login.*;
 import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.util.TokenUtils;
 import com.zfoo.tank.single.boot.service.SystemService;
+import com.zfoo.util.SafeRunnable;
 import com.zfoo.util.math.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * @author jaysunxiao
+ * @author godotg
  * @version 1.0
  * @since 2021-01-20 14:43
  */
@@ -96,9 +97,9 @@ public class LoginController {
 
         var sid = session.getSid();
 
-        EventBus.execute(HashUtils.fnvHash(account)).execute(new Runnable() {
+        EventBus.execute(HashUtils.fnvHash(account), new SafeRunnable() {
             @Override
-            public void run() {
+            public void doRun() {
                 var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
                 if (accountEntity == null) {
                     var id = MongoIdUtils.getIncrementIdFromMongoDefault(PlayerEntity.class);
