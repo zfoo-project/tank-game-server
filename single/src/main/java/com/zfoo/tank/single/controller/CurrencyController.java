@@ -84,7 +84,7 @@ public class CurrencyController {
             }
         });
 
-        map.forEach((executorIndex, players) -> TaskBus.executor(executorIndex, new SafeRunnable() {
+        map.forEach((executorIndex, players) -> TaskBus.execute(executorIndex, new SafeRunnable() {
             @Override
             public void doRun() {
                 for (var player : players) {
