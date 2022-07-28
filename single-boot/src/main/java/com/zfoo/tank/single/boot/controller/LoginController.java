@@ -37,7 +37,6 @@ import com.zfoo.tank.common.protocol.login.*;
 import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.util.TokenUtils;
 import com.zfoo.tank.single.boot.service.SystemService;
-import com.zfoo.util.SafeRunnable;
 import com.zfoo.util.math.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,9 +96,9 @@ public class LoginController {
 
         var sid = session.getSid();
 
-        EventBus.execute(HashUtils.fnvHash(account), new SafeRunnable() {
+        EventBus.execute(HashUtils.fnvHash(account), new Runnable() {
             @Override
-            public void doRun() {
+            public void run() {
                 var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
                 if (accountEntity == null) {
                     var id = MongoIdUtils.getIncrementIdFromMongoDefault(PlayerEntity.class);

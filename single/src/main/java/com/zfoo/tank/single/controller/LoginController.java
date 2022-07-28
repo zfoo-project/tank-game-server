@@ -37,7 +37,6 @@ import com.zfoo.tank.common.protocol.login.*;
 import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.util.TokenUtils;
 import com.zfoo.tank.single.service.SystemService;
-import com.zfoo.util.SafeRunnable;
 import com.zfoo.util.math.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,9 +86,9 @@ public class LoginController {
         var sid = session.getSid();
 
         // 由于uid还没确定下来，现在只能用account线程去处理
-        EventBus.execute(HashUtils.fnvHash(account), new SafeRunnable() {
+        EventBus.execute(HashUtils.fnvHash(account), new Runnable() {
             @Override
-            public void doRun() {
+            public void run() {
                 var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
                 if (accountEntity == null) {
                     // uid

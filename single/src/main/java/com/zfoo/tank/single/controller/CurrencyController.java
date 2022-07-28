@@ -22,7 +22,6 @@ import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.resource.PlayerExpResource;
 import com.zfoo.tank.single.model.PlayerLevelUpEvent;
 import com.zfoo.tank.single.util.SendUtils;
-import com.zfoo.util.SafeRunnable;
 import com.zfoo.util.math.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,9 +83,9 @@ public class CurrencyController {
             }
         });
 
-        map.forEach((executorIndex, players) -> TaskBus.execute(executorIndex, new SafeRunnable() {
+        map.forEach((executorIndex, players) -> TaskBus.execute(executorIndex, new Runnable() {
             @Override
-            public void doRun() {
+            public void run() {
                 for (var player : players) {
                     var currencyPo = player.getCurrencyPo();
                     currencyPo.addEnergy(1);
