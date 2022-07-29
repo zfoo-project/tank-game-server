@@ -3,6 +3,7 @@ package com.zfoo.tank.common.generate;
 import com.baidu.bjf.remoting.protobuf.annotation.Protobuf;
 import com.baidu.bjf.remoting.protobuf.annotation.ProtobufClass;
 import com.zfoo.protocol.IPacket;
+import com.zfoo.protocol.registration.ProtocolAnalysis;
 import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.StringUtils;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -10,7 +11,6 @@ import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
@@ -143,8 +143,7 @@ public class ProtobufXml {
                     }
                     if (packetClazz.isAssignableFrom(clazz)) {
                         result.add(clazzMeta.getClassName());
-                        Field field = clazz.getDeclaredField("PROTOCOL_ID");
-                        short protoId = field.getShort(null);
+                        short protoId = ProtocolAnalysis.getProtocolIdByClass(clazz);
                         clazzMap.put(protoId, clazz);
                     }
                 }
