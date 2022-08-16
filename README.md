@@ -6,6 +6,8 @@
 
 ### Ⅱ. 环境要求
 
+- 项目依赖 [zfoo](https://github.com/zfoo-project/zfoo) ，运行前先使用Maven install [zfoo](https://github.com/zfoo-project/zfoo)
+  
 - JDK 11+
 - MongoDB 4.2
 - Zookeeper 3.6.1
