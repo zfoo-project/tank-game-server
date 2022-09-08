@@ -126,8 +126,6 @@ public class LoginController {
 
                 session.putAttribute(AttributeType.UID, uid);
 
-                playerEntityCaches.update(player);
-
                 if (player.id() <= 0) {
                     NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
                     return;
