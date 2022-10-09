@@ -18,7 +18,7 @@ import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.model.AttributeType;
 import com.zfoo.net.session.model.Session;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
-import com.zfoo.orm.model.cache.IEntityCaches;
+import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.storage.model.anno.ResInjection;
 import com.zfoo.storage.model.vo.Storage;

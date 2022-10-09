@@ -21,7 +21,7 @@ import com.zfoo.net.session.model.Session;
 import com.zfoo.net.util.SingleCache;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
-import com.zfoo.orm.model.cache.IEntityCaches;
+import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.scheduler.util.TimeUtils;

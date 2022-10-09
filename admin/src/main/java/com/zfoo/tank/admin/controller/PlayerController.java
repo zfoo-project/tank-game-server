@@ -14,7 +14,7 @@ package com.zfoo.tank.admin.controller;
 
 import com.mongodb.client.model.Filters;
 import com.zfoo.orm.OrmContext;
-import com.zfoo.orm.model.query.Page;
+import com.zfoo.orm.query.Page;
 import com.zfoo.protocol.model.Pair;
 import com.zfoo.protocol.util.AssertionUtils;
 import com.zfoo.tank.admin.model.PlayerVO;
