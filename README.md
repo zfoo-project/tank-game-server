@@ -7,7 +7,7 @@
 ### Ⅱ. 环境要求
 
 - 项目依赖 [zfoo](https://github.com/zfoo-project/zfoo) ，运行前先使用Maven install [zfoo](https://github.com/zfoo-project/zfoo)
-  
+
 - JDK 11+
 - MongoDB 4.2
 - Zookeeper 3.6.1
@@ -17,6 +17,8 @@
 - [admin](./admin/src/test/java/com/zfoo/tank/admin/ApplicationTest.java)为web资源服务器提供游戏入口和后台管理系统
 - [single](./single/src/test/java/com/zfoo/tank/single/ApplicationTest.java)为单服游戏服务器，single-boot是用了spring
   boot自动化配置的single，代码一致
+- 本地运行从test下运行，原因看[FAQ](https://github.com/zfoo-project/zfoo/blob/main/doc/FAQ.md) ，实在有问题可以看看手把手的
+  [zfoo 框架视频教程](https://github.com/zfoo-project/zfoo/blob/main/doc/video-tutorial.md)
 
 ```
 1. 在浏览器中运行游戏使用websocket的服务器启动入口，即ApplicationTest.startWebsocketApplication()
@@ -32,7 +34,9 @@
 - [gateway](./gateway/src/test/java/com/zfoo/tank/gateway/ApplicationTest.java)网关
 - [cache](./cache/src/test/java/com/zfoo/tank/cache/ApplicationTest.java)提供缓存服务
 - [home](./home/src/test/java/com/zfoo/tank/cache/ApplicationTest.java)提供基本业务逻辑服务
-
+- 本地运行从test下运行，原因看[FAQ](https://github.com/zfoo-project/zfoo/blob/main/doc/FAQ.md) ，实在有问题可以看看手把手的
+  [zfoo 框架视频教程](https://github.com/zfoo-project/zfoo/blob/main/doc/video-tutorial.md)
+  
 ```
 本地游戏入口，http://localhost:9600/game/index.html
 本地后台入口，http://localhost:9600/
