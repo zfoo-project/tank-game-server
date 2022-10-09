@@ -13,7 +13,7 @@ package com.zfoo.tank.single.boot.controller;
 import com.zfoo.event.model.anno.EventReceiver;
 import com.zfoo.net.task.TaskBus;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
-import com.zfoo.orm.model.cache.IEntityCaches;
+import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.scheduler.model.anno.Scheduler;
 import com.zfoo.storage.model.anno.ResInjection;
 import com.zfoo.storage.model.vo.Storage;
