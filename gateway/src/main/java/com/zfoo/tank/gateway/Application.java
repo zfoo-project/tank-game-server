@@ -76,11 +76,13 @@ public class Application {
         var context = new ClassPathXmlApplicationContext("application.xml");
         context.registerShutdownHook();
 
-        // tcp网关
-//        var gateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT), packetFilter);
+        // tcp网关，启动哪个网关取决于客户端的协议，可以同时启动tcp网关和websocket网关
+        // var tcpGateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT), packetFilter);
+        // tcpGateway.start();
+
         // websocket网关
-        var gateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT), packetFilter);
-        gateway.start();
+        var websocketGateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT), packetFilter);
+        websocketGateway.start();
     }
 
 }
