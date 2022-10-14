@@ -25,7 +25,7 @@ import com.zfoo.tank.common.protocol.common.PlayerInfo;
  * @version 1.0
  * @since 2021-01-20 13:55
  */
-@EntityCache(cacheStrategy = "tenThousand", persister = @Persister("time30s"))
+@EntityCache
 public class PlayerEntity implements IEntity<Long> {
 
     // 记录会话信息

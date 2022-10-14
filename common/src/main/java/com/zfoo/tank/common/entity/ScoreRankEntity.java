@@ -23,7 +23,7 @@ import com.zfoo.orm.model.entity.IEntity;
  * @author jaysunxiao
  * @version 3.0
  */
-@EntityCache(cacheStrategy = "tenThousand", persister = @Persister("time30s"))
+@EntityCache
 public class ScoreRankEntity implements IEntity<Long> {
 
     @Id
