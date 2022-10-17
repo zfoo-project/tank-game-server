@@ -25,7 +25,7 @@ orm:
   persisters:
     - strategy: default
       type: time
-      config: 30000
+      config: 60000
     - strategy: cron30s
       type: cron
       config: 0/30 * * * * ?
