@@ -143,7 +143,7 @@ public class ProtobufXml {
                     }
                     if (packetClazz.isAssignableFrom(clazz)) {
                         result.add(clazzMeta.getClassName());
-                        short protoId = ProtocolAnalysis.getProtocolIdByClass(clazz);
+                        short protoId = ProtocolAnalysis.getProtocolIdAndCheckClass(clazz);
                         clazzMap.put(protoId, clazz);
                     }
                 }
