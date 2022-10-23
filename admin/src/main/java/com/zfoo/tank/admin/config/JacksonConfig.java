@@ -33,7 +33,7 @@ public class JacksonConfig {
     private static final Logger logger = LoggerFactory.getLogger(JacksonConfig.class);
 
     @Bean
-    public ObjectMapper getObjectMapper() throws NoSuchFieldException {
+    public ObjectMapper getObjectMapper() {
         return JsonUtils.MAPPER;
     }
 }
