@@ -58,7 +58,7 @@ public class ExportExcelGodot {
     }
 
     @Test
-    public void exportProtocolsAndExcel() {
+    public void exportAll() {
         // 生成协议
         var protocols = new HashSet<Class<?>>();
         protocols.add(ResourceStorage.class);
@@ -85,25 +85,6 @@ public class ExportExcelGodot {
         System.out.println(StringUtils.format("导出Excel成功，导出个数[{}]", storageManager.storageMap().size()));
     }
 
-
-    @Test
-    public void exportProtocols() {
-        // 生成协议
-        var protocols = new HashSet<Class<?>>();
-        protocols.add(ResourceStorage.class);
-        protocols.addAll(storageManager.storageMap().keySet());
-        var operation = new GenerateOperation();
-        operation.setProtocolPath(generateStoragePath);
-        operation.getGenerateLanguages().add(CodeLanguage.GdScript);
-        ProtocolManager.initProtocolAuto(protocols, operation);
-        var count = 0;
-        for (int i = 0; i < ProtocolManager.MAX_PROTOCOL_NUM; i++) {
-            if (ProtocolManager.protocols[i] != null) {
-                count++;
-            }
-        }
-        System.out.println(StringUtils.format("导出协议成功，导出个数[{}]", count));
-    }
 
     @Test
     public void exportExcel() {
