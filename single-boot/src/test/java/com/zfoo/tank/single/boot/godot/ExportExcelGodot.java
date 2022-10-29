@@ -39,6 +39,7 @@ public class ExportExcelGodot {
 
     public static final String scanPackage = "com.zfoo.tank.single.boot.godot";
     public static final String excelPath = "classpath:/excel";
+//    public static final String excelPath = "file:C:\\tank-game-server\\single-boot\\src\\test\\resources\\excel";
     public static final String generateStoragePath = "D:\\github\\godot-bird\\storage";
     public static final String generateBinaryPath = "D:/github/godot-bird/godot_resource_binary.cfg";
 
