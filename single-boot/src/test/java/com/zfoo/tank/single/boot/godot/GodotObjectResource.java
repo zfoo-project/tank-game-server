@@ -21,7 +21,7 @@ import com.zfoo.storage.model.anno.Resource;
  * @version 3.0
  */
 @Resource
-public class GodotResource implements IPacket {
+public class GodotObjectResource implements IPacket {
 
     @Id
     public int id;
@@ -29,7 +29,8 @@ public class GodotResource implements IPacket {
     public float randomUpY;
     public float randomDownY;
     public float forwardX;
-    public int refreshTime;
+    public float refreshTime;
+    public float refreshMinTime;
     public float refreshAccelerate;
     public String signalBind;
     public String callback;

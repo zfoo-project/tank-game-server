@@ -13,22 +13,19 @@
 package com.zfoo.tank.single.boot.godot;
 
 import com.zfoo.protocol.IPacket;
-import com.zfoo.protocol.registration.anno.Note;
-
-import java.util.Map;
+import com.zfoo.storage.model.anno.Id;
+import com.zfoo.storage.model.anno.Resource;
 
 /**
- * 所有配置的聚合
- *
  * @author godotg
  * @version 3.0
  */
-public class ResourceStorage implements IPacket {
+@Resource
+public class GodotCommonResource implements IPacket {
 
-    @Note("Map<Integer, GodotResource>")
-    public Map<Integer, GodotObjectResource> objectResources;
+    @Id
+    public String key;
 
-    @Note("Map<String, GodotCommonResource>")
-    public Map<String, GodotCommonResource> commonResources;
+    public String value;
 
 }

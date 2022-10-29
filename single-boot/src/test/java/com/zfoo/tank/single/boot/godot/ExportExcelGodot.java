@@ -17,10 +17,9 @@ import com.zfoo.protocol.buffer.ByteBufUtils;
 import com.zfoo.protocol.generate.GenerateOperation;
 import com.zfoo.protocol.serializer.CodeLanguage;
 import com.zfoo.protocol.util.FileUtils;
-import com.zfoo.protocol.util.JsonUtils;
+import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.manager.StorageManager;
 import com.zfoo.storage.model.config.StorageConfig;
-import com.zfoo.storage.model.vo.Storage;
 import com.zfoo.storage.util.ExportUtils;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.UnpooledHeapByteBuf;
@@ -43,18 +42,23 @@ public class ExportExcelGodot {
     public static final String generateStoragePath = "D:\\github\\godot-bird\\storage";
     public static final String generateBinaryPath = "D:/github/godot-bird/godot_resource_binary.cfg";
 
-    @Test
-    public void export() {
-        var config = new StorageConfig();
+
+    public static final StorageConfig config = new StorageConfig();
+    public static final StorageManager storageManager = new StorageManager();
+
+    static {
         config.setScanPackage(scanPackage);
         config.setResourceLocation(excelPath);
         config.setWriteable(true);
         config.setRecycle(false);
-        var storageManager = new StorageManager();
+
         storageManager.setStorageConfig(config);
         storageManager.initBefore();
         storageManager.initAfter();
+    }
 
+    @Test
+    public void exportProtocolsAndExcel() {
         // 生成协议
         var protocols = new HashSet<Class<?>>();
         protocols.add(ResourceStorage.class);
@@ -63,18 +67,60 @@ public class ExportExcelGodot {
         operation.setProtocolPath(generateStoragePath);
         operation.getGenerateLanguages().add(CodeLanguage.GdScript);
         ProtocolManager.initProtocolAuto(protocols, operation);
+        var count = 0;
+        for (int i = 0; i < ProtocolManager.MAX_PROTOCOL_NUM; i++) {
+            if (ProtocolManager.protocols[i] != null) {
+                count++;
+            }
+        }
+        System.out.println(StringUtils.format("导出协议成功，导出个数[{}]", count));
 
         // 生成数据
         var resourceData = ExportUtils.autoWrapData(ResourceStorage.class, storageManager.storageMap());
         var buffer = new UnpooledHeapByteBuf(ByteBufAllocator.DEFAULT, 100, Integer.MAX_VALUE);
         ProtocolManager.write(buffer, resourceData);
         var bytes = ByteBufUtils.readAllBytes(buffer);
+        FileUtils.deleteFile(new File(generateBinaryPath));
         FileUtils.writeInputStreamToFile(new File(generateBinaryPath), new ByteArrayInputStream(bytes));
+        System.out.println(StringUtils.format("导出Excel成功，导出个数[{}]", storageManager.storageMap().size()));
+    }
 
-        var storage = (Storage<Integer, GodotResource>) storageManager.getStorage(GodotResource.class);
-        for (var resource : storage.getAll()) {
-            System.out.println(JsonUtils.object2String(resource));
+
+    @Test
+    public void exportProtocols() {
+        // 生成协议
+        var protocols = new HashSet<Class<?>>();
+        protocols.add(ResourceStorage.class);
+        protocols.addAll(storageManager.storageMap().keySet());
+        var operation = new GenerateOperation();
+        operation.setProtocolPath(generateStoragePath);
+        operation.getGenerateLanguages().add(CodeLanguage.GdScript);
+        ProtocolManager.initProtocolAuto(protocols, operation);
+        var count = 0;
+        for (int i = 0; i < ProtocolManager.MAX_PROTOCOL_NUM; i++) {
+            if (ProtocolManager.protocols[i] != null) {
+                count++;
+            }
         }
+        System.out.println(StringUtils.format("导出协议成功，导出个数[{}]", count));
+    }
+
+    @Test
+    public void exportExcel() {
+        // 初始化协议
+        var protocols = new HashSet<Class<?>>();
+        protocols.add(ResourceStorage.class);
+        protocols.addAll(storageManager.storageMap().keySet());
+        ProtocolManager.initProtocolAuto(protocols, GenerateOperation.NO_OPERATION);
+
+        // 生成数据
+        var resourceData = ExportUtils.autoWrapData(ResourceStorage.class, storageManager.storageMap());
+        var buffer = new UnpooledHeapByteBuf(ByteBufAllocator.DEFAULT, 100, Integer.MAX_VALUE);
+        ProtocolManager.write(buffer, resourceData);
+        var bytes = ByteBufUtils.readAllBytes(buffer);
+        FileUtils.deleteFile(new File(generateBinaryPath));
+        FileUtils.writeInputStreamToFile(new File(generateBinaryPath), new ByteArrayInputStream(bytes));
+        System.out.println(StringUtils.format("导出Excel成功，导出个数[{}]", storageManager.storageMap().size()));
     }
 
 }
