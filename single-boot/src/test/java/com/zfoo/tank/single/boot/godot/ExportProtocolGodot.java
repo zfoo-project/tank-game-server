@@ -35,7 +35,7 @@ public class ExportProtocolGodot {
     public static final String protocolLocation = "protocol.xml";
 
     @Test
-    public void exportAll() throws IOException {
+    public void exportProtocol() throws IOException {
         // 生成协议
         var xmlProtocols = DomUtils.inputStream2Object(ClassUtils.getFileFromClassPath(protocolLocation), XmlProtocols.class);
         var operation = new GenerateOperation();
