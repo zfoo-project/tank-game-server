@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.tank.cache.controller;
+package com.zfoo.tank.home.controller;
 
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.net.NetContext;
