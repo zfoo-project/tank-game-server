@@ -2,7 +2,7 @@
 
 <configuration scan="false" debug="false">
 
-    <contextName>com.zfoo.tank.cache</contextName>
+    <contextName>com.zfoo.tank.home</contextName>
 
     <property name="LOG_HOME" value="log/"/>
     <property name="PATTERN_CONSOLE" value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%-5level)] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
