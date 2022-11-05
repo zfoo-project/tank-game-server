@@ -8,7 +8,7 @@
  *  See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.tank.cache.model;
+package com.zfoo.tank.home.model;
 
 import com.zfoo.event.model.event.IEvent;
 import com.zfoo.tank.common.entity.PlayerEntity;

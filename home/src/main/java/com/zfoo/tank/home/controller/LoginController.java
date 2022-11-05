@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.tank.cache.controller;
+package com.zfoo.tank.home.controller;
 
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.net.NetContext;
@@ -146,10 +146,10 @@ public class LoginController {
         }
 
         var triple = TokenUtils.get(token);
-        var playerId = triple.getLeft();
+        var uid = triple.getLeft();
 
         // 授权给网关uid
-        NetContext.getRouter().send(session, AuthUidToGatewayCheck.valueOf(playerId), gatewayAttachment);
+        NetContext.getRouter().send(session, AuthUidToGatewayCheck.valueOf(uid), gatewayAttachment);
     }
 
 }

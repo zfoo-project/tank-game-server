@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.tank.cache.service;
+package com.zfoo.tank.home.service;
 
 import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.tank.common.util.HotUtils;
