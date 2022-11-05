@@ -11,7 +11,7 @@
  *
  */
 
-package com.zfoo.tank.cache.controller;
+package com.zfoo.tank.home.controller;
 
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.attachment.GatewayAttachment;

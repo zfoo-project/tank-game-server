@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.tank.cache;
+package com.zfoo.tank.home;
 
 import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.tank.common.generate.ProtobufXml;

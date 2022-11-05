@@ -8,7 +8,7 @@
  *  See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.tank.cache.util;
+package com.zfoo.tank.home.util;
 
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.attachment.GatewayAttachment;
