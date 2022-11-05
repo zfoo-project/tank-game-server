@@ -14,6 +14,7 @@
 package com.zfoo.tank.single.boot;
 
 import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.net.core.websocket.WebsocketServer;
 import com.zfoo.util.net.HostAndPort;
 import com.zfoo.util.net.NetUtils;
@@ -63,9 +64,9 @@ public class Application {
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
 
-        // tcp网关，启动哪个网关取决于客户端的协议，也可以同时启动tcp服务器和websocket服务器
-        // var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
-        // tcpServer.start();
+        // tcp服务器，可以同时启动tcp服务器和websocket服务器
+         var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
+         tcpServer.start();
 
         // websocket服务器
         var websocketServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT));
