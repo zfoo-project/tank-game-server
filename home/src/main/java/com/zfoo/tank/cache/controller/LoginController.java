@@ -146,10 +146,10 @@ public class LoginController {
         }
 
         var triple = TokenUtils.get(token);
-        var playerId = triple.getLeft();
+        var uid = triple.getLeft();
 
         // 授权给网关uid
-        NetContext.getRouter().send(session, AuthUidToGatewayCheck.valueOf(playerId), gatewayAttachment);
+        NetContext.getRouter().send(session, AuthUidToGatewayCheck.valueOf(uid), gatewayAttachment);
     }
 
 }
