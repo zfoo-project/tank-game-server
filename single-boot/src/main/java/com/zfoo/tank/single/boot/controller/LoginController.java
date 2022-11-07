@@ -120,8 +120,6 @@ public class LoginController {
                 var uid = accountEntity.getUid();
                 logger.info("c[{}][{}]玩家登录[account:{}][password:{}]", uid, sid, account, password);
 
-                session.putAttribute(AttributeType.UID, accountEntity.getUid());
-
                 var player = playerEntityCaches.load(uid);
                 player.setLastLoginTime(TimeUtils.now());
 
