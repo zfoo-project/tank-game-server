@@ -32,7 +32,7 @@
 
     <context:property-placeholder location="classpath:deploy-${spring.profiles.active}.properties"/>
 
-    <context:component-scan base-package="com.zfoo.tank.cache"/>
+    <context:component-scan base-package="com.zfoo.tank.home"/>
 
     <event:event id="eventBus"/>
 
