@@ -65,7 +65,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
     @ResInjection
     private Storage<Integer, PlayerExpResource> playerExpStorage;
 
-    private static final int RANK_SIZE = 20;
+    private static final int RANK_SIZE = 200;
 
     private volatile int rankLimit = 0;
     private volatile int minScore = 0;
