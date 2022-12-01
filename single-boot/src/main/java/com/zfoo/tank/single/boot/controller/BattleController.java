@@ -170,7 +170,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
             playerEntity.setExp(exp - playerExpConfig.getExp());
 
             // 抛出一个升级的事件
-            EventBus.syncSubmit(PlayerLevelUpEvent.valueOf(playerEntity, level));
+            EventBus.submit(PlayerLevelUpEvent.valueOf(playerEntity, level));
         }
 
         SendUtils.sendToPlayer(playerEntity, PlayerExpNotice.valueOf(playerEntity.getLevel(), playerEntity.getExp()));
