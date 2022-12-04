@@ -99,12 +99,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.zfoo</groupId>
-            <artifactId>hotswap</artifactId>
-            <version>${zfoo.hotswap.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
