@@ -9,13 +9,6 @@
               value="%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
     <property name="PATTERN_CONSOLE"
               value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%-5level)] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
-    <!-- 负责写日志,控制台日志，会打印所有的包的所有级别日志 -->
-    <appender name="zfoo_console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${PATTERN_CONSOLE}</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
 
     <!-- debug日志，只有一个文件，只收集debug级别日志，每次启动会覆盖以前的debug日志 -->
     <appender name="zfoo_debug" class="ch.qos.logback.core.FileAppender">
@@ -67,7 +60,6 @@
         <appender-ref ref="zfoo_info"/>
     </appender>
 
-    <!-- 只收集error级别的日志 -->
     <appender name="zfoo_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/error.log</file>
 
@@ -90,15 +82,10 @@
         </filter>
     </appender>
 
-    <!-- 根logger -->
     <root level="info">
         <appender-ref ref="zfoo_debug"/>
         <appender-ref ref="zfoo_async_info"/>
         <appender-ref ref="zfoo_error"/>
-        <appender-ref ref="zfoo_console"/>
     </root>
 
-    <logger name="ch.qos.logback" level="info"/>
-    <logger name="org.springframework" level="info"/>
-    <logger name="io.netty" level="info"/>
 </configuration>
