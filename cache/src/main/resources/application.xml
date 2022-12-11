@@ -50,7 +50,7 @@
             <net:address name="${registry.address.name}" url="${registry.address.url}"/>
         </net:registry>
 
-        <net:providers task-dispatch="consistent-hash">
+        <net:providers>
             <net:provider protocol-module="tankCache" provider="tankCacheProvider"/>
         </net:providers>
 
