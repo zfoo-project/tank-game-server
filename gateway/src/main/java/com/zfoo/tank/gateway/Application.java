@@ -50,7 +50,7 @@ public class Application {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
     public static final BiFunction<Session, IPacket, Boolean> packetFilter = (session, packet) -> {
         if (packet.protocolId() == LoginRequest.PROTOCOL_ID) {
-            if (session.getUid() < 0) {
+            if (session.getUid() <= 0) {
                 return false;
             } else {
                 return true;
@@ -63,7 +63,7 @@ public class Application {
         }
 
         var uid = session.getUid();
-        if (uid < 0) {
+        if (uid <= 0) {
             return false;
         }
 

@@ -15,7 +15,6 @@ import com.zfoo.net.NetContext;
 import com.zfoo.net.core.gateway.model.GatewaySessionInactiveEvent;
 import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.protocol.ProtocolManager;
-import com.zfoo.protocol.registration.ProtocolModule;
 import com.zfoo.tank.common.protocol.login.LogoutRequest;
 import org.springframework.stereotype.Component;
 
