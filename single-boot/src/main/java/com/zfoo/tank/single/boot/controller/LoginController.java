@@ -19,11 +19,10 @@ import com.zfoo.net.packet.common.Error;
 import com.zfoo.net.packet.common.Ping;
 import com.zfoo.net.packet.common.Pong;
 import com.zfoo.net.router.receiver.PacketReceiver;
-import com.zfoo.net.session.model.AttributeType;
-import com.zfoo.net.session.model.Session;
+import com.zfoo.net.session.Session;
 import com.zfoo.orm.OrmContext;
-import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.scheduler.util.TimeUtils;
@@ -68,7 +67,7 @@ public class LoginController {
 
     @PacketReceiver
     public void atLogoutRequest(Session session, LogoutRequest request) {
-        var uid = (long) session.getAttribute(AttributeType.UID);
+        var uid = session.getUid();
         var sid = session.getSid();
 
         logger.info("c[{}][{}]玩家退出游戏", uid, sid);
@@ -126,7 +125,7 @@ public class LoginController {
                 // 设置session
                 player.sid = sid;
                 player.session = session;
-                session.putAttribute(AttributeType.UID, uid);
+                session.setUid(uid);
 
                 if (player.id() <= 0) {
                     NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()));
@@ -160,7 +159,7 @@ public class LoginController {
         // 设置session
         player.sid = sid;
         player.session = session;
-        session.putAttribute(AttributeType.UID, uid);
+        session.setUid(uid);
         NetContext.getRouter().send(session, LoginResponse.valueOf(token));
         NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
     }

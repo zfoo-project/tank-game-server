@@ -19,7 +19,7 @@ import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.router.receiver.PacketReceiver;
-import com.zfoo.net.session.model.Session;
+import com.zfoo.net.session.Session;
 import com.zfoo.net.util.SingleCache;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.util.MongoIdUtils;

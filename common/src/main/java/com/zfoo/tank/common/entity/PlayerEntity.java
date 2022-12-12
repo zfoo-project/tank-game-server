@@ -13,10 +13,9 @@
 
 package com.zfoo.tank.common.entity;
 
-import com.zfoo.net.session.model.Session;
+import com.zfoo.net.session.Session;
 import com.zfoo.orm.model.anno.EntityCache;
 import com.zfoo.orm.model.anno.Id;
-import com.zfoo.orm.model.anno.Persister;
 import com.zfoo.orm.model.entity.IEntity;
 import com.zfoo.tank.common.protocol.common.PlayerInfo;
 

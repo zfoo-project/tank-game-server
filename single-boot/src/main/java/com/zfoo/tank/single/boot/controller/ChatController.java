@@ -15,8 +15,7 @@ package com.zfoo.tank.single.boot.controller;
 import com.mongodb.client.model.Filters;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.receiver.PacketReceiver;
-import com.zfoo.net.session.model.AttributeType;
-import com.zfoo.net.session.model.Session;
+import com.zfoo.net.session.Session;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
@@ -34,7 +33,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -51,7 +49,7 @@ public class ChatController {
 
     @PacketReceiver
     public void atGroupChatRequest(Session session, GroupChatRequest request) {
-        var uid = (long) session.getAttribute(AttributeType.UID);
+        var uid = session.getUid();
 
         var message = request.getMessage();
         if (StringUtils.isBlank(message)) {
