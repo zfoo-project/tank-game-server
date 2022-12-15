@@ -24,7 +24,6 @@ import com.zfoo.protocol.IPacket;
 public class PlayerInfo implements IPacket {
 
     public static final PlayerInfo DEFAULT_INSTANCE = new PlayerInfo();
-    public static final transient short PROTOCOL_ID = 400;
     private long id;
     private String name;
     private String avatar;
@@ -39,11 +38,6 @@ public class PlayerInfo implements IPacket {
         info.level = level;
         info.exp = exp;
         return info;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public long getId() {

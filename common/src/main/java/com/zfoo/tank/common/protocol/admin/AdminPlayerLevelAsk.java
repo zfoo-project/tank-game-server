@@ -22,10 +22,7 @@ import com.zfoo.protocol.IPacket;
  */
 public class AdminPlayerLevelAsk implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 1200;
-
     private long userId;
-
     private int playerLevel;
     private int playerExp;
 
@@ -35,11 +32,6 @@ public class AdminPlayerLevelAsk implements IPacket {
         ask.playerLevel = playerLevel;
         ask.playerExp = playerExp;
         return ask;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public long getUserId() {

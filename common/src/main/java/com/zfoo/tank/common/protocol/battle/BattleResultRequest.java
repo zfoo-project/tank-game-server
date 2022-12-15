@@ -18,14 +18,7 @@ import com.zfoo.protocol.IPacket;
  */
 public class BattleResultRequest implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 1006;
-
     private int score;
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
-    }
 
     public int getScore() {
         return score;

@@ -24,8 +24,6 @@ import com.zfoo.protocol.IPacket;
  */
 public class LoginRequest implements IPacket, IGatewayLoadBalancer {
 
-    public static final transient short PROTOCOL_ID = 1000;
-
     private String account;
     private String password;
 
@@ -39,11 +37,6 @@ public class LoginRequest implements IPacket, IGatewayLoadBalancer {
     @Override
     public Object loadBalancerConsistentHashObject() {
         return account;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public String getAccount() {

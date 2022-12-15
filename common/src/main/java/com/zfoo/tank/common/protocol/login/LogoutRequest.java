@@ -23,15 +23,8 @@ import com.zfoo.protocol.IPacket;
  */
 public class LogoutRequest implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 1002;
-
     public static LogoutRequest valueOf() {
         return new LogoutRequest();
     }
 
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
-    }
 }

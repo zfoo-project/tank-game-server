@@ -21,8 +21,6 @@ import com.zfoo.protocol.IPacket;
  */
 public class BattleScoreAsk implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 3000;
-
     private long playerId;
 
     private int score;
@@ -32,11 +30,6 @@ public class BattleScoreAsk implements IPacket {
         ask.playerId = playerId;
         ask.score = score;
         return ask;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public long getPlayerId() {

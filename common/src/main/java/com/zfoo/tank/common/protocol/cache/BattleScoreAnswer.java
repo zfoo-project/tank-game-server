@@ -21,8 +21,6 @@ import com.zfoo.protocol.IPacket;
  */
 public class BattleScoreAnswer implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 3001;
-
     // 如果上榜则给奖励
     private boolean rankReward;
 
@@ -30,11 +28,6 @@ public class BattleScoreAnswer implements IPacket {
         var packet = new BattleScoreAnswer();
         packet.rankReward = rankReward;
         return packet;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public boolean isRankReward() {

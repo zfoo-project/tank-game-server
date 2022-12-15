@@ -18,19 +18,12 @@ import com.zfoo.protocol.IPacket;
  */
 public class BattleResultResponse implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 1007;
-
     private int score;
 
     public static BattleResultResponse valueOf(int score) {
         var packet = new BattleResultResponse();
         packet.score = score;
         return packet;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public int getScore() {

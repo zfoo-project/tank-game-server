@@ -25,8 +25,6 @@ import com.zfoo.tank.common.protocol.common.PlayerInfo;
  */
 public class GetPlayerInfoResponse implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 1005;
-
     private PlayerInfo playerInfo;
 
     private CurrencyVo currencyVo;
@@ -36,11 +34,6 @@ public class GetPlayerInfoResponse implements IPacket {
         packet.playerInfo = playerInfo;
         packet.currencyVo = currencyVo;
         return packet;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public PlayerInfo getPlayerInfo() {

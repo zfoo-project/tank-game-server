@@ -19,19 +19,12 @@ import com.zfoo.tank.common.protocol.common.CurrencyVo;
  */
 public class CurrencyUpdateNotice implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 1100;
-
     private CurrencyVo currencyVo;
 
     public static CurrencyUpdateNotice valueOf(CurrencyVo currencyVO) {
         var packet = new CurrencyUpdateNotice();
         packet.currencyVo = currencyVO;
         return packet;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public CurrencyVo getCurrencyVo() {

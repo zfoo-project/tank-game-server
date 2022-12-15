@@ -17,9 +17,6 @@ import com.zfoo.protocol.IPacket;
  * @version 3.0
  */
 public class PlayerExpNotice implements IPacket {
-
-    public static final transient short PROTOCOL_ID = 1101;
-
     private int level;
     private long exp;
 
@@ -28,11 +25,6 @@ public class PlayerExpNotice implements IPacket {
         packet.level = level;
         packet.exp = exp;
         return packet;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public int getLevel() {
