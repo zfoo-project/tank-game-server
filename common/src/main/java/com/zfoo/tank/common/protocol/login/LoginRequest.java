@@ -24,6 +24,8 @@ import com.zfoo.protocol.IPacket;
  */
 public class LoginRequest implements IPacket, IGatewayLoadBalancer {
 
+    public static final transient short PROTOCOL_ID = 1000;
+
     private String account;
     private String password;
 
