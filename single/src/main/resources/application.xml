@@ -2,6 +2,8 @@
 
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+
        xmlns:net="http://www.zfoo.com/schema/net"
        xmlns:storage="http://www.zfoo.com/schema/storage"
        xmlns:orm="http://www.zfoo.com/schema/orm"
@@ -14,6 +16,8 @@
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
 
     http://www.zfoo.com/schema/net
     http://www.zfoo.com/schema/net-1.0.xsd
@@ -33,6 +37,9 @@
     <context:property-placeholder location="classpath:deploy-${spring.profiles.active}.properties"/>
 
     <context:component-scan base-package="com.zfoo.tank.single"/>
+
+    <!-- AOP拦截配置 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <event:event id="eventBus"/>
 
