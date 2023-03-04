@@ -31,7 +31,7 @@ import java.io.IOException;
 @Ignore
 public class ExportProtocolGodot {
 
-    public static final String generateStoragePath = "D:\\github\\godot-bird\\protocol";
+    public static final String generateProtocolPath = "D:\\github\\godot-bird\\protocol";
     public static final String protocolLocation = "protocol.xml";
 
     @Test
@@ -39,7 +39,7 @@ public class ExportProtocolGodot {
         // 生成协议
         var xmlProtocols = DomUtils.inputStream2Object(ClassUtils.getFileFromClassPath(protocolLocation), XmlProtocols.class);
         var operation = new GenerateOperation();
-        operation.setProtocolPath(generateStoragePath);
+        operation.setProtocolPath(generateProtocolPath);
         operation.setFoldProtocol(true);
         operation.getGenerateLanguages().add(CodeLanguage.GdScript);
         ProtocolManager.initProtocol(xmlProtocols, operation);
