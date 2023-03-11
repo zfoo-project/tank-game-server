@@ -120,17 +120,15 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
         logger.info("c[{}][{}]玩家战斗结果[score:{}]", uid, sid, score);
 
         // 战斗过后如果上了排行榜，则奖励一下，每一分值一个金币，半个钻石
-        if (battleScore(player, score)) {
-            var currencyPo = player.getCurrencyPo();
-            currencyPo.setGold(currencyPo.getGold() + score);
-            currencyPo.setGem(currencyPo.getGem() + score / 2);
-            addPlayerExp(player, score);
+        var currencyPo = player.getCurrencyPo();
+        currencyPo.setGold(currencyPo.getGold() + score);
+        currencyPo.setGem(currencyPo.getGem() + score / 2);
+        addPlayerExp(player, score);
 
-            playerEntityCaches.update(player);
+        playerEntityCaches.update(player);
 
-            NetContext.getRouter().send(session, BattleResultResponse.valueOf(score));
-            NetContext.getRouter().send(session, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
-        }
+        NetContext.getRouter().send(session, BattleResultResponse.valueOf(score));
+        NetContext.getRouter().send(session, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
     }
 
 
