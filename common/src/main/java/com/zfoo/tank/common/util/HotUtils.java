@@ -79,8 +79,7 @@ public abstract class HotUtils {
                     return;
                 }
 
-                Storage<?, ?> storage = new Storage<>();
-                storage.init(new ByteArrayInputStream(bytes), clazz, fileExtName);
+                Storage<?, ?> storage = Storage.parse(new ByteArrayInputStream(bytes), clazz, fileExtName);
                 StorageContext.getStorageManager().updateStorage(clazz, storage);
                 StorageContext.getStorageManager().inject();
             }
