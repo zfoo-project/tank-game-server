@@ -64,7 +64,7 @@ public class ChatController {
 
         var notice = GroupChatMessageNotice.valueOf(entity.toChatMessage());
         // 广播给全服玩家
-        NetContext.getSessionManager().getServerSessionMap().forEach((sid, it) -> NetContext.getRouter().send(it, notice));
+        NetContext.getSessionManager().forEachServerSession(it -> NetContext.getRouter().send(it, notice));
     }
 
     @PacketReceiver
