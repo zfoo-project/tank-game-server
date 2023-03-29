@@ -20,32 +20,13 @@ import com.zfoo.util.net.HostAndPort;
 import com.zfoo.util.net.NetUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration;
-import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
-import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration;
 
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2021-01-20 16:00
  */
-@SpringBootApplication(exclude = {
-        // 排除MongoDB自动配置
-        MongoDataAutoConfiguration.class,
-        MongoRepositoriesAutoConfiguration.class,
-        MongoAutoConfiguration.class,
-        MongoReactiveAutoConfiguration.class,
-        MongoReactiveDataAutoConfiguration.class,
-        MongoReactiveRepositoriesAutoConfiguration.class,
-
-        TaskExecutionAutoConfiguration.class,
-        TaskSchedulingAutoConfiguration.class
-})
+@SpringBootApplication
 public class Application {
 
     /**
