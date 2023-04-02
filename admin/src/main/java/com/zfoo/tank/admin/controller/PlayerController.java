@@ -18,6 +18,7 @@ import com.zfoo.orm.query.Page;
 import com.zfoo.protocol.model.Pair;
 import com.zfoo.protocol.util.AssertionUtils;
 import com.zfoo.tank.admin.model.PlayerVO;
+import com.zfoo.tank.admin.model.user.PlayerSearchRequest;
 import com.zfoo.tank.admin.service.LoginService;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.result.BaseResponse;
@@ -25,8 +26,8 @@ import com.zfoo.tank.common.result.CodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,11 +47,15 @@ public class PlayerController {
     @Autowired
     private LoginService loginService;
 
-    @GetMapping(value = "/api/player/search")
+    @PostMapping(value = "/api/player/search", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public BaseResponse search(HttpServletRequest request, @RequestParam("query") String query, @RequestParam("page") int page, @RequestParam("itemsPerPage") int itemsPerPage) {
+    public BaseResponse search(HttpServletRequest request, @RequestBody PlayerSearchRequest cm) {
         var adminEntity = loginService.adminUserInfo(request);
         AssertionUtils.notNull(adminEntity);
+
+        var query = cm.getQuery();
+        var page = cm.getPage();
+        var itemsPerPage = cm.getItemsPerPage();
 
         //游戏名查询
         var filters = Filters.regex("name", Pattern.compile(query));
@@ -72,7 +77,6 @@ public class PlayerController {
                         result.add(PlayerVO.valueOf(playerEntity));
                     }
                 });
-
         return BaseResponse.valueOf(CodeEnum.OK, new Pair<>(p, result));
     }
 }
