@@ -13,6 +13,7 @@
 
 package com.zfoo.tank.cache.controller;
 
+import com.mongodb.ReadPreference;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.zfoo.event.model.event.AppStartEvent;
@@ -62,6 +63,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
             var rankList = new ArrayList<ScoreRankEntity>();
             OrmContext.getOrmManager()
                     .getCollection(ScoreRankEntity.class)
+                    .withReadPreference(ReadPreference.secondary())
                     .find()
                     .sort(Sorts.descending("score"))
                     .limit(RANK_SIZE)
@@ -70,6 +72,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
             var playerInfoMap = new HashMap<Long, PlayerInfo>();
             OrmContext.getOrmManager()
                     .getCollection(PlayerEntity.class)
+                    .withReadPreference(ReadPreference.secondary())
                     .find(Filters.in("_id", rankList.stream().map(it -> it.getPlayerId()).collect(Collectors.toList())))
                     .forEach(it -> playerInfoMap.put(it.getId(), it.toPlayerInfo()));
 
