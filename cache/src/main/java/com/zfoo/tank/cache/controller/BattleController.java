@@ -57,6 +57,9 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
     private SingleCache<List<RankInfo>> rankCache;
 
 
+    /**
+     * 排行榜缓存数据读写分离
+     */
     @Override
     public void onApplicationEvent(AppStartEvent appStartEvent) {
         rankCache = SingleCache.build(10 * TimeUtils.MILLIS_PER_SECOND, () -> {
