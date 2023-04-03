@@ -94,6 +94,9 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
         NetContext.getRouter().send(session, ScoreRankResponse.valueOf(rankCache.get()), gatewayAttachment);
     }
 
+    /**
+     * 这个是个演示，真实情况为了真正的读写分离，不应该入库的
+     */
     @PacketReceiver
     public void atBattleScoreAsk(Session session, BattleScoreAsk ask) {
         var playerId = ask.getPlayerId();
