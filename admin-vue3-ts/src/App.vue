@@ -4,6 +4,8 @@
       <router-view> </router-view>
     </component>
     <CustomizationMenu />
+    <BackToTop />
+    <ToolBox />
     <Snackbar />
   </v-app>
 </template>
@@ -16,6 +18,8 @@ import AuthLayout from "@/layouts/AuthLayout.vue";
 import CustomizationMenu from "@/components/CustomizationMenu.vue";
 import Snackbar from "@/components/Snackbar.vue";
 import { useCustomizeThemeStore } from "@/stores/customizeTheme";
+import BackToTop from "@/components/common/BackToTop.vue";
+import ToolBox from "@/components/Toolbox.vue";
 import { useSnackbarStore } from "@/stores/myStore";
 const customizeTheme = useCustomizeThemeStore();
 const myStore = useSnackbarStore();

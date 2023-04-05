@@ -156,8 +156,6 @@ const rules = reactive({
 
 
 const submit = async () => {
-  isLoading.value = true;
-  isSignInDisabled.value = true;
   signIn(userName.value, password.value);
 };
 
@@ -171,9 +169,18 @@ const signIn = async (userName, password) => {
     snackbarStore.showErrorSnackbar(t('notice.loginPasswordEmptyError'));
     return;
   }
+
+  isLoading.value = true;
+  isSignInDisabled.value = true;
+
   const response = await axios.post(BASE_URL + "/api/signIn", {
     userName,
     password
+  }).catch(reason => {
+    snackbarStore.showErrorSnackbar(reason);
+  }).finally(() => {
+    isLoading.value = false;
+    isSignInDisabled.value = false;
   });
 
   const code = response.data.code;

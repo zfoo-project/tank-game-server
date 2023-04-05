@@ -1,12 +1,12 @@
 <template>
   <v-menu scroll-y>
     <template v-slot:activator="{ props }">
-      <v-btn width="100" class="ma-2" v-bind="props">
+      <v-btn width="100" v-bind="props">
         <Icon :icon="`twemoji:flag-${currentLocale.name}`" class="mr-2" />
         <span class="text-body-2">{{ currentLocale.label }}</span>
       </v-btn>
     </template>
-    <v-list nav>
+    <v-list elevation="1" nav>
       <v-list-item
         v-for="locale in availableLocaleList"
         :key="locale.code"
