@@ -8,9 +8,9 @@
 
 ### Ⅱ. 环境要求
 
-- 项目依赖 [zfoo](https://github.com/zfoo-project/zfoo) ，运行前先使用Maven
+- 后端依赖 [zfoo](https://github.com/zfoo-project/zfoo) ，运行前先使用Maven
   install [zfoo](https://github.com/zfoo-project/zfoo)
-
+  前端依赖 [lux-admin-vuetify3](https://github.com/yangjiakai/lux-admin-vuetify3)，目标创造最优秀的 vuetify3 的 Admin 开源模板
 - JDK 11+
 - MongoDB 4.2
 - Zookeeper 3.6.1
