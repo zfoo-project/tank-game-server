@@ -3,7 +3,7 @@ import { useCustomizeThemeStore } from "@/stores/customizeTheme";
 const customizeTheme = useCustomizeThemeStore();
 
 const props = defineProps({
-  // 数据
+  // Data
   menu: {
     type: Array<any>,
     default: () => [],
@@ -14,7 +14,7 @@ onMounted(() => {});
 </script>
 <template>
   <v-list nav dense color="primary">
-    <template v-for="(menuArea, index) in menu" :key="index">
+    <template v-for="menuArea in props.menu" :key="menuArea.key">
       <div
         v-if="!customizeTheme.miniSidebar && (menuArea.key || menuArea.text)"
         class="pa-1 mt-2 text-overline"
@@ -22,10 +22,7 @@ onMounted(() => {});
         {{ menuArea.key ? $t(menuArea.key) : menuArea.text }}
       </div>
       <template v-if="menuArea.items">
-        <template
-          v-for="(menuItem, menuIndex) in menuArea.items"
-          :key="menuIndex"
-        >
+        <template v-for="menuItem in menuArea.items" :key="menuItem.key">
           <!-- menu level 1 -->
           <v-list-item
             v-if="!menuItem.items"
@@ -50,8 +47,8 @@ onMounted(() => {});
             </template>
             <!-- menu level 2 -->
             <v-list-item
-              v-for="(subMenuItem, subMenuIndex) in menuItem.items"
-              :key="subMenuIndex"
+              v-for="subMenuItem in menuItem.items"
+              :key="subMenuItem.key"
               :prepend-icon="subMenuItem.icon || 'mdi-circle-medium'"
               :title="subMenuItem.key ? $t(subMenuItem.key) : subMenuItem.text"
               :to="subMenuItem.link"

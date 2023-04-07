@@ -3,9 +3,7 @@ import { useCookies } from '@vueuse/integrations/useCookies'
 const cookies = useCookies();
 
 export const TokenKey = "tank";
-
-export const BASE_URL = "http://tank-api.zfoo.net";
-// export const BASE_URL = "http://localhost:9600";
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export function getToken() {
     return cookies.get(TokenKey);
