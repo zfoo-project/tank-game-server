@@ -4,34 +4,35 @@
 <protocols author="jaysunxiao">
 
     <module id="1" name="native" minId="0" maxId="100">
-        <protocol id="0" location="com.zfoo.net.router.attachment.SignalAttachment"/>
-        <protocol id="1" location="com.zfoo.net.router.attachment.GatewayAttachment"/>
-        <protocol id="2" location="com.zfoo.net.router.attachment.UdpAttachment"/>
-        <protocol id="3" location="com.zfoo.net.router.attachment.HttpAttachment"/>
-        <protocol id="4" location="com.zfoo.net.router.attachment.NoAnswerAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.SignalAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.SignalOnlyAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.GatewayAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.UdpAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.HttpAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.NoAnswerAttachment"/>
 
 
-        <protocol id="20" location="com.zfoo.net.core.gateway.model.AuthUidToGatewayCheck"/>
-        <protocol id="21" location="com.zfoo.net.core.gateway.model.AuthUidToGatewayConfirm"/>
-        <protocol id="22" location="com.zfoo.net.core.gateway.model.AuthUidAsk"/>
-        <protocol id="23" location="com.zfoo.net.core.gateway.model.GatewaySessionInactiveAsk"/>
-        <protocol id="24" location="com.zfoo.net.core.gateway.model.GatewaySynchronizeSidAsk"/>
+        <protocol location="com.zfoo.net.core.gateway.model.AuthUidToGatewayCheck"/>
+        <protocol location="com.zfoo.net.core.gateway.model.AuthUidToGatewayConfirm"/>
+        <protocol location="com.zfoo.net.core.gateway.model.AuthUidAsk"/>
+        <protocol location="com.zfoo.net.core.gateway.model.GatewaySessionInactiveAsk"/>
+        <protocol location="com.zfoo.net.core.gateway.model.GatewaySynchronizeSidAsk"/>
     </module>
 
     <module id="2" name="common" minId="100" maxId="1000">
-        <protocol id="100" location="com.zfoo.net.packet.common.Message"/>
-        <protocol id="101" location="com.zfoo.net.packet.common.Error"/>
-        <protocol id="102" location="com.zfoo.net.packet.common.Heartbeat"/>
-        <protocol id="103" location="com.zfoo.net.packet.common.Ping"/>
-        <protocol id="104" location="com.zfoo.net.packet.common.Pong"/>
+        <protocol location="com.zfoo.net.packet.common.Message"/>
+        <protocol location="com.zfoo.net.packet.common.Error"/>
+        <protocol location="com.zfoo.net.packet.common.Heartbeat"/>
+        <protocol location="com.zfoo.net.packet.common.Ping"/>
+        <protocol location="com.zfoo.net.packet.common.Pong"/>
 
-        <protocol id="110" location="com.zfoo.net.packet.common.PairIntLong"/>
-        <protocol id="111" location="com.zfoo.net.packet.common.PairLong"/>
-        <protocol id="112" location="com.zfoo.net.packet.common.PairString"/>
-        <protocol id="113" location="com.zfoo.net.packet.common.PairLS"/>
-        <protocol id="114" location="com.zfoo.net.packet.common.TripleLong"/>
-        <protocol id="115" location="com.zfoo.net.packet.common.TripleString"/>
-        <protocol id="116" location="com.zfoo.net.packet.common.TripleLSS"/>
+        <protocol location="com.zfoo.net.packet.common.PairIntLong"/>
+        <protocol location="com.zfoo.net.packet.common.PairLong"/>
+        <protocol location="com.zfoo.net.packet.common.PairString"/>
+        <protocol location="com.zfoo.net.packet.common.PairLS"/>
+        <protocol location="com.zfoo.net.packet.common.TripleLong"/>
+        <protocol location="com.zfoo.net.packet.common.TripleString"/>
+        <protocol location="com.zfoo.net.packet.common.TripleLSS"/>
 
 
         <protocol id="400" location="com.zfoo.tank.common.protocol.common.PlayerInfo"/>
