@@ -52,8 +52,7 @@
 
 
     <net:config id="tankCache" protocol-location="protocol.xml"
-                csharp-protocol="${net.generate.cs.protocol}"
-                javascript-protocol="${net.generate.js.protocol}"
+                code-languages="${net.code.languages}"
                 fold-protocol="${net.fold.protocol}">
 
     </net:config>
