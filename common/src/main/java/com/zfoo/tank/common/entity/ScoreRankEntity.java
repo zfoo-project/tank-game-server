@@ -13,14 +13,17 @@
 
 package com.zfoo.tank.common.entity;
 
-import com.zfoo.orm.model.anno.*;
+import com.zfoo.orm.model.anno.EntityCache;
+import com.zfoo.orm.model.anno.Id;
+import com.zfoo.orm.model.anno.Index;
+import com.zfoo.orm.model.anno.Persister;
 import com.zfoo.orm.model.entity.IEntity;
 
 /**
  * @author jaysunxiao
  * @version 3.0
  */
-@EntityCache(cache = @Cache("tenThousand"), persister = @Persister("time30s"))
+@EntityCache
 public class ScoreRankEntity implements IEntity<Long> {
 
     @Id

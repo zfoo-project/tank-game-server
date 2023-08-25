@@ -16,7 +16,6 @@ package com.zfoo.tank.admin.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfoo.orm.model.anno.EntityCache;
 import com.zfoo.orm.model.anno.Id;
-import com.zfoo.orm.model.anno.Persister;
 import com.zfoo.orm.model.entity.IEntity;
 
 /**
@@ -24,7 +23,7 @@ import com.zfoo.orm.model.entity.IEntity;
  * @version 1.0
  * @since 2019-12-03 10:46
  */
-@EntityCache(cacheStrategy = "tenThousand", persister = @Persister("time30s"))
+@EntityCache
 public class AdminEntity implements IEntity<String> {
 
     @Id

@@ -21,8 +21,6 @@ import com.zfoo.protocol.IPacket;
  */
 public class RankInfo implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 402;
-
     private PlayerInfo playerInfo;
 
     private long time;
@@ -35,11 +33,6 @@ public class RankInfo implements IPacket {
         packet.time = time;
         packet.score = score;
         return packet;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public PlayerInfo getPlayerInfo() {

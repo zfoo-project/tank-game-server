@@ -40,7 +40,7 @@ public abstract class HotUtils {
 
     public static Map<String, Class<?>> configSimpleClazzNameMap() {
         Map<String, Class<?>> clazzSimpleNameMap = StorageContext.getStorageManager()
-                .allStorageUsableMap()
+                .storageMap()
                 .keySet()
                 .stream()
                 .collect(Collectors.toMap(key -> key.getSimpleName(), value -> value));
@@ -74,12 +74,12 @@ public abstract class HotUtils {
                 var clazz = clazzSimpleNameMap.get(fileSimpleName);
 
                 // 如果该excel在当前项目中没有被使用，则不必解析配置表，也不用去更新了
-                if (!StorageContext.getStorageManager().allStorageUsableMap().get(clazz)) {
+                var currentStorage = StorageContext.getStorageManager().getStorage(clazz);
+                if (currentStorage == null || currentStorage.isRecycle()) {
                     return;
                 }
 
-                Storage<?, ?> storage = new Storage<>();
-                storage.init(new ByteArrayInputStream(bytes), clazz, fileExtName);
+                Storage<?, ?> storage = Storage.parse(new ByteArrayInputStream(bytes), clazz, fileExtName);
                 StorageContext.getStorageManager().updateStorage(clazz, storage);
                 StorageContext.getStorageManager().inject();
             }

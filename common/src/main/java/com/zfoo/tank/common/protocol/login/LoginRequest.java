@@ -41,11 +41,6 @@ public class LoginRequest implements IPacket, IGatewayLoadBalancer {
         return account;
     }
 
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
-    }
-
     public String getAccount() {
         return account;
     }

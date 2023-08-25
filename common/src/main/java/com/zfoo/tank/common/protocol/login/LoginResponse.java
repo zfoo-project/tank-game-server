@@ -22,20 +22,12 @@ import com.zfoo.protocol.IPacket;
  * @since 2019-10-15 17:55
  */
 public class LoginResponse implements IPacket {
-
-    public static final transient short PROTOCOL_ID = 1001;
-
     private String token;
 
     public static LoginResponse valueOf(String token) {
         var packet = new LoginResponse();
         packet.token = token;
         return packet;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public String getToken() {

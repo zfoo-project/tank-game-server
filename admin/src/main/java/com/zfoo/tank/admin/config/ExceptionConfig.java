@@ -51,8 +51,7 @@ public class ExceptionConfig {
     private BaseResponse handleErrorInfo(HttpServletRequest request, HttpServletResponse response, Exception exception) {
         logger.error("request url:[{}] has an exception", request.getRequestURI(), exception);
         // 发生错误时，不要返回 200 状态码，使用通用的状态码
-        response.setStatus(CodeEnum.INTERNAL_SERVER_ERROR.getCode());
-        return BaseResponse.valueOf(CodeEnum.INTERNAL_SERVER_ERROR);
+        return BaseResponse.valueOf(CodeEnum.INTERNAL_SERVER_ERROR, exception.getMessage());
     }
 
 }

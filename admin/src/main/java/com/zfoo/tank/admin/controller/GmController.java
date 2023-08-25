@@ -35,28 +35,6 @@ public class GmController {
     @Autowired
     private LoginService loginService;
 
-    @PostMapping(value = "/api/gm/playerLevel", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public BaseResponse playerLevel(HttpServletRequest request, @RequestBody ChangePlayerLevelRequest cm) {
-        var adminEntity = loginService.adminUserInfo(request);
-        AssertionUtils.notNull(adminEntity);
-
-        var userName = cm.getUserName();
-        var userId = loginService.getUserIdByAccount(userName);
-        if (userId <= 0) {
-            return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("用户[userName:{}]不存在", userName));
-        }
-
-        try {
-            var message = NetContext.getConsumer().syncAsk(AdminPlayerLevelAsk.valueOf(userId, cm.getPlayerLevel(),cm.getExp())
-                    , Message.class, userId).packet();
-            return BaseResponse.valueOf(CodeEnum.OK, message);
-        } catch (Exception e) {
-            logger.error("玩家等级修改gm发生未知异常", e);
-            return BaseResponse.valueOf(CodeEnum.FAIL, e.toString());
-        }
-    }
-
     @PostMapping(value = "/api/gm/currency", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public BaseResponse currency(HttpServletRequest request, @RequestBody ChangeCurrencyRequest cm) {

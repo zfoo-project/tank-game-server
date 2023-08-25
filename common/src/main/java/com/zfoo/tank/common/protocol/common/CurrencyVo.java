@@ -20,8 +20,6 @@ import com.zfoo.protocol.IPacket;
  */
 public class CurrencyVo implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 401;
-
     // 能量
     private int energy;
 
@@ -37,11 +35,6 @@ public class CurrencyVo implements IPacket {
         packet.gem = gem;
         packet.gold = gold;
         return packet;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public int getEnergy() {

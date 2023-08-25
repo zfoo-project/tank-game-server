@@ -94,11 +94,10 @@ public class ExcelHotswapController {
         for (var file : newFiles) {
             try {
                 var fileSimpleName = FileUtils.fileSimpleName(file.getOriginalFilename());
-                Storage<?, ?> storage = new Storage<>();
                 var clazz = clazzSimpleNameMap.get(fileSimpleName);
                 var inputStream = file.getInputStream();
                 var fileExtName = FileUtils.fileExtName(file.getOriginalFilename());
-                storage.init(inputStream, clazz, fileExtName);
+                Storage<?, ?> storage = Storage.parse(inputStream, clazz, fileExtName);
             } catch (Exception e) {
                 return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("excel文件[{}]解析出错[{}]", file.getOriginalFilename(), e.getMessage()));
             }

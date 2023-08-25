@@ -15,10 +15,9 @@ package com.zfoo.tank.single.boot.controller;
 
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.receiver.PacketReceiver;
-import com.zfoo.net.session.model.AttributeType;
-import com.zfoo.net.session.model.Session;
-import com.zfoo.orm.model.anno.EntityCachesInjection;
+import com.zfoo.net.session.Session;
 import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.storage.model.anno.ResInjection;
 import com.zfoo.storage.model.vo.Storage;
@@ -48,7 +47,7 @@ public class TestController {
 
     @PacketReceiver
     public void atTestRequest(Session session, TestRequest request) {
-        var uid = (long) session.getAttribute(AttributeType.UID);
+        var uid = session.getUid();
 
         var player = playerEntityCaches.load(uid);
 

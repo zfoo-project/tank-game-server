@@ -50,7 +50,7 @@
             <net:address name="${registry.address.name}" url="${registry.address.url}"/>
         </net:registry>
 
-        <net:providers task-dispatch="consistent-hash">
+        <net:providers>
             <net:provider protocol-module="tankCache" provider="tankCacheProvider"/>
         </net:providers>
 
@@ -64,14 +64,14 @@
 
         <!-- 缓存策略 -->
         <orm:caches>
-            <orm:cache strategy="hundred" size="100" expire-millisecond="600000"/>
+            <orm:cache strategy="default" size="6000" expire-millisecond="600000"/>
             <orm:cache strategy="tenThousand" size="10000" expire-millisecond="600000"/>
         </orm:caches>
 
         <!-- 持久化策略 -->
         <orm:persisters>
+            <orm:persister strategy="default" type="time" config="60000"/>
             <orm:persister strategy="cron30s" type="cron" config="0/30 * * * * ?"/>
-            <orm:persister strategy="time30s" type="time" config="30000"/>
         </orm:persisters>
     </orm:config>
 </beans>

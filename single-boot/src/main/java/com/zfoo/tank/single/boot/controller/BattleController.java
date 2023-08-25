@@ -16,12 +16,11 @@ import com.zfoo.event.manager.EventBus;
 import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.receiver.PacketReceiver;
-import com.zfoo.net.session.model.AttributeType;
-import com.zfoo.net.session.model.Session;
+import com.zfoo.net.session.Session;
 import com.zfoo.net.util.SingleCache;
 import com.zfoo.orm.OrmContext;
-import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.scheduler.util.TimeUtils;
@@ -65,7 +64,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
     @ResInjection
     private Storage<Integer, PlayerExpResource> playerExpStorage;
 
-    private static final int RANK_SIZE = 20;
+    private static final int RANK_SIZE = 200;
 
     private volatile int rankLimit = 0;
     private volatile int minScore = 0;
@@ -110,7 +109,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
 
     @PacketReceiver
     public void atBattleResultRequest(Session session, BattleResultRequest request) {
-        var uid = (long) session.getAttribute(AttributeType.UID);
+        var uid = session.getUid();
         var sid = session.getSid();
 
         var player = playerEntityCaches.load(uid);
@@ -121,17 +120,15 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
         logger.info("c[{}][{}]玩家战斗结果[score:{}]", uid, sid, score);
 
         // 战斗过后如果上了排行榜，则奖励一下，每一分值一个金币，半个钻石
-        if (battleScore(player, score)) {
-            var currencyPo = player.getCurrencyPo();
-            currencyPo.setGold(currencyPo.getGold() + score);
-            currencyPo.setGem(currencyPo.getGem() + score / 2);
-            addPlayerExp(player, score);
+        var currencyPo = player.getCurrencyPo();
+        currencyPo.setGold(currencyPo.getGold() + score);
+        currencyPo.setGem(currencyPo.getGem() + score / 2);
+        addPlayerExp(player, score);
 
-            playerEntityCaches.update(player);
+        playerEntityCaches.update(player);
 
-            NetContext.getRouter().send(session, BattleResultResponse.valueOf(score));
-            NetContext.getRouter().send(session, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
-        }
+        NetContext.getRouter().send(session, BattleResultResponse.valueOf(score));
+        NetContext.getRouter().send(session, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
     }
 
 
@@ -170,7 +167,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
             playerEntity.setExp(exp - playerExpConfig.getExp());
 
             // 抛出一个升级的事件
-            EventBus.syncSubmit(PlayerLevelUpEvent.valueOf(playerEntity, level));
+            EventBus.post(PlayerLevelUpEvent.valueOf(playerEntity, level));
         }
 
         SendUtils.sendToPlayer(playerEntity, PlayerExpNotice.valueOf(playerEntity.getLevel(), playerEntity.getExp()));

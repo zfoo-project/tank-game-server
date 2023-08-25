@@ -13,13 +13,14 @@
 
 package com.zfoo.tank.cache.controller;
 
+import com.mongodb.ReadPreference;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.router.receiver.PacketReceiver;
-import com.zfoo.net.session.model.Session;
+import com.zfoo.net.session.Session;
 import com.zfoo.net.util.SingleCache;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.util.MongoIdUtils;
@@ -56,12 +57,16 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
     private SingleCache<List<RankInfo>> rankCache;
 
 
+    /**
+     * 排行榜缓存数据读写分离
+     */
     @Override
     public void onApplicationEvent(AppStartEvent appStartEvent) {
         rankCache = SingleCache.build(10 * TimeUtils.MILLIS_PER_SECOND, () -> {
             var rankList = new ArrayList<ScoreRankEntity>();
             OrmContext.getOrmManager()
                     .getCollection(ScoreRankEntity.class)
+                    .withReadPreference(ReadPreference.secondary())
                     .find()
                     .sort(Sorts.descending("score"))
                     .limit(RANK_SIZE)
@@ -70,6 +75,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
             var playerInfoMap = new HashMap<Long, PlayerInfo>();
             OrmContext.getOrmManager()
                     .getCollection(PlayerEntity.class)
+                    .withReadPreference(ReadPreference.secondary())
                     .find(Filters.in("_id", rankList.stream().map(it -> it.getPlayerId()).collect(Collectors.toList())))
                     .forEach(it -> playerInfoMap.put(it.getId(), it.toPlayerInfo()));
 
@@ -91,6 +97,9 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
         NetContext.getRouter().send(session, ScoreRankResponse.valueOf(rankCache.get()), gatewayAttachment);
     }
 
+    /**
+     * 这个是个演示，真实情况为了真正的读写分离，不应该入库的
+     */
     @PacketReceiver
     public void atBattleScoreAsk(Session session, BattleScoreAsk ask) {
         var playerId = ask.getPlayerId();

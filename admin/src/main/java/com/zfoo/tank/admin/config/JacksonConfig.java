@@ -15,13 +15,10 @@ package com.zfoo.tank.admin.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zfoo.protocol.util.JsonUtils;
-import com.zfoo.protocol.util.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.lang.reflect.Field;
 
 /**
  * 全局Json配置
@@ -36,11 +33,7 @@ public class JacksonConfig {
     private static final Logger logger = LoggerFactory.getLogger(JacksonConfig.class);
 
     @Bean
-    public ObjectMapper getObjectMapper() throws NoSuchFieldException {
-        // 断点进入ObjectMapper，看到的确和JsonUtils用的是同一个对象
-        Field field = JsonUtils.class.getDeclaredField("MAPPER");
-        ReflectionUtils.makeAccessible(field);
-        logger.info("Deploy jackson config successfully!");
-        return (ObjectMapper) ReflectionUtils.getField(field, null);
+    public ObjectMapper getObjectMapper() {
+        return JsonUtils.MAPPER;
     }
 }

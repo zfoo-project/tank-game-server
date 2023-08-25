@@ -14,8 +14,7 @@
 package com.zfoo.tank.gateway;
 
 import com.zfoo.net.core.gateway.WebsocketGatewayServer;
-import com.zfoo.net.session.model.AttributeType;
-import com.zfoo.net.session.model.Session;
+import com.zfoo.net.session.Session;
 import com.zfoo.protocol.IPacket;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.tank.common.protocol.login.GetPlayerInfoRequest;
@@ -51,7 +50,7 @@ public class Application {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
     public static final BiFunction<Session, IPacket, Boolean> packetFilter = (session, packet) -> {
         if (packet.protocolId() == LoginRequest.PROTOCOL_ID) {
-            if (session.getAttribute(AttributeType.UID) == null) {
+            if (session.getUid() <= 0) {
                 return false;
             } else {
                 return true;
@@ -63,8 +62,8 @@ public class Application {
             return false;
         }
 
-        var uid = session.getAttribute(AttributeType.UID);
-        if (uid != null) {
+        var uid = session.getUid();
+        if (uid <= 0) {
             return false;
         }
 

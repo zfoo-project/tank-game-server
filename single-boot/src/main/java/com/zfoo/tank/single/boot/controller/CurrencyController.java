@@ -12,8 +12,8 @@ package com.zfoo.tank.single.boot.controller;
 
 import com.zfoo.event.model.anno.EventReceiver;
 import com.zfoo.net.task.TaskBus;
-import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.scheduler.model.anno.Scheduler;
 import com.zfoo.storage.model.anno.ResInjection;
 import com.zfoo.storage.model.vo.Storage;
@@ -22,7 +22,6 @@ import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.resource.PlayerExpResource;
 import com.zfoo.tank.single.boot.model.PlayerLevelUpEvent;
 import com.zfoo.tank.single.boot.util.SendUtils;
-import com.zfoo.util.math.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -76,7 +75,7 @@ public class CurrencyController {
                     return;
                 }
                 // 计算需要在哪一个线程池去执行玩家的逻辑
-                var executorIndex = TaskBus.executorIndex(HashUtils.fnvHash(playerEntity.id()));
+                var executorIndex = TaskBus.calTaskExecutorHash(playerEntity.id());
                 var list = map.computeIfAbsent(executorIndex, k -> new ArrayList<>());
                 list.add(playerEntity);
             }

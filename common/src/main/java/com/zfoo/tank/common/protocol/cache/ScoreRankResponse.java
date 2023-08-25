@@ -24,8 +24,6 @@ import java.util.List;
  */
 public class ScoreRankResponse implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 3003;
-
     // 排名，按list的先后顺序
     private List<RankInfo> ranks;
 
@@ -33,11 +31,6 @@ public class ScoreRankResponse implements IPacket {
         var packet = new ScoreRankResponse();
         packet.ranks = ranks;
         return packet;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public List<RankInfo> getRanks() {

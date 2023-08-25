@@ -21,15 +21,8 @@ import com.zfoo.protocol.IPacket;
  */
 public class ScoreRankRequest implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 3002;
-
     public static ScoreRankRequest valueOf() {
         return new ScoreRankRequest();
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
 }

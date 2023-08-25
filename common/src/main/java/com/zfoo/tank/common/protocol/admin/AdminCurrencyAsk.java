@@ -9,8 +9,6 @@ import com.zfoo.protocol.IPacket;
  */
 public class AdminCurrencyAsk implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 1201;
-
     private long userId;
 
     private int gold;
@@ -26,11 +24,6 @@ public class AdminCurrencyAsk implements IPacket {
         ask.gem = gem;
         ask.energy = energy;
         return ask;
-    }
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public long getUserId() {

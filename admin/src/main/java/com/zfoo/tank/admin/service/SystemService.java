@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SystemService implements ApplicationListener<AppStartEvent> {
 
-
+    @Override
     public void onApplicationEvent(AppStartEvent appStartEvent) {
         // 热更新
         HotUtils.startHotSwapConfig();

@@ -13,7 +13,7 @@
 package com.zfoo.tank.single.boot.client;
 
 import com.zfoo.net.router.receiver.PacketReceiver;
-import com.zfoo.net.session.model.Session;
+import com.zfoo.net.session.Session;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.tank.common.protocol.cache.ScoreRankResponse;
 import com.zfoo.tank.common.protocol.login.GetPlayerInfoResponse;

@@ -16,12 +16,11 @@ import com.zfoo.event.manager.EventBus;
 import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.receiver.PacketReceiver;
-import com.zfoo.net.session.model.AttributeType;
-import com.zfoo.net.session.model.Session;
+import com.zfoo.net.session.Session;
 import com.zfoo.net.util.SingleCache;
 import com.zfoo.orm.OrmContext;
-import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.scheduler.util.TimeUtils;
@@ -109,7 +108,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
 
     @PacketReceiver
     public void atBattleResultRequest(Session session, BattleResultRequest request) {
-        var uid = (long) session.getAttribute(AttributeType.UID);
+        var uid = session.getUid();
         var sid = session.getSid();
 
         var player = playerEntityCaches.load(uid);
@@ -168,7 +167,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
             playerEntity.setExp(exp - playerExpConfig.getExp());
 
             // 抛出一个升级的事件
-            EventBus.syncSubmit(PlayerLevelUpEvent.valueOf(playerEntity, level));
+            EventBus.post(PlayerLevelUpEvent.valueOf(playerEntity, level));
         }
 
         SendUtils.sendToPlayer(playerEntity, PlayerExpNotice.valueOf(playerEntity.getLevel(), playerEntity.getExp()));

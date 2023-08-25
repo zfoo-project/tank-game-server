@@ -39,18 +39,7 @@ import org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfigurati
  * @since 2021-01-20 16:36
  */
 @Ignore
-@SpringBootApplication(exclude = {
-        // 排除MongoDB自动配置
-        MongoDataAutoConfiguration.class,
-        MongoRepositoriesAutoConfiguration.class,
-        MongoAutoConfiguration.class,
-        MongoReactiveAutoConfiguration.class,
-        MongoReactiveDataAutoConfiguration.class,
-        MongoReactiveRepositoriesAutoConfiguration.class,
-
-        TaskExecutionAutoConfiguration.class,
-        TaskSchedulingAutoConfiguration.class
-})
+@SpringBootApplication
 public class ApplicationTest {
 
     static {
