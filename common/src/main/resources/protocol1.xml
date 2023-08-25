@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!-- native为内部消息，common是公共消息每个模块都能使用 -->
+<protocols author="jaysunxiao" packages="true">
+
+    <module id="1" name="native" minId="0" maxId="100">
+        <protocol location="com.zfoo.net.router.attachment"/>
+        <protocol location="com.zfoo.net.core.gateway.model"/>
+    </module>
+
+    <module id="2" name="common" minId="100" maxId="1000">
+        <protocol id="100" location="com.zfoo.net.packet.common"/>
+        <protocol id="1000" location="com.zfoo.tank.common.protocol"/>
+    </module>
+
+    <module id="3" name="tankHome" minId="1000" maxId="3000"/>
+    <module id="4" name="tankCache" minId="3000" maxId="4000"/>
+
+</protocols>
