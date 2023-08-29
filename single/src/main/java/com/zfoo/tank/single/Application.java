@@ -48,6 +48,7 @@ public class Application {
         // websocket服务器
         var websocketServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT));
         websocketServer.start();
+        System.out.println("66666");
     }
 
 }

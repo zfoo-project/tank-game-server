@@ -3,7 +3,7 @@
 <!-- native为内部消息，common是公共消息每个模块都能使用 -->
 <protocols>
 
-    <module id="1" name="native" minId="0" maxId="100">
+    <module id="1" name="native">
         <protocol location="com.zfoo.net.router.attachment.SignalAttachment"/>
         <protocol location="com.zfoo.net.router.attachment.SignalOnlyAttachment"/>
         <protocol location="com.zfoo.net.router.attachment.GatewayAttachment"/>
@@ -19,7 +19,7 @@
         <protocol location="com.zfoo.net.core.gateway.model.GatewaySynchronizeSidAsk"/>
     </module>
 
-    <module id="2" name="common" minId="100" maxId="1000">
+    <module id="2" name="common">
         <protocol location="com.zfoo.net.packet.common.Message"/>
         <protocol location="com.zfoo.net.packet.common.Error"/>
         <protocol location="com.zfoo.net.packet.common.Heartbeat"/>
@@ -41,7 +41,7 @@
 
     </module>
 
-    <module id="3" name="tankHome" minId="1000" maxId="3000">
+    <module id="3" name="tankHome">
         <protocol id="1000" location="com.zfoo.tank.common.protocol.login.LoginRequest"/>
         <protocol id="1001" location="com.zfoo.tank.common.protocol.login.LoginResponse"/>
         <protocol id="1002" location="com.zfoo.tank.common.protocol.login.LogoutRequest"/>
@@ -61,14 +61,14 @@
         <protocol id="1301" location="com.zfoo.tank.common.protocol.TestResponse"/>
     </module>
 
-    <module id="4" name="tankCache" minId="3000" maxId="4000">
+    <module id="4" name="tankCache">
         <protocol id="3000" location="com.zfoo.tank.common.protocol.cache.BattleScoreAsk"/>
         <protocol id="3001" location="com.zfoo.tank.common.protocol.cache.BattleScoreAnswer"/>
         <protocol id="3002" location="com.zfoo.tank.common.protocol.cache.ScoreRankRequest"/>
         <protocol id="3003" location="com.zfoo.tank.common.protocol.cache.ScoreRankResponse"/>
     </module>
 
-    <module id="5" name="chat" minId="4000" maxId="5000">
+    <module id="5" name="chat">
         <protocol id="4000" location="com.zfoo.tank.common.protocol.chat.ChatMessage"/>
         <protocol id="4001" location="com.zfoo.tank.common.protocol.chat.GroupChatMessageNotice"/>
         <protocol id="4002" location="com.zfoo.tank.common.protocol.chat.GroupChatRequest"/>
