@@ -57,7 +57,7 @@
         <!-- elastic search -->
         <elastic.search.version>8.4.3</elastic.search.version>
 
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <file.encoding>UTF-8</file.encoding>
 
         <!-- maven core plugin(maven核心插件) -->
