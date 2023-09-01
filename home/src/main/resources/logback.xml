@@ -2,11 +2,9 @@
 
 <configuration scan="false" debug="false">
 
-    <contextName>com.zfoo.tank.home</contextName>
-
     <property name="LOG_HOME" value="log/"/>
-    <property name="PATTERN_FILE" value="%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
-    <property name="PATTERN_CONSOLE" value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%-5level)] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
+    <property name="PATTERN_FILE" value="%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger.%M\(%F:%line\) - %msg%n"/>
+    <property name="PATTERN_CONSOLE" value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%-5level)] [%thread] %logger.%M\(%F:%line\) - %msg%n"/>
     <!-- 负责写日志,控制台日志，会打印所有的包的所有级别日志 -->
     <appender name="zfoo_console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

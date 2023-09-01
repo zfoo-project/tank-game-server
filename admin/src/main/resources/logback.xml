@@ -2,13 +2,11 @@
 
 <configuration scan="false" debug="false">
 
-    <contextName>com.zfoo.tank.admin</contextName>
-
     <property name="LOG_HOME" value="log/"/>
     <property name="PATTERN_FILE"
-              value="%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%thread] %logger.%M\(%F:%line\) - %msg%n"/>
     <property name="PATTERN_CONSOLE"
-              value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%-5level)] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%-5level)] [%thread] %logger.%M\(%F:%line\) - %msg%n"/>
 
     <!-- debug日志，只有一个文件，只收集debug级别日志，每次启动会覆盖以前的debug日志 -->
     <appender name="zfoo_debug" class="ch.qos.logback.core.FileAppender">

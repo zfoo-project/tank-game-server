@@ -2,11 +2,8 @@
 
 <configuration scan="false" debug="false">
 
-    <contextName>com.zfoo.tank.home</contextName>
+    <property name="PATTERN_CONSOLE" value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%5level)] [%thread] %logger.%M\(%F:%line\) - %msg%n"/>
 
-    <property name="LOG_HOME" value="log/"/>
-    <property name="PATTERN_CONSOLE" value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%-5level)] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
-    <!-- 负责写日志,控制台日志，会打印所有的包的所有级别日志 -->
     <appender name="zfoo_console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${PATTERN_CONSOLE}</pattern>
@@ -14,15 +11,8 @@
         </encoder>
     </appender>
 
-    <!-- 根logger -->
     <root level="info">
         <appender-ref ref="zfoo_console"/>
     </root>
-
-    <logger name="ch.qos.logback" level="info"/>
-    <logger name="org.springframework" level="info"/>
-    <logger name="io.netty" level="info"/>
-    <logger name="org.mongodb" level="warn"/>
-    <logger name="com.intellij.rt" level="warn"/>
 
 </configuration>
