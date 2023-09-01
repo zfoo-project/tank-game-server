@@ -40,7 +40,7 @@ public class ProtocolXml {
     }
     
     public static String beginProtocols() {
-        return "<protocols author=\"zfoo\">";
+        return "<protocols>";
     }
     
     public static String endProtocols() {
@@ -48,8 +48,8 @@ public class ProtocolXml {
     }
     
     public static String beginModule(ProtoModule module) {
-        return StringUtils.format("<module id={}{}{} name={}{}{} minId={}{}{} maxId={}{}{}>", StringUtils.QUOTATION_MARK, module.id, StringUtils.QUOTATION_MARK, StringUtils.QUOTATION_MARK, module.name, StringUtils.QUOTATION_MARK
-                , StringUtils.QUOTATION_MARK, module.minId, StringUtils.QUOTATION_MARK, StringUtils.QUOTATION_MARK, module.maxId, StringUtils.QUOTATION_MARK);
+        return StringUtils.format("<module id={}{}{} name={}{}{}>", StringUtils.QUOTATION_MARK, module.id, StringUtils.QUOTATION_MARK, StringUtils.QUOTATION_MARK, module.name, StringUtils.QUOTATION_MARK
+                , StringUtils.QUOTATION_MARK, StringUtils.QUOTATION_MARK, StringUtils.QUOTATION_MARK, StringUtils.QUOTATION_MARK);
     }
     
     public static String endModule() {

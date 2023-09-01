@@ -27,7 +27,7 @@ import com.zfoo.util.math.NumberUtils;
 import com.zfoo.util.security.AesUtils;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author jaysunxiao
