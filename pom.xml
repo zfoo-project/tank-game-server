@@ -20,6 +20,8 @@
         <module>cache</module>
         <module>single</module>
         <module>single-boot</module>
+        <module>zfoo-graalvm-asimple</module>
+        <module>zfoo-graalvm-event</module>
     </modules>
 
     <properties>

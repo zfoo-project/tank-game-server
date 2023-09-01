@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.zfoo.tank</groupId>
-    <artifactId>single-boot</artifactId>
+    <artifactId>zfoo-graalvm-asimple</artifactId>
     <version>1.0</version>
 
     <packaging>jar</packaging>
@@ -68,9 +68,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.zfoo.tank</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring.boot.version}</version>
         </dependency>
 
         <dependency>
@@ -85,6 +85,10 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -97,6 +101,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>com.zfoo.asimple.AsimpleContext</mainClass>
+                    <layout>ZIP</layout>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -107,6 +113,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>
