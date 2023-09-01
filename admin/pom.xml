@@ -168,7 +168,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <forkMode>once</forkMode>
                     <threadCount>10</threadCount>
                     <argLine>-Dfile.encoding=${file.encoding}</argLine>
                 </configuration>

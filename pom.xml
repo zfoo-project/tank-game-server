@@ -141,7 +141,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <forkMode>once</forkMode>
                     <threadCount>10</threadCount>
                     <argLine>-Dfile.encoding=${file.encoding}</argLine><!--argLine传入JVM选项-->
                     <!--<skipTests>true</skipTests>-->
