@@ -13,7 +13,7 @@
 
 package com.zfoo.tank.single;
 
-import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.event.model.AppStartEvent;
 import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.net.core.websocket.WebsocketServer;

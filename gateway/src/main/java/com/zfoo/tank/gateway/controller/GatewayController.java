@@ -10,7 +10,7 @@
 
 package com.zfoo.tank.gateway.controller;
 
-import com.zfoo.event.model.anno.EventReceiver;
+import com.zfoo.event.anno.EventReceiver;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.core.gateway.model.GatewaySessionInactiveEvent;
 import com.zfoo.net.router.attachment.GatewayAttachment;

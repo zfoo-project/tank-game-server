@@ -13,7 +13,7 @@
 
 package com.zfoo.tank.admin.service;
 
-import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.event.model.AppStartEvent;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.tank.admin.model.entity.AdminEntity;

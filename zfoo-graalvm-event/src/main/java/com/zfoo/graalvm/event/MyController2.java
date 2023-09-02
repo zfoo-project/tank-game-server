@@ -12,8 +12,8 @@
 
 package com.zfoo.graalvm.event;
 
-import com.zfoo.event.model.anno.Bus;
-import com.zfoo.event.model.anno.EventReceiver;
+import com.zfoo.event.anno.Bus;
+import com.zfoo.event.anno.EventReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

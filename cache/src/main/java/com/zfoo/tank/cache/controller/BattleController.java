@@ -16,7 +16,7 @@ package com.zfoo.tank.cache.controller;
 import com.mongodb.ReadPreference;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
-import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.event.model.AppStartEvent;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.router.receiver.PacketReceiver;

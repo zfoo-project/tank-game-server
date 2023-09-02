@@ -10,7 +10,7 @@
 
 package com.zfoo.tank.home.controller;
 
-import com.zfoo.event.model.anno.EventReceiver;
+import com.zfoo.event.anno.EventReceiver;
 import com.zfoo.net.task.TaskBus;
 import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;

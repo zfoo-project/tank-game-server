@@ -14,7 +14,7 @@
 package com.zfoo.tank.admin;
 
 
-import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.event.model.AppStartEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

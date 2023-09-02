@@ -10,7 +10,7 @@
 
 package com.zfoo.tank.single.model;
 
-import com.zfoo.event.model.event.IEvent;
+import com.zfoo.event.model.IEvent;
 import com.zfoo.tank.common.entity.PlayerEntity;
 
 /**

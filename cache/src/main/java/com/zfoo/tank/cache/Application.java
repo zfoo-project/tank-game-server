@@ -12,7 +12,7 @@ package com.zfoo.tank.cache;/*
  */
 
 
-import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.event.model.AppStartEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
