@@ -14,7 +14,7 @@ import com.zfoo.event.anno.EventReceiver;
 import com.zfoo.net.task.TaskBus;
 import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
-import com.zfoo.scheduler.model.anno.Scheduler;
+import com.zfoo.scheduler.anno.Scheduler;
 import com.zfoo.storage.anno.StorageInjection;
 import com.zfoo.storage.manager.ObjectStorage;
 import com.zfoo.tank.common.entity.PlayerEntity;
