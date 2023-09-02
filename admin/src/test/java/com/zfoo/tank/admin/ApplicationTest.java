@@ -16,7 +16,7 @@ package com.zfoo.tank.admin;
 
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.tank.common.constant.TankDeployEnum;
-import com.zfoo.util.ThreadUtils;
+import com.zfoo.protocol.util.ThreadUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 

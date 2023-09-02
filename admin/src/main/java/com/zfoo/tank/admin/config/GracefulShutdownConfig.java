@@ -14,7 +14,7 @@
 package com.zfoo.tank.admin.config;
 
 import com.zfoo.protocol.exception.ExceptionUtils;
-import com.zfoo.util.ThreadUtils;
+import com.zfoo.protocol.util.ThreadUtils;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.threads.ThreadPoolExecutor;
 import org.slf4j.Logger;

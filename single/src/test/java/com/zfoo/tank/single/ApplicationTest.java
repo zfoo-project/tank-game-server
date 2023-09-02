@@ -17,7 +17,7 @@ import com.zfoo.event.model.event.AppStartEvent;
 import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.net.core.websocket.WebsocketServer;
 import com.zfoo.tank.common.constant.TankDeployEnum;
-import com.zfoo.util.ThreadUtils;
+import com.zfoo.protocol.util.ThreadUtils;
 import com.zfoo.util.net.HostAndPort;
 import com.zfoo.util.net.NetUtils;
 import org.junit.Ignore;

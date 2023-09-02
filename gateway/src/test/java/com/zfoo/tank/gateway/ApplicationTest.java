@@ -16,7 +16,7 @@ package com.zfoo.tank.gateway;
 import com.zfoo.net.core.gateway.GatewayServer;
 import com.zfoo.net.core.gateway.WebsocketGatewayServer;
 import com.zfoo.tank.common.constant.TankDeployEnum;
-import com.zfoo.util.ThreadUtils;
+import com.zfoo.protocol.util.ThreadUtils;
 import com.zfoo.util.net.HostAndPort;
 import com.zfoo.util.net.NetUtils;
 import org.junit.Ignore;
