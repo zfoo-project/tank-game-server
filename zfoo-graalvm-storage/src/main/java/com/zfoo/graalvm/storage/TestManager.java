@@ -15,7 +15,7 @@ package com.zfoo.graalvm.storage;
 
 import com.zfoo.graalvm.storage.resource.TestResource;
 import com.zfoo.storage.anno.StorageInjection;
-import com.zfoo.storage.manager.ObjectStorage;
+import com.zfoo.storage.manager.IStorage;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,6 +26,6 @@ import org.springframework.stereotype.Component;
 public class TestManager {
 
     @StorageInjection
-    public ObjectStorage<Integer, TestResource> testResources;
+    public IStorage<Integer, TestResource> testResources;
 
 }
