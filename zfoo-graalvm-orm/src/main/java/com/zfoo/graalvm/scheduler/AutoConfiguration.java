@@ -12,7 +12,7 @@
 
 package com.zfoo.graalvm.scheduler;
 
-import com.zfoo.orm.model.config.OrmConfig;
+import com.zfoo.orm.config.OrmConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

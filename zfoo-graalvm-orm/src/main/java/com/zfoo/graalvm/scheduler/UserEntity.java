@@ -13,8 +13,8 @@
 
 package com.zfoo.graalvm.scheduler;
 
-import com.zfoo.orm.model.anno.*;
-import com.zfoo.orm.model.entity.IEntity;
+import com.zfoo.orm.anno.*;
+import com.zfoo.orm.model.IEntity;
 
 import java.util.List;
 

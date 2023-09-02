@@ -15,8 +15,8 @@ import com.zfoo.net.NetContext;
 import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.Session;
+import com.zfoo.orm.anno.EntityCacheAutowired;
 import com.zfoo.orm.cache.IEntityCaches;
-import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.storage.anno.StorageAutowired;
 import com.zfoo.storage.manager.IStorage;
 import com.zfoo.tank.common.entity.PlayerEntity;
@@ -42,7 +42,7 @@ public class BattleController {
 
     private static final Logger logger = LoggerFactory.getLogger(BattleController.class);
 
-    @EntityCachesInjection
+    @EntityCacheAutowired
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
 
     @StorageAutowired

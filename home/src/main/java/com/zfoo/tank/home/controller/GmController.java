@@ -4,8 +4,8 @@ import com.zfoo.net.NetContext;
 import com.zfoo.net.packet.common.Message;
 import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.Session;
+import com.zfoo.orm.anno.EntityCacheAutowired;
 import com.zfoo.orm.cache.IEntityCaches;
-import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.protocol.PlayerExpNotice;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 public class GmController {
     private static final Logger logger = LoggerFactory.getLogger(GmController.class);
 
-    @EntityCachesInjection
+    @EntityCacheAutowired
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
 
     @PacketReceiver

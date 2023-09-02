@@ -14,9 +14,9 @@
 package com.zfoo.tank.common.entity;
 
 
-import com.zfoo.orm.model.anno.EntityCache;
-import com.zfoo.orm.model.anno.Id;
-import com.zfoo.orm.model.entity.IEntity;
+import com.zfoo.orm.anno.EntityCache;
+import com.zfoo.orm.anno.Id;
+import com.zfoo.orm.model.IEntity;
 import com.zfoo.tank.common.protocol.chat.ChatMessage;
 
 /**

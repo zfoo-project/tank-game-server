@@ -22,8 +22,8 @@ import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.net.util.HashUtils;
 import com.zfoo.orm.OrmContext;
+import com.zfoo.orm.anno.EntityCacheAutowired;
 import com.zfoo.orm.cache.IEntityCaches;
-import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.scheduler.util.TimeUtils;
@@ -56,7 +56,7 @@ public class LoginController {
     @StorageAutowired
     public IStorage<String, PropertyResource> propertyResources;
 
-    @EntityCachesInjection
+    @EntityCacheAutowired
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
 
     @Value("${spring.profiles.active}")
