@@ -19,13 +19,14 @@ import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.IOUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.model.resource.ResourceEnum;
-import com.zfoo.storage.model.vo.Storage;
+import com.zfoo.storage.model.vo.StorageObject;
 import com.zfoo.tank.admin.service.LoginService;
 import com.zfoo.tank.common.constant.GameConstant;
 import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.tank.common.result.BaseResponse;
 import com.zfoo.tank.common.result.CodeEnum;
 import com.zfoo.tank.common.util.HotUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +37,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -97,7 +97,7 @@ public class ExcelHotswapController {
                 var clazz = clazzSimpleNameMap.get(fileSimpleName);
                 var inputStream = file.getInputStream();
                 var fileExtName = FileUtils.fileExtName(file.getOriginalFilename());
-                Storage<?, ?> storage = Storage.parse(inputStream, clazz, fileExtName);
+                StorageObject<?, ?> storage = StorageObject.parse(inputStream, clazz, fileExtName);
             } catch (Exception e) {
                 return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("excel文件[{}]解析出错[{}]", file.getOriginalFilename(), e.getMessage()));
             }

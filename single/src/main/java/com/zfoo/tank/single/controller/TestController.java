@@ -19,8 +19,8 @@ import com.zfoo.net.session.Session;
 import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.protocol.util.JsonUtils;
-import com.zfoo.storage.model.anno.ResInjection;
-import com.zfoo.storage.model.vo.Storage;
+import com.zfoo.storage.anno.StorageInjection;
+import com.zfoo.storage.model.vo.StorageObject;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.TestRequest;
 import com.zfoo.tank.common.protocol.TestResponse;
@@ -42,8 +42,8 @@ public class TestController {
     @EntityCachesInjection
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
 
-    @ResInjection
-    private Storage<Integer, PlayerExpResource> playerExpStorage;
+    @StorageInjection
+    private StorageObject<Integer, PlayerExpResource> playerExpStorageObject;
 
     @PacketReceiver
     public void atTestRequest(Session session, TestRequest request) {
@@ -53,7 +53,7 @@ public class TestController {
 
         logger.info("玩家[name:{}][id:{}]收到消息[{}]", player.getName(), player.getId(), JsonUtils.object2String(request));
 
-        var playerExpResource = playerExpStorage.get(player.getLevel());
+        var playerExpResource = playerExpStorageObject.get(player.getLevel());
         logger.info("当前的钻石奖励是[{}]", playerExpResource.getDiamond());
 
         player.setMessage(request.getMessage());

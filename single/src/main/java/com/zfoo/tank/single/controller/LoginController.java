@@ -20,14 +20,15 @@ import com.zfoo.net.packet.common.Ping;
 import com.zfoo.net.packet.common.Pong;
 import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.Session;
+import com.zfoo.net.util.HashUtils;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.scheduler.util.TimeUtils;
-import com.zfoo.storage.model.anno.ResInjection;
-import com.zfoo.storage.model.vo.Storage;
+import com.zfoo.storage.anno.StorageInjection;
+import com.zfoo.storage.model.vo.StorageObject;
 import com.zfoo.tank.common.constant.I18nEnum;
 import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.tank.common.entity.AccountEntity;
@@ -36,7 +37,6 @@ import com.zfoo.tank.common.protocol.login.*;
 import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.util.TokenUtils;
 import com.zfoo.tank.single.service.SystemService;
-import com.zfoo.net.util.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +53,8 @@ public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    @ResInjection
-    public Storage<String, PropertyResource> propertyResources;
+    @StorageInjection
+    public StorageObject<String, PropertyResource> propertyResources;
 
     @EntityCachesInjection
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;

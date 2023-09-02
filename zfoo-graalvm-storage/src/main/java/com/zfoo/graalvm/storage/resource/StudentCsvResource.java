@@ -13,17 +13,17 @@
 
 package com.zfoo.graalvm.storage.resource;
 
-import com.zfoo.storage.model.anno.Id;
-import com.zfoo.storage.model.anno.Index;
-import com.zfoo.storage.model.anno.GraalvmNativeResource;
-import com.zfoo.storage.model.anno.Resource;
+import com.zfoo.storage.anno.GraalvmNativeStorage;
+import com.zfoo.storage.anno.Id;
+import com.zfoo.storage.anno.Index;
+import com.zfoo.storage.anno.Storage;
 
 /**
  * @author godotg
  * @version 3.0
  */
-@Resource(alias="StudentCsvResource")
-@GraalvmNativeResource("classpath:excel/StudentCsvResource.csv")
+@Storage("StudentCsvResource")
+@GraalvmNativeStorage("classpath:excel/StudentCsvResource.csv")
 public class StudentCsvResource {
 
     @Id

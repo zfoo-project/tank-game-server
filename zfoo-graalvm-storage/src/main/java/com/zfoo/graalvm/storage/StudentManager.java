@@ -14,8 +14,8 @@
 package com.zfoo.graalvm.storage;
 
 import com.zfoo.graalvm.storage.resource.StudentCsvResource;
-import com.zfoo.storage.model.anno.ResInjection;
-import com.zfoo.storage.model.vo.Storage;
+import com.zfoo.storage.anno.StorageInjection;
+import com.zfoo.storage.model.vo.StorageObject;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentManager {
 
-    @ResInjection
-    public Storage<Integer, StudentCsvResource> studentCsvResources;
+    @StorageInjection
+    public StorageObject<Integer, StudentCsvResource> studentCsvResources;
 
 }

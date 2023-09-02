@@ -13,14 +13,14 @@
 package com.zfoo.tank.single.boot.godot;
 
 import com.zfoo.protocol.IPacket;
-import com.zfoo.storage.model.anno.Id;
-import com.zfoo.storage.model.anno.Resource;
+import com.zfoo.storage.anno.Id;
+import com.zfoo.storage.anno.Storage;
 
 /**
  * @author godotg
  * @version 3.0
  */
-@Resource
+@Storage
 public class GodotCommonResource implements IPacket {
 
     @Id

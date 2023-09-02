@@ -13,9 +13,9 @@
 
 package com.zfoo.graalvm.storage.resource;
 
-import com.zfoo.storage.model.anno.Id;
-import com.zfoo.storage.model.anno.GraalvmNativeResource;
-import com.zfoo.storage.model.anno.Resource;
+import com.zfoo.storage.anno.GraalvmNativeStorage;
+import com.zfoo.storage.anno.Id;
+import com.zfoo.storage.anno.Storage;
 
 import java.util.Map;
 
@@ -23,8 +23,8 @@ import java.util.Map;
  * @author godotg
  * @version 3.0
  */
-@Resource
-@GraalvmNativeResource("classpath:excel/TestResource.json")
+@Storage
+@GraalvmNativeStorage("classpath:excel/TestResource.json")
 public class TestResource {
 
 	@Id

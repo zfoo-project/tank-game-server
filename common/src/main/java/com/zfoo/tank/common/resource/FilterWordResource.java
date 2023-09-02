@@ -13,15 +13,15 @@
 
 package com.zfoo.tank.common.resource;
 
-import com.zfoo.storage.model.anno.Id;
-import com.zfoo.storage.model.anno.Resource;
+import com.zfoo.storage.anno.Id;
+import com.zfoo.storage.anno.Storage;
 
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2020-04-22 14:39
  */
-@Resource
+@Storage
 public class FilterWordResource {
 
     @Id

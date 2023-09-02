@@ -17,8 +17,8 @@ import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
-import com.zfoo.storage.model.anno.ResInjection;
-import com.zfoo.storage.model.vo.Storage;
+import com.zfoo.storage.anno.StorageInjection;
+import com.zfoo.storage.model.vo.StorageObject;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.protocol.PlayerExpNotice;
@@ -45,8 +45,8 @@ public class BattleController {
     @EntityCachesInjection
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
 
-    @ResInjection
-    private Storage<Integer, PlayerExpResource> playerExpStorage;
+    @StorageInjection
+    private StorageObject<Integer, PlayerExpResource> playerExpStorage;
 
     @PacketReceiver
     public void atBattleResultRequest(Session session, BattleResultRequest request, GatewayAttachment gatewayAttachment) {
