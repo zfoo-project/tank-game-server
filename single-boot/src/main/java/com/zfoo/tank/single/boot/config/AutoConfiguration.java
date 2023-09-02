@@ -14,7 +14,7 @@ package com.zfoo.tank.single.boot.config;
 
 import com.zfoo.net.config.model.NetConfig;
 import com.zfoo.orm.model.config.OrmConfig;
-import com.zfoo.storage.model.config.StorageConfig;
+import com.zfoo.storage.config.StorageConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

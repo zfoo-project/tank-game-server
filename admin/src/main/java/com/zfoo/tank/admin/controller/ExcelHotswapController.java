@@ -18,8 +18,8 @@ import com.zfoo.protocol.util.AssertionUtils;
 import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.IOUtils;
 import com.zfoo.protocol.util.StringUtils;
-import com.zfoo.storage.model.resource.ResourceEnum;
-import com.zfoo.storage.model.vo.StorageObject;
+import com.zfoo.storage.interpreter.data.StorageEnum;
+import com.zfoo.storage.manager.ObjectStorage;
 import com.zfoo.tank.admin.service.LoginService;
 import com.zfoo.tank.common.constant.GameConstant;
 import com.zfoo.tank.common.constant.TankDeployEnum;
@@ -81,8 +81,8 @@ public class ExcelHotswapController {
         for (var file : files) {
             var fileSimpleName = FileUtils.fileSimpleName(file.getOriginalFilename());
             var fileExtName = FileUtils.fileExtName(file.getOriginalFilename());
-            if (!ResourceEnum.containsResourceEnum(fileExtName)) {
-                return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("文件[{}]必须是[{}]格式的", file.getOriginalFilename(), ResourceEnum.typesToString()));
+            if (!StorageEnum.containsResourceEnum(fileExtName)) {
+                return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("文件[{}]必须是[{}]格式的", file.getOriginalFilename(), StorageEnum.typesToString()));
             }
 
             if (clazzSimpleNameMap.containsKey(fileSimpleName)) {
@@ -97,7 +97,7 @@ public class ExcelHotswapController {
                 var clazz = clazzSimpleNameMap.get(fileSimpleName);
                 var inputStream = file.getInputStream();
                 var fileExtName = FileUtils.fileExtName(file.getOriginalFilename());
-                StorageObject<?, ?> storage = StorageObject.parse(inputStream, clazz, fileExtName);
+                ObjectStorage<?, ?> storage = ObjectStorage.parse(inputStream, clazz, fileExtName);
             } catch (Exception e) {
                 return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("excel文件[{}]解析出错[{}]", file.getOriginalFilename(), e.getMessage()));
             }

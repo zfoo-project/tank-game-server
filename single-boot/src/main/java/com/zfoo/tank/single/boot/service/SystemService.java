@@ -18,7 +18,7 @@ import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.protocol.collection.tree.DfaWordTree;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.anno.StorageInjection;
-import com.zfoo.storage.model.vo.StorageObject;
+import com.zfoo.storage.manager.ObjectStorage;
 import com.zfoo.tank.common.resource.FilterWordResource;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ public class SystemService implements ApplicationListener<AppStartEvent> {
 
     // 下面是关键词过滤相关
     @StorageInjection
-    private StorageObject<Integer, FilterWordResource> filterWordResources;
+    private ObjectStorage<Integer, FilterWordResource> filterWordResources;
 
     @Override
     public void onApplicationEvent(AppStartEvent event) {

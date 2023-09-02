@@ -29,7 +29,7 @@ import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.scheduler.util.TimeUtils;
 import com.zfoo.storage.anno.StorageInjection;
-import com.zfoo.storage.model.vo.StorageObject;
+import com.zfoo.storage.manager.ObjectStorage;
 import com.zfoo.tank.common.constant.I18nEnum;
 import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.tank.common.entity.AccountEntity;
@@ -53,7 +53,7 @@ public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @StorageInjection
-    public StorageObject<String, PropertyResource> propertyResources;
+    public ObjectStorage<String, PropertyResource> propertyResources;
 
     @EntityCachesInjection
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;

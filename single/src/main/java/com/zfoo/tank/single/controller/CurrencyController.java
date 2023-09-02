@@ -16,7 +16,7 @@ import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.scheduler.model.anno.Scheduler;
 import com.zfoo.storage.anno.StorageInjection;
-import com.zfoo.storage.model.vo.StorageObject;
+import com.zfoo.storage.manager.ObjectStorage;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.resource.PlayerExpResource;
@@ -44,7 +44,7 @@ public class CurrencyController {
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
 
     @StorageInjection
-    private StorageObject<Integer, PlayerExpResource> playerExpStorage;
+    private ObjectStorage<Integer, PlayerExpResource> playerExpStorage;
 
     @EventReceiver
     public void onPlayerLevelUpEvent(PlayerLevelUpEvent event) {
