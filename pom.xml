@@ -23,6 +23,7 @@
         <module>zfoo-graalvm-asimple</module>
         <module>zfoo-graalvm-event</module>
         <module>zfoo-graalvm-storage</module>
+        <module>zfoo-graalvm-scheduler</module>
     </modules>
 
     <properties>
