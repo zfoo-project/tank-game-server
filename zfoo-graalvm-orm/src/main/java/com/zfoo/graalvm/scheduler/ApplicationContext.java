@@ -15,7 +15,7 @@ package com.zfoo.graalvm.scheduler;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.protocol.util.JsonUtils;
-import com.zfoo.util.math.RandomUtils;
+import com.zfoo.protocol.util.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

@@ -16,7 +16,7 @@ package com.zfoo.tank.common.util;
 import com.zfoo.protocol.model.Triple;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.scheduler.util.TimeUtils;
-import com.zfoo.util.math.RandomUtils;
+import com.zfoo.protocol.util.RandomUtils;
 import com.zfoo.util.security.AesUtils;
 
 /**
