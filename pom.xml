@@ -22,6 +22,7 @@
         <module>single-boot</module>
         <module>zfoo-graalvm-asimple</module>
         <module>zfoo-graalvm-event</module>
+        <module>zfoo-graalvm-storage</module>
     </modules>
 
     <properties>

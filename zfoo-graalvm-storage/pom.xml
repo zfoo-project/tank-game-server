@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.3</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.zfoo.tank</groupId>
+    <artifactId>zfoo-graalvm-storage</artifactId>
+    <version>1.0</version>
+
+    <packaging>jar</packaging>
+
+    <properties>
+        <zfoo.version>3.0</zfoo.version>
+
+        <!-- spring and spring boot -->
+        <spring.version>6.0.11</spring.version>
+        <spring.boot.version>3.1.3</spring.boot.version>
+        <junit.version>4.12</junit.version>
+
+        <!-- bytecode enhancement(字节码增强) -->
+        <javassist.version>3.29.2-GA</javassist.version>
+        <bytebuddy.version>1.14.6</bytebuddy.version>
+
+        <!-- network framework -->
+        <netty.version>4.1.97.Final</netty.version>
+
+        <!-- zookeeper -->
+        <curator.version>5.5.0</curator.version>
+
+        <!-- hardware detection(硬件检测) -->
+        <oshi.version>6.4.5</oshi.version>
+
+        <!-- database and cache -->
+        <mongodb-driver-sync.version>4.10.2</mongodb-driver-sync.version>
+        <caffeine.version>3.1.8</caffeine.version>
+
+        <!-- Office document parsing(office文档解析包) -->
+        <poi.version>5.2.3</poi.version>
+        <csv.version>1.10.0</csv.version>
+
+        <java.version>17</java.version>
+        <file.encoding>UTF-8</file.encoding>
+
+        <!-- maven core plugin(maven核心插件) -->
+        <maven-clean-plugin.version>3.3.1</maven-clean-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+        <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+        <maven-shade-plugin.version>3.5.0</maven-shade-plugin.version>
+        <versions-maven-plugin.version>2.16.0</versions-maven-plugin.version>
+
+        <project.build.sourceEncoding>${file.encoding}</project.build.sourceEncoding>
+        <maven.compiler.encoding>${file.encoding}</maven.compiler.encoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zfoo</groupId>
+            <artifactId>boot</artifactId>
+            <version>${zfoo.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

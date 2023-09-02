@@ -1,0 +1,6 @@
+storage:
+  id: storageManager
+  scan:
+    package: com.zfoo.**.resource
+  resource:
+    location: classpath:/excel
