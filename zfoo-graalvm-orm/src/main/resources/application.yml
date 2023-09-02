@@ -1,0 +1,23 @@
+orm:
+  id: mongodbConfig
+  entity-package: com.zfoo.**
+  host:
+    database: graalvm
+    user:
+    password:
+    address:
+      - 127.0.0.1:27017
+  caches:
+    - strategy: default
+      size: 6000
+      expire-millisecond: 600000
+    - strategy: tenThousand
+      size: 10000
+      expire-millisecond: 600000
+  persisters:
+    - strategy: default
+      type: time
+      config: 60000
+    - strategy: cron30s
+      type: cron
+      config: 0/30 * * * * ?
