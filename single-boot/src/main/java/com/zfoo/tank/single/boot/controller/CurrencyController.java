@@ -16,7 +16,7 @@ import com.zfoo.orm.anno.EntityCacheAutowired;
 import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.scheduler.anno.Scheduler;
 import com.zfoo.storage.anno.StorageAutowired;
-import com.zfoo.storage.manager.IStorage;
+import com.zfoo.storage.model.IStorage;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.resource.PlayerExpResource;

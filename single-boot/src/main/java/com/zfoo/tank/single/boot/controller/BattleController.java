@@ -25,7 +25,7 @@ import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.scheduler.util.TimeUtils;
 import com.zfoo.storage.anno.StorageAutowired;
-import com.zfoo.storage.manager.IStorage;
+import com.zfoo.storage.model.IStorage;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.entity.ScoreRankEntity;
 import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;

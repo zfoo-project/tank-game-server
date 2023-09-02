@@ -28,7 +28,7 @@ import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.scheduler.util.TimeUtils;
 import com.zfoo.storage.anno.StorageAutowired;
-import com.zfoo.storage.manager.IStorage;
+import com.zfoo.storage.model.IStorage;
 import com.zfoo.tank.common.constant.I18nEnum;
 import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.tank.common.entity.AccountEntity;

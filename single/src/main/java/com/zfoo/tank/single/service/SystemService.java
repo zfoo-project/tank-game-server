@@ -18,7 +18,7 @@ import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.protocol.collection.tree.DfaWordTree;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.anno.StorageAutowired;
-import com.zfoo.storage.manager.IStorage;
+import com.zfoo.storage.model.IStorage;
 import com.zfoo.tank.common.resource.FilterWordResource;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
