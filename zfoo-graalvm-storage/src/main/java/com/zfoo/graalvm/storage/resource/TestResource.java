@@ -14,6 +14,7 @@
 package com.zfoo.graalvm.storage.resource;
 
 import com.zfoo.storage.model.anno.Id;
+import com.zfoo.storage.model.anno.GraalvmNativeResource;
 import com.zfoo.storage.model.anno.Resource;
 
 import java.util.Map;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @version 3.0
  */
 @Resource
+@GraalvmNativeResource("classpath:excel/TestResource.json")
 public class TestResource {
 
 	@Id

@@ -12,7 +12,6 @@
 
 package com.zfoo.graalvm.storage;
 
-import com.zfoo.graalvm.storage.resource.StudentResource;
 import com.zfoo.graalvm.storage.resource.TestResource;
 import com.zfoo.protocol.util.AssertionUtils;
 import com.zfoo.protocol.util.JsonUtils;
@@ -33,23 +32,11 @@ public class ApplicationContext {
         var context = SpringApplication.run(ApplicationContext.class, args);
 
         var studentManager = context.getBean(StudentManager.class);
-        var studentResources = studentManager.studentResources;
         var studentCsvResources = studentManager.studentCsvResources;
         // @Resource注解没指定别名，类名称和Excel名称必须完全一致，没有使用@ExcelFieldName对象属性名会自动对应同名的资源文件列名
-        for (StudentResource resource : studentResources.getAll()) {
-            logger.info(JsonUtils.object2String(resource));
-        }
-        logger.info(StringUtils.MULTIPLE_HYPHENS);
 
         // 通过id找到对应的行
-        var id = 1002;
-        var valueById = studentResources.get(id);
-        logger.info(JsonUtils.object2String(valueById));
         logger.info(StringUtils.MULTIPLE_HYPHENS);
-
-        // 通过索引找对应的行
-        var valuesByIndex = studentResources.getIndex("name", "james0");
-        logger.info(JsonUtils.object2String(valuesByIndex));
 
         // 通过索引找对应的行
         var csvValuesByIndex = studentCsvResources.getIndex("name", "james0");
@@ -64,8 +51,7 @@ public class ApplicationContext {
             logger.info(JsonUtils.object2String(resource));
         }
         // 通过id找到对应的行
-        id = 2;
-        var resource = testResources.get(id);
+        var resource = testResources.get(2);
         logger.info(JsonUtils.object2String(resource));
         logger.info(StringUtils.MULTIPLE_HYPHENS);
     }
