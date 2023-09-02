@@ -24,7 +24,7 @@ import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.scheduler.util.TimeUtils;
-import com.zfoo.storage.anno.StorageInjection;
+import com.zfoo.storage.anno.StorageAutowired;
 import com.zfoo.storage.manager.IStorage;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.entity.ScoreRankEntity;
@@ -61,7 +61,7 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
     @EntityCachesInjection
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
 
-    @StorageInjection
+    @StorageAutowired
     private IStorage<Integer, PlayerExpResource> playerExpStorage;
 
     private static final int RANK_SIZE = 200;

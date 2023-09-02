@@ -15,7 +15,7 @@ import com.zfoo.net.task.TaskBus;
 import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.scheduler.anno.Scheduler;
-import com.zfoo.storage.anno.StorageInjection;
+import com.zfoo.storage.anno.StorageAutowired;
 import com.zfoo.storage.manager.IStorage;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
@@ -43,7 +43,7 @@ public class CurrencyController {
     @EntityCachesInjection
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
 
-    @StorageInjection
+    @StorageAutowired
     private IStorage<Integer, PlayerExpResource> playerExpStorage;
 
     @EventReceiver

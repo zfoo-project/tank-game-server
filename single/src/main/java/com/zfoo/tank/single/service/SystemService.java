@@ -17,7 +17,7 @@ import com.zfoo.event.model.AppStartEvent;
 import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.protocol.collection.tree.DfaWordTree;
 import com.zfoo.protocol.util.StringUtils;
-import com.zfoo.storage.anno.StorageInjection;
+import com.zfoo.storage.anno.StorageAutowired;
 import com.zfoo.storage.manager.IStorage;
 import com.zfoo.tank.common.resource.FilterWordResource;
 import org.springframework.context.ApplicationListener;
@@ -41,7 +41,7 @@ public class SystemService implements ApplicationListener<AppStartEvent> {
     public Pattern cnPattern = Pattern.compile("[\u4E00-\u9FA5]");
 
     // 下面是关键词过滤相关
-    @StorageInjection
+    @StorageAutowired
     private IStorage<Integer, FilterWordResource> filterWordResources;
 
     @Override
