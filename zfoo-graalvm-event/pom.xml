@@ -67,24 +67,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
             <version>${spring.boot.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jackson-databind</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zfoo.tank</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.zfoo</groupId>
             <artifactId>boot</artifactId>
             <version>${zfoo.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+            <version>${spring.boot.version}</version>
         </dependency>
 
         <dependency>
