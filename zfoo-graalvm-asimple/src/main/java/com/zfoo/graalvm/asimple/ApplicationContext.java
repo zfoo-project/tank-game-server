@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2020 The zfoo Authors
- *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
  *
@@ -11,29 +10,16 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.event;
+package com.zfoo.graalvm.asimple;
 
-import com.zfoo.event.model.event.IEvent;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author godotg
- * @version 3.0
- */
-public class MyNoticeEvent implements IEvent {
+@SpringBootApplication
+public class ApplicationContext {
 
-    private String message;
-
-    public static MyNoticeEvent valueOf(String message) {
-        var event = new MyNoticeEvent();
-        event.setMessage(message);
-        return event;
+    public static void main(String[] args) {
+        SpringApplication.run(ApplicationContext.class, args);
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }

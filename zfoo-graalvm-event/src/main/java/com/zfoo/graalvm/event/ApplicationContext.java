@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.event;
+package com.zfoo.graalvm.event;
 
 import com.zfoo.event.manager.EventBus;
 import org.springframework.boot.SpringApplication;
