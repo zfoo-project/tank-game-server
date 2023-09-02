@@ -13,15 +13,15 @@
 package com.zfoo.tank.single.client;
 
 import com.zfoo.net.NetContext;
+import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.tcp.TcpClient;
+import com.zfoo.net.util.NetUtils;
+import com.zfoo.protocol.util.ThreadUtils;
 import com.zfoo.scheduler.util.TimeUtils;
 import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.tank.common.protocol.cache.ScoreRankRequest;
 import com.zfoo.tank.common.protocol.login.LoginRequest;
 import com.zfoo.tank.single.Application;
-import com.zfoo.protocol.util.ThreadUtils;
-import com.zfoo.util.net.HostAndPort;
-import com.zfoo.util.net.NetUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

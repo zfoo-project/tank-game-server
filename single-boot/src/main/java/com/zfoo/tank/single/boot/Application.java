@@ -14,10 +14,10 @@
 package com.zfoo.tank.single.boot;
 
 import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.net.core.websocket.WebsocketServer;
-import com.zfoo.util.net.HostAndPort;
-import com.zfoo.util.net.NetUtils;
+import com.zfoo.net.util.NetUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -13,12 +13,12 @@
 
 package com.zfoo.tank.gateway;
 
+import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.gateway.GatewayServer;
 import com.zfoo.net.core.gateway.WebsocketGatewayServer;
-import com.zfoo.tank.common.constant.TankDeployEnum;
+import com.zfoo.net.util.NetUtils;
 import com.zfoo.protocol.util.ThreadUtils;
-import com.zfoo.util.net.HostAndPort;
-import com.zfoo.util.net.NetUtils;
+import com.zfoo.tank.common.constant.TankDeployEnum;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

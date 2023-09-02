@@ -14,12 +14,12 @@
 package com.zfoo.tank.single.boot;
 
 import com.zfoo.event.model.event.AppStartEvent;
+import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.net.core.websocket.WebsocketServer;
-import com.zfoo.tank.common.constant.TankDeployEnum;
+import com.zfoo.net.util.NetUtils;
 import com.zfoo.protocol.util.ThreadUtils;
-import com.zfoo.util.net.HostAndPort;
-import com.zfoo.util.net.NetUtils;
+import com.zfoo.tank.common.constant.TankDeployEnum;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;
