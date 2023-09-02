@@ -30,7 +30,8 @@ public class ApplicationContext {
         var context = SpringApplication.run(ApplicationContext.class, args);
 
         var id = RandomUtils.randomLong();
-        var userEntity = new UserEntity(id, (byte) 2, (short) 3, 5, true, "orm", "orm");
+        var cIndex = RandomUtils.randomInt();
+        var userEntity = new UserEntity(id, (byte) 2, (short) 3, cIndex, true, "orm", "orm");
         OrmContext.getAccessor().insert(userEntity);
         logger.info("insert [{}] {}", id, userEntity);
 
@@ -50,12 +51,10 @@ public class ApplicationContext {
         var userEntityCaches2 = (IEntityCaches<Long, UserEntity>) OrmContext.getOrmManager().getEntityCaches(UserEntity.class);
         logger.info("entity cache [{}] [{}]", userEntityCaches, userEntityCaches2);
         OrmContext.getAccessor().insert(loadEntity);
-        for (int i = 1; i <= 10; i++) {
-            var entity = userEntityCaches.load(id);
-            entity.setE("update" + i);
-            entity.setC(i);
-            userEntityCaches.update(entity);
-        }
+        var entity = userEntityCaches.load(id);
+        entity.setE("update " + RandomUtils.randomString(16));
+        entity.setC(RandomUtils.randomInt());
+        userEntityCaches.update(entity);
     }
 
 
