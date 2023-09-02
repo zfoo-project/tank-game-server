@@ -36,7 +36,7 @@ import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.login.*;
 import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.util.TokenUtils;
-import com.zfoo.util.math.HashUtils;
+import com.zfoo.net.util.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
