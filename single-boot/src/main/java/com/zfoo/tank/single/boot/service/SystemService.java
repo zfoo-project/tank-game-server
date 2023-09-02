@@ -19,7 +19,7 @@ import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.model.anno.ResInjection;
 import com.zfoo.storage.model.vo.Storage;
 import com.zfoo.tank.common.resource.FilterWordResource;
-import com.zfoo.util.math.dfa.WordTree;
+import com.zfoo.protocol.collection.tree.DfaWordTree;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 @Component
 public class SystemService implements ApplicationListener<AppStartEvent> {
 
-    public WordTree wordTree;
+    public DfaWordTree dfaWordTree;
 
     // 中文正则
     public Pattern cnPattern = Pattern.compile("[\u4E00-\u9FA5]");
@@ -46,12 +46,12 @@ public class SystemService implements ApplicationListener<AppStartEvent> {
 
     @Override
     public void onApplicationEvent(AppStartEvent event) {
-        var tree = new WordTree();
+        var tree = new DfaWordTree();
         var words = filterWordResources.getAll().stream()
                 .map(it -> it.getFilter().trim().toLowerCase())
                 .collect(Collectors.toList());
         tree.addWords(words);
-        wordTree = tree;
+        dfaWordTree = tree;
     }
 
     /**
@@ -84,18 +84,18 @@ public class SystemService implements ApplicationListener<AppStartEvent> {
         });
 
         var result = new ArrayList<String>();
-        result.addAll(wordTree.matchAll(word, -1, true, true));
+        result.addAll(dfaWordTree.matchAll(word, -1, true, true));
 
         if (CollectionUtils.isNotEmpty(result)) {
             return true;
         }
 
         if (StringUtils.isNotBlank(cnStr)) {
-            result.addAll(wordTree.matchAll(cnStr.toString(), -1, true, true));
+            result.addAll(dfaWordTree.matchAll(cnStr.toString(), -1, true, true));
         }
 
         if (StringUtils.isNotBlank(enStr)) {
-            result.addAll(wordTree.matchAll(enStr.toString(), -1, true, true));
+            result.addAll(dfaWordTree.matchAll(enStr.toString(), -1, true, true));
         }
 
         return CollectionUtils.isNotEmpty(result);
