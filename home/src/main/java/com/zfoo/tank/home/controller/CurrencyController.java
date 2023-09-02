@@ -13,7 +13,7 @@ package com.zfoo.tank.home.controller;
 import com.zfoo.event.anno.EventReceiver;
 import com.zfoo.net.task.TaskBus;
 import com.zfoo.orm.anno.EntityCacheAutowired;
-import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.cache.IEntityCache;
 import com.zfoo.scheduler.anno.Scheduler;
 import com.zfoo.storage.anno.StorageAutowired;
 import com.zfoo.storage.model.IStorage;
@@ -41,7 +41,7 @@ public class CurrencyController {
     private static final Logger logger = LoggerFactory.getLogger(CurrencyController.class);
 
     @EntityCacheAutowired
-    private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
+    private IEntityCache<Long, PlayerEntity> playerEntityCaches;
 
     @StorageAutowired
     private IStorage<Integer, PlayerExpResource> playerExpStorage;

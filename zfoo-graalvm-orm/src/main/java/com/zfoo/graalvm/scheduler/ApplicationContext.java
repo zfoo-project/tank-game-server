@@ -13,7 +13,7 @@
 package com.zfoo.graalvm.scheduler;
 
 import com.zfoo.orm.OrmContext;
-import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.cache.IEntityCache;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.protocol.util.RandomUtils;
 import org.slf4j.Logger;
@@ -48,7 +48,7 @@ public class ApplicationContext {
 
         // 通过注解自动注入的方式去拿到UserEntity的EntityCaches
         var userEntityCaches = context.getBean(UserManager.class).userEntityCaches;
-        var userEntityCaches2 = (IEntityCaches<Long, UserEntity>) OrmContext.getOrmManager().getEntityCaches(UserEntity.class);
+        var userEntityCaches2 = (IEntityCache<Long, UserEntity>) OrmContext.getOrmManager().getEntityCaches(UserEntity.class);
         logger.info("entity cache [{}] [{}]", userEntityCaches, userEntityCaches2);
         OrmContext.getAccessor().insert(loadEntity);
         var entity = userEntityCaches.load(id);

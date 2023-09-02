@@ -5,7 +5,7 @@ import com.zfoo.net.packet.common.Message;
 import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.orm.anno.EntityCacheAutowired;
-import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.cache.IEntityCache;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.protocol.PlayerExpNotice;
@@ -26,7 +26,7 @@ public class GmController {
     private static final Logger logger = LoggerFactory.getLogger(GmController.class);
 
     @EntityCacheAutowired
-    private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
+    private IEntityCache<Long, PlayerEntity> playerEntityCaches;
 
     @PacketReceiver
     public void atAdminPlayerLevelAsk(Session session, AdminPlayerLevelAsk ask) {

@@ -18,7 +18,7 @@ import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.anno.EntityCacheAutowired;
-import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.cache.IEntityCache;
 import com.zfoo.orm.util.MongoIdUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.scheduler.util.TimeUtils;
@@ -45,7 +45,7 @@ public class ChatController {
     private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
     @EntityCacheAutowired
-    private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
+    private IEntityCache<Long, PlayerEntity> playerEntityCaches;
 
     @PacketReceiver
     public void atGroupChatRequest(Session session, GroupChatRequest request) {

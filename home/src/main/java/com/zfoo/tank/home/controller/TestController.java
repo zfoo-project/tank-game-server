@@ -18,7 +18,7 @@ import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.router.receiver.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.orm.anno.EntityCacheAutowired;
-import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.cache.IEntityCache;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.storage.anno.StorageAutowired;
 import com.zfoo.storage.model.IStorage;
@@ -41,7 +41,7 @@ public class TestController {
 
 
     @EntityCacheAutowired
-    private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
+    private IEntityCache<Long, PlayerEntity> playerEntityCaches;
 
     @StorageAutowired
     private IStorage<Integer, PlayerExpResource> playerExpStorageObject;

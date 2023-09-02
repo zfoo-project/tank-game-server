@@ -14,7 +14,7 @@
 package com.zfoo.graalvm.scheduler;
 
 import com.zfoo.orm.anno.EntityCacheAutowired;
-import com.zfoo.orm.cache.IEntityCaches;
+import com.zfoo.orm.cache.IEntityCache;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,6 +25,6 @@ import org.springframework.stereotype.Component;
 public class UserManager {
 
     @EntityCacheAutowired
-    public IEntityCaches<Long, UserEntity> userEntityCaches;
+    public IEntityCache<Long, UserEntity> userEntityCaches;
 
 }
