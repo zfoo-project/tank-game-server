@@ -19,7 +19,7 @@ import com.zfoo.protocol.collection.ArrayUtils;
 import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.StorageContext;
-import com.zfoo.storage.manager.ObjectStorage;
+import com.zfoo.storage.manager.StorageObject;
 import com.zfoo.tank.common.constant.GameConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +79,7 @@ public abstract class HotUtils {
                     return;
                 }
 
-                ObjectStorage<?, ?> storageObject = ObjectStorage.parse(new ByteArrayInputStream(bytes), clazz, fileExtName);
+                StorageObject<?, ?> storageObject = StorageObject.parse(new ByteArrayInputStream(bytes), clazz, fileExtName);
                 StorageContext.getStorageManager().updateStorage(clazz, storageObject);
                 StorageContext.getStorageManager().inject();
             }

@@ -19,7 +19,7 @@ import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.IOUtils;
 import com.zfoo.protocol.util.StringUtils;
 import com.zfoo.storage.interpreter.data.StorageEnum;
-import com.zfoo.storage.manager.ObjectStorage;
+import com.zfoo.storage.manager.StorageObject;
 import com.zfoo.tank.admin.service.LoginService;
 import com.zfoo.tank.common.constant.GameConstant;
 import com.zfoo.tank.common.constant.TankDeployEnum;
@@ -97,7 +97,7 @@ public class ExcelHotswapController {
                 var clazz = clazzSimpleNameMap.get(fileSimpleName);
                 var inputStream = file.getInputStream();
                 var fileExtName = FileUtils.fileExtName(file.getOriginalFilename());
-                ObjectStorage<?, ?> storage = ObjectStorage.parse(inputStream, clazz, fileExtName);
+                StorageObject<?, ?> storage = StorageObject.parse(inputStream, clazz, fileExtName);
             } catch (Exception e) {
                 return BaseResponse.valueOf(CodeEnum.FAIL, StringUtils.format("excel文件[{}]解析出错[{}]", file.getOriginalFilename(), e.getMessage()));
             }

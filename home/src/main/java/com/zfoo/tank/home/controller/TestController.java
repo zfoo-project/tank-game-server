@@ -21,7 +21,7 @@ import com.zfoo.orm.cache.IEntityCaches;
 import com.zfoo.orm.model.anno.EntityCachesInjection;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.storage.anno.StorageInjection;
-import com.zfoo.storage.manager.ObjectStorage;
+import com.zfoo.storage.manager.IStorage;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.TestRequest;
 import com.zfoo.tank.common.protocol.TestResponse;
@@ -44,7 +44,7 @@ public class TestController {
     private IEntityCaches<Long, PlayerEntity> playerEntityCaches;
 
     @StorageInjection
-    private ObjectStorage<Integer, PlayerExpResource> playerExpStorageObject;
+    private IStorage<Integer, PlayerExpResource> playerExpStorageObject;
 
     @PacketReceiver
     public void atTestRequest(Session session, TestRequest request, GatewayAttachment gatewayAttachment) {
