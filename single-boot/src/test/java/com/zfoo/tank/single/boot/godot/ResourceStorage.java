@@ -13,7 +13,7 @@
 package com.zfoo.tank.single.boot.godot;
 
 import com.zfoo.protocol.IPacket;
-import com.zfoo.protocol.registration.anno.Note;
+import com.zfoo.protocol.anno.Note;
 
 import java.util.Map;
 
