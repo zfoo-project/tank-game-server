@@ -22,6 +22,8 @@ import com.zfoo.protocol.util.ClassUtils;
 import com.zfoo.protocol.util.IOUtils;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.UnpooledHeapByteBuf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
@@ -33,14 +35,18 @@ import java.util.Set;
 @ImportRuntimeHints(ProtocolHints.class)
 public class ApplicationContext {
 
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationContext.class);
+
     public static void main(String[] args) throws IOException {
         SpringApplication.run(ApplicationContext.class, args);
 
-        ProtocolManager.initProtocolAuto(Set.of(ComplexObject.class, NormalObject.class, SimpleObject.class, EmptyObject.class), GenerateOperation.NO_OPERATION);
-
         var bytes = IOUtils.toByteArray(ClassUtils.getFileFromClassPath("ComplexObject.bytes"));
+        logger.info("字节数组读取长度 [{}]", bytes.length);
+
         var buffer = new UnpooledHeapByteBuf(ByteBufAllocator.DEFAULT, 100, 1_0000);
         buffer.writeBytes(bytes);
+
+        ProtocolManager.initProtocolAuto(Set.of(ComplexObject.class, NormalObject.class, SimpleObject.class, EmptyObject.class), GenerateOperation.NO_OPERATION);
 
         var packet = ProtocolManager.read(buffer);
 
