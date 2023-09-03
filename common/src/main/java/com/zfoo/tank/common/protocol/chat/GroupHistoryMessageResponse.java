@@ -13,7 +13,7 @@
 
 package com.zfoo.tank.common.protocol.chat;
 
-import com.zfoo.protocol.IPacket;
+import com.zfoo.net.packet.IPacket;
 
 import java.util.List;
 

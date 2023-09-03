@@ -10,7 +10,7 @@
 
 package com.zfoo.tank.common.protocol;
 
-import com.zfoo.protocol.IPacket;
+import com.zfoo.net.packet.IPacket;
 
 /**
  * @author jaysunxiao

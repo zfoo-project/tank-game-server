@@ -1,6 +1,6 @@
 package com.zfoo.tank.common.generate;
 
-import com.zfoo.protocol.IPacket;
+import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.registration.ProtocolAnalysis;
 import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.StringUtils;

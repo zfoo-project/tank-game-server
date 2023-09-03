@@ -14,7 +14,7 @@
 package com.zfoo.tank.common.protocol.login;
 
 
-import com.zfoo.protocol.IPacket;
+import com.zfoo.net.packet.IPacket;
 import com.zfoo.tank.common.protocol.common.CurrencyVo;
 import com.zfoo.tank.common.protocol.common.PlayerInfo;
 

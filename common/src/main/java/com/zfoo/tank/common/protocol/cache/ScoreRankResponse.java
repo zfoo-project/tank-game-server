@@ -13,7 +13,7 @@
 
 package com.zfoo.tank.common.protocol.cache;
 
-import com.zfoo.protocol.IPacket;
+import com.zfoo.net.packet.IPacket;
 import com.zfoo.tank.common.protocol.common.RankInfo;
 
 import java.util.List;

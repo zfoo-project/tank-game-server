@@ -11,8 +11,8 @@
 package com.zfoo.tank.single.util;
 
 import com.zfoo.net.NetContext;
+import com.zfoo.net.packet.IPacket;
 import com.zfoo.net.util.SessionUtils;
-import com.zfoo.protocol.IPacket;
 import com.zfoo.tank.common.entity.PlayerEntity;
 
 /**

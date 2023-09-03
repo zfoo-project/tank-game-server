@@ -15,9 +15,9 @@ package com.zfoo.tank.gateway;
 
 import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.gateway.WebsocketGatewayServer;
+import com.zfoo.net.packet.IPacket;
 import com.zfoo.net.session.Session;
 import com.zfoo.net.util.NetUtils;
-import com.zfoo.protocol.IPacket;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.tank.common.protocol.login.GetPlayerInfoRequest;
 import com.zfoo.tank.common.protocol.login.LoginRequest;
