@@ -36,7 +36,7 @@ public class GatewayController {
 
         var packet = LogoutRequest.valueOf();
 
-        var loadBalancer = NetContext.getConsumer().loadBalancer(ProtocolManager.moduleByProtocolId(packet.protocolId()));
+        var loadBalancer = NetContext.getConsumer().loadBalancer(ProtocolManager.moduleByProtocolId(ProtocolManager.protocolId(packet.getClass())));
         var consumerSession = loadBalancer.loadBalancer(packet, uid);
 
         // 包的附加包，通过网关转发到home的包会丢失sid和uid，通过这个GatewayAttachment附带到IPacket后面，home就知道哪个玩家发的包了
