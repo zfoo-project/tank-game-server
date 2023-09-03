@@ -16,6 +16,7 @@ package com.zfoo.tank.common.protocol.login;
 
 import com.zfoo.net.core.gateway.IGatewayLoadBalancer;
 import com.zfoo.protocol.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 import com.zfoo.tank.common.util.TokenUtils;
 
 /**
@@ -23,15 +24,10 @@ import com.zfoo.tank.common.util.TokenUtils;
  * @version 1.0
  * @since 2019-10-15 17:55
  */
+@Protocol(id = 1004)
 public class GetPlayerInfoRequest implements IPacket, IGatewayLoadBalancer {
 
-    public static final transient short PROTOCOL_ID = 1004;
-
     private String token;
-
-    public static short getProtocolId() {
-        return PROTOCOL_ID;
-    }
 
     public static GetPlayerInfoRequest valueOf(String token) {
         var packet = new GetPlayerInfoRequest();
@@ -43,12 +39,6 @@ public class GetPlayerInfoRequest implements IPacket, IGatewayLoadBalancer {
     public Object loadBalancerConsistentHashObject() {
         var triple = TokenUtils.get(token);
         return triple.getLeft();
-    }
-
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
     }
 
     public String getToken() {

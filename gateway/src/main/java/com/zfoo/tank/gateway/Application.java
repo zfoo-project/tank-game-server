@@ -49,7 +49,7 @@ public class Application {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
     public static final BiFunction<Session, IPacket, Boolean> packetFilter = (session, packet) -> {
-        if (packet.protocolId() == LoginRequest.PROTOCOL_ID) {
+        if (packet.getClass() == LoginRequest.class) {
             if (session.getUid() <= 0) {
                 return false;
             } else {
@@ -57,7 +57,7 @@ public class Application {
             }
         }
 
-        if (packet.protocolId() == GetPlayerInfoRequest.getProtocolId()) {
+        if (packet.getClass() == GetPlayerInfoRequest.class) {
             logger.info("[session:{}发送了GetPlayerInfo[{}]", session, packet);
             return false;
         }

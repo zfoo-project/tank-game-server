@@ -11,20 +11,15 @@
 package com.zfoo.tank.common.protocol;
 
 import com.zfoo.protocol.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
  * @version 3.0
  */
+@Protocol(id = 1301)
 public class TestResponse implements IPacket {
 
-    public static final transient short PROTOCOL_ID = 1301;
-
     public String message;
-
-    @Override
-    public short protocolId() {
-        return PROTOCOL_ID;
-    }
 
 }

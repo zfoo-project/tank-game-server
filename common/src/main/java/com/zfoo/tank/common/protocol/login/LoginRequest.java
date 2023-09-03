@@ -16,15 +16,15 @@ package com.zfoo.tank.common.protocol.login;
 
 import com.zfoo.net.core.gateway.IGatewayLoadBalancer;
 import com.zfoo.protocol.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2019-10-15 17:55
  */
+@Protocol(id = 1000)
 public class LoginRequest implements IPacket, IGatewayLoadBalancer {
-
-    public static final transient short PROTOCOL_ID = 1000;
 
     private String account;
     private String password;
