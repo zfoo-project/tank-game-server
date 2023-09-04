@@ -20,6 +20,7 @@ import com.zfoo.protocol.ProtocolManager;
 import com.zfoo.protocol.generate.GenerateOperation;
 import com.zfoo.protocol.util.ClassUtils;
 import com.zfoo.protocol.util.IOUtils;
+import com.zfoo.protocol.util.StringUtils;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.UnpooledHeapByteBuf;
 import org.slf4j.Logger;
@@ -55,13 +56,20 @@ public class ApplicationContext {
 
         buffer.resetReaderIndex();
         newBuffer.resetReaderIndex();
+
+        // 字节码增强的Map遍历顺序会出现不一样，所以序列化的内容顺序会改变，可以看到不相同的字节并不是连续的
+        var equal = 0;
+        var notEqual = 0;
         for (int i = 0; i < buffer.writerIndex(); i++) {
             var a = buffer.readByte();
             var b = newBuffer.readByte();
-            if (a != b) {
-                System.out.println("协议兼容错误" + i);
+            if (a == b) {
+                equal++;
+            } else {
+                notEqual++;
             }
         }
+        logger.info(StringUtils.format("equal [{}], not equal [{}]", equal, notEqual));
     }
 
 }
