@@ -1,0 +1,5 @@
+net:
+  id: netConfig
+  protocol-location: protocol.xml
+  code-languages: 0
+  fold-protocol: true

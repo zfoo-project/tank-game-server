@@ -26,6 +26,7 @@
         <module>zfoo-graalvm-scheduler</module>
         <module>zfoo-graalvm-orm</module>
         <module>zfoo-graalvm-protocol</module>
+        <module>zfoo-graalvm-net</module>
     </modules>
 
     <properties>

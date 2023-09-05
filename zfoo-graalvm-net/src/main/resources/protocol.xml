@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!-- native为内部消息，common是公共消息每个模块都能使用，js是web通信用的协议会生成js协议文件 -->
+<protocols>
+
+    <module id="1" name="native">
+        <protocol location="com.zfoo.net.router.attachment.SignalAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.SignalOnlyAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.GatewayAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.UdpAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.HttpAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.NoAnswerAttachment"/>
+
+
+        <protocol location="com.zfoo.net.core.gateway.model.AuthUidToGatewayCheck"/>
+        <protocol location="com.zfoo.net.core.gateway.model.AuthUidToGatewayConfirm"/>
+        <protocol location="com.zfoo.net.core.gateway.model.AuthUidAsk"/>
+        <protocol location="com.zfoo.net.core.gateway.model.GatewaySessionInactiveAsk"/>
+        <protocol location="com.zfoo.net.core.gateway.model.GatewaySynchronizeSidAsk"/>
+    </module>
+
+    <!-- 在xml文件中写协议号是为了统一规划协议号，更加直观；不写协议号也没有影响 -->
+    <module id="2" name="common">
+        <protocol id="100" location="com.zfoo.net.packet.common.Message"/>
+        <protocol id="101" location="com.zfoo.net.packet.common.Error"/>
+        <protocol id="102" location="com.zfoo.net.packet.common.Heartbeat"/>
+        <protocol id="103" location="com.zfoo.net.packet.common.Ping"/>
+        <protocol id="104" location="com.zfoo.net.packet.common.Pong"/>
+
+        <protocol id="110" location="com.zfoo.net.packet.common.PairIntLong"/>
+        <protocol id="111" location="com.zfoo.net.packet.common.PairLong"/>
+        <protocol id="112" location="com.zfoo.net.packet.common.PairString"/>
+        <protocol id="113" location="com.zfoo.net.packet.common.PairLS"/>
+        <protocol id="114" location="com.zfoo.net.packet.common.TripleLong"/>
+        <protocol id="115" location="com.zfoo.net.packet.common.TripleString"/>
+        <protocol id="116" location="com.zfoo.net.packet.common.TripleLSS"/>
+
+    </module>
+
+    <module id="5" name="providerTest">
+        <protocol id="1300" location="com.zfoo.graalvm.net.packet.TcpHelloRequest"/>
+        <protocol id="1301" location="com.zfoo.graalvm.net.packet.TcpHelloResponse"/>
+    </module>
+
+</protocols>
