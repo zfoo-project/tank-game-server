@@ -14,7 +14,7 @@ package com.zfoo.tank.single.boot.controller;
 
 import com.mongodb.client.model.Filters;
 import com.zfoo.net.NetContext;
-import com.zfoo.net.router.receiver.PacketReceiver;
+import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.anno.EntityCacheAutowired;

@@ -19,7 +19,7 @@ import com.mongodb.client.model.Sorts;
 import com.zfoo.event.model.AppStartEvent;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.router.attachment.GatewayAttachment;
-import com.zfoo.net.router.receiver.PacketReceiver;
+import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.net.util.SingleCache;
 import com.zfoo.orm.OrmContext;

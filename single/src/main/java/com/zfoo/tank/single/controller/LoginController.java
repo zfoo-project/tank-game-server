@@ -18,7 +18,7 @@ import com.zfoo.net.NetContext;
 import com.zfoo.net.packet.common.Error;
 import com.zfoo.net.packet.common.Ping;
 import com.zfoo.net.packet.common.Pong;
-import com.zfoo.net.router.receiver.PacketReceiver;
+import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.net.util.HashUtils;
 import com.zfoo.orm.OrmContext;

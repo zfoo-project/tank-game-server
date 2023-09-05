@@ -2,7 +2,7 @@ package com.zfoo.tank.home.controller;
 
 import com.zfoo.net.NetContext;
 import com.zfoo.net.packet.common.Message;
-import com.zfoo.net.router.receiver.PacketReceiver;
+import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.orm.anno.EntityCacheAutowired;
 import com.zfoo.orm.cache.IEntityCache;
