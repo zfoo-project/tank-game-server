@@ -32,6 +32,11 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * 需要先使用下面这行生成hint文件
+ * <p>
+ * java -Dspring.aot.enabled=true -agentlib:native-image-agent=config-output-dir=D:/ -jar zfoo-graalvm-protocol-1.0.jar
+ */
 @SpringBootApplication
 @ImportRuntimeHints(ProtocolHints.class)
 public class ApplicationContext {
