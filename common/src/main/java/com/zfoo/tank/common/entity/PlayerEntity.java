@@ -15,6 +15,7 @@ package com.zfoo.tank.common.entity;
 
 import com.zfoo.net.session.Session;
 import com.zfoo.orm.anno.EntityCache;
+import com.zfoo.orm.anno.GraalvmNativeEntityCache;
 import com.zfoo.orm.anno.Id;
 import com.zfoo.orm.model.IEntity;
 import com.zfoo.tank.common.protocol.common.PlayerInfo;
@@ -25,6 +26,7 @@ import com.zfoo.tank.common.protocol.common.PlayerInfo;
  * @since 2021-01-20 13:55
  */
 @EntityCache
+@GraalvmNativeEntityCache
 public class PlayerEntity implements IEntity<Long> {
 
     // 记录会话信息

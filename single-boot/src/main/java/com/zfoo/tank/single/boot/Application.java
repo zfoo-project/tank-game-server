@@ -18,6 +18,8 @@ import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.net.core.websocket.WebsocketServer;
 import com.zfoo.net.util.NetUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -26,9 +28,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 1.0
  * @since 2021-01-20 16:00
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.zfoo.tank")
 public class Application {
-
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
     /**
      * tcp服务器的默认端口
      */
@@ -56,6 +58,7 @@ public class Application {
      */
     public static void main(String[] args) {
         var context = SpringApplication.run(Application.class, args);
+
 
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));

@@ -14,6 +14,7 @@
 package com.zfoo.tank.common.entity;
 
 import com.zfoo.orm.anno.EntityCache;
+import com.zfoo.orm.anno.GraalvmNativeEntityCache;
 import com.zfoo.orm.anno.Id;
 import com.zfoo.orm.anno.Index;
 import com.zfoo.orm.model.IEntity;
@@ -24,6 +25,7 @@ import com.zfoo.orm.model.IEntity;
  * @since 2019-12-30 18:28
  */
 @EntityCache
+@GraalvmNativeEntityCache
 public class AccountEntity implements IEntity<String> {
 
     /**

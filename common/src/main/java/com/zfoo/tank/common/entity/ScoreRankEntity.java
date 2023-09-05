@@ -14,6 +14,7 @@
 package com.zfoo.tank.common.entity;
 
 import com.zfoo.orm.anno.EntityCache;
+import com.zfoo.orm.anno.GraalvmNativeEntityCache;
 import com.zfoo.orm.anno.Id;
 import com.zfoo.orm.anno.Index;
 import com.zfoo.orm.model.IEntity;
@@ -23,6 +24,7 @@ import com.zfoo.orm.model.IEntity;
  * @version 3.0
  */
 @EntityCache
+@GraalvmNativeEntityCache
 public class ScoreRankEntity implements IEntity<Long> {
 
     @Id

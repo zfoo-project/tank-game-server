@@ -59,8 +59,6 @@ public class LoginController {
     @EntityCacheAutowired
     private IEntityCache<Long, PlayerEntity> playerEntityCaches;
 
-    @Value("${spring.profiles.active}")
-    private TankDeployEnum deployEnum;
 
     @Autowired
     private SystemService systemService;
@@ -105,15 +103,6 @@ public class LoginController {
                     OrmContext.getAccessor().insert(PlayerEntity.valueOf(id, account, 1, TimeUtils.now(), TimeUtils.now()));
                     accountEntity = AccountEntity.valueOf(account, account, password, id);
                     OrmContext.getAccessor().insert(accountEntity);
-                }
-
-                if (deployEnum == TankDeployEnum.pro) {
-                    // 验证密码
-                    if (StringUtils.isNotBlank(accountEntity.getPassword()) && !accountEntity.getPassword().trim().equals(password.trim())) {
-                        logger.info("[id:{}][password:{}]账号或密码错误", accountEntity.getUid(), password);
-                        NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_password.toString()));
-                        return;
-                    }
                 }
 
                 var uid = accountEntity.getUid();
