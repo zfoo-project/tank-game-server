@@ -54,9 +54,13 @@ public class ApplicationContext {
             logger.info(JsonUtils.object2String(resource));
         }
         // 通过id找到对应的行
-        var resource = testResources.get(2);
-        logger.info(JsonUtils.object2String(resource));
+        logger.info(JsonUtils.object2String(testResources.get(2)));
         logger.info(StringUtils.MULTIPLE_HYPHENS);
+
+        var studentResources = studentManager.studentResources;
+        for (var resource : studentResources.getAll()) {
+            logger.info(JsonUtils.object2String(resource));
+        }
     }
 
 }

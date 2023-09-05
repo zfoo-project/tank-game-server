@@ -14,6 +14,7 @@
 package com.zfoo.graalvm.storage;
 
 import com.zfoo.graalvm.storage.resource.StudentCsvResource;
+import com.zfoo.graalvm.storage.resource.StudentResource;
 import com.zfoo.storage.anno.StorageAutowired;
 import com.zfoo.storage.model.IStorage;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentManager {
 
+    @StorageAutowired
+    public IStorage<Integer, StudentResource> studentResources;
     @StorageAutowired
     public IStorage<Integer, StudentCsvResource> studentCsvResources;
 
