@@ -23,6 +23,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Map;
 
+/**
+ * java -Dspring.aot.enabled=true -agentlib:native-image-agent=config-output-dir=D:/ -jar zfoo-graalvm-storage-1.0.jar
+ */
 @SpringBootApplication
 public class ApplicationContext {
 
