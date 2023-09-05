@@ -13,6 +13,7 @@
 
 package com.zfoo.tank.common.resource;
 
+import com.zfoo.storage.anno.GraalvmNativeStorage;
 import com.zfoo.storage.anno.Id;
 import com.zfoo.storage.anno.Storage;
 
@@ -22,6 +23,7 @@ import com.zfoo.storage.anno.Storage;
  * @since 2021-01-20 16:20
  */
 @Storage
+@GraalvmNativeStorage("classpath:excel/PropertyResource.xlsx")
 public class PropertyResource {
 
     @Id

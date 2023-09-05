@@ -13,6 +13,7 @@
 
 package com.zfoo.tank.common.resource;
 
+import com.zfoo.storage.anno.GraalvmNativeStorage;
 import com.zfoo.storage.anno.Id;
 import com.zfoo.storage.anno.Storage;
 
@@ -22,6 +23,7 @@ import com.zfoo.storage.anno.Storage;
  * @since 2020-04-22 14:39
  */
 @Storage
+@GraalvmNativeStorage("classpath:excel/FilterWordResource.xlsx")
 public class FilterWordResource {
 
     @Id
