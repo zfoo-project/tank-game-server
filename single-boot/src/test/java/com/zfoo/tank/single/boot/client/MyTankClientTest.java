@@ -41,7 +41,7 @@ public class MyTankClientTest {
     public void tankClient() {
         var context = new ClassPathXmlApplicationContext("my-tank-application.xml");
 
-        var myTankClient = new TcpClient(HostAndPort.valueOf(NetUtils.getLocalhostStr(), Application.TCP_SERVER_PORT));
+        var myTankClient = new TcpClient(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT));
         var myTankSession = myTankClient.start();
 
         // 模拟客户端，发送一个登录请求
