@@ -23,7 +23,7 @@ import com.zfoo.storage.anno.Storage;
  * @since 2021-01-20 16:20
  */
 @Storage
-@GraalvmNativeStorage("classpath:excel/PropertyResource.xlsx")
+@GraalvmNativeStorage("classpath:export/PropertyResource.csv")
 public class PropertyResource {
 
     @Id

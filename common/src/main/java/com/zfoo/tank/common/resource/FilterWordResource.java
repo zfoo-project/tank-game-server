@@ -23,7 +23,7 @@ import com.zfoo.storage.anno.Storage;
  * @since 2020-04-22 14:39
  */
 @Storage
-@GraalvmNativeStorage("classpath:excel/FilterWordResource.xlsx")
+@GraalvmNativeStorage("classpath:export/FilterWordResource.csv")
 public class FilterWordResource {
 
     @Id
