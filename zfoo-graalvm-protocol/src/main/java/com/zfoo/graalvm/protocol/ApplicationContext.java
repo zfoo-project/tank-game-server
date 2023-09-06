@@ -37,7 +37,6 @@ import java.util.Set;
  * java -Dspring.aot.enabled=true -agentlib:native-image-agent=config-output-dir=D:/ -jar zfoo-graalvm-protocol-1.0.jar
  */
 @SpringBootApplication
-@ImportRuntimeHints(ProtocolHints.class)
 public class ApplicationContext {
 
     private static final Logger logger = LoggerFactory.getLogger(ApplicationContext.class);
