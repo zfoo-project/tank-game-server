@@ -13,7 +13,6 @@
 package com.zfoo.graalvm.protocol;
 
 import com.zfoo.graalvm.protocol.packet.ComplexObject;
-import com.zfoo.graalvm.protocol.packet.EmptyObject;
 import com.zfoo.graalvm.protocol.packet.NormalObject;
 import com.zfoo.graalvm.protocol.packet.SimpleObject;
 import com.zfoo.protocol.ProtocolManager;
