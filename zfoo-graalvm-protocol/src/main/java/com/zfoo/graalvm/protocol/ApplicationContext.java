@@ -44,7 +44,7 @@ public class ApplicationContext {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(ApplicationContext.class, args);
 
-        var bytes = IOUtils.toByteArray(ClassUtils.getFileFromClassPath("ComplexObject.bytes"));
+        var bytes = IOUtils.toByteArray(ClassUtils.getFileFromClassPath("ComplexObjectBytes.protocol"));
         logger.info("字节数组读取长度 [{}]", bytes.length);
 
         var buffer = new UnpooledHeapByteBuf(ByteBufAllocator.DEFAULT, 100, 1_0000);
