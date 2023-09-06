@@ -52,7 +52,7 @@ public class ApplicationContext {
         var buffer = new UnpooledHeapByteBuf(ByteBufAllocator.DEFAULT, 100, 1_0000);
         buffer.writeBytes(bytes);
 
-        ProtocolManager.initProtocolAuto(Set.of(ComplexObject.class, NormalObject.class, SimpleObject.class, EmptyObject.class), GenerateOperation.NO_OPERATION);
+        ProtocolManager.initProtocolAuto(Set.of(ComplexObject.class, NormalObject.class, SimpleObject.class), GenerateOperation.NO_OPERATION);
 
         var packet = ProtocolManager.read(buffer);
 

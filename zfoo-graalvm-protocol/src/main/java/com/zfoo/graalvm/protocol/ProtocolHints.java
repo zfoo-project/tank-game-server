@@ -38,7 +38,6 @@ public class ProtocolHints implements RuntimeHintsRegistrar {
 
         var classes = new HashSet<Class<?>>();
         classes.add(ComplexObject.class);
-        classes.add(EmptyObject.class);
         classes.add(NormalObject.class);
         classes.add(ObjectA.class);
         classes.add(ObjectB.class);
