@@ -15,12 +15,14 @@ package com.zfoo.tank.common.protocol.common;
 
 
 import com.zfoo.net.packet.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2019-10-28 09:58
  */
+@Protocol(id = 400)
 public class PlayerInfo implements IPacket {
 
     public static final PlayerInfo DEFAULT_INSTANCE = new PlayerInfo();

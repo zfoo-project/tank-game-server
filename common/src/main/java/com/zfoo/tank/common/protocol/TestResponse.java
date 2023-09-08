@@ -17,7 +17,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @author jaysunxiao
  * @version 3.0
  */
-@Protocol(id = 1301)
+@Protocol(id = 1301, enhance = false)
 public class TestResponse implements IPacket {
 
     public String message;

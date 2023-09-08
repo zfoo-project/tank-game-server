@@ -15,6 +15,7 @@ package com.zfoo.tank.common.protocol.login;
 
 
 import com.zfoo.net.packet.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 import com.zfoo.tank.common.protocol.common.CurrencyVo;
 import com.zfoo.tank.common.protocol.common.PlayerInfo;
 
@@ -23,6 +24,7 @@ import com.zfoo.tank.common.protocol.common.PlayerInfo;
  * @version 1.0
  * @since 2019-10-15 17:55
  */
+@Protocol(id = 1005)
 public class GetPlayerInfoResponse implements IPacket {
 
     private PlayerInfo playerInfo;

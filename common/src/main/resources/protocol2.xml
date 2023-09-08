@@ -10,18 +10,17 @@
 
     <module id="2" name="common">
         <protocol location="com.zfoo.net.packet.common"/>
-        <protocol id="400" location="com.zfoo.tank.common.protocol.common.PlayerInfo"/>
-        <protocol id="401" location="com.zfoo.tank.common.protocol.common.CurrencyVo"/>
-        <protocol id="402" location="com.zfoo.tank.common.protocol.common.RankInfo"/>
+        <protocol location="com.zfoo.tank.common.protocol.common"/>
     </module>
 
     <module id="3" name="tankHome">
-        <protocol id="1000" location="com.zfoo.tank.common.protocol.login.LoginRequest"/>
+        <protocol location="com.zfoo.tank.common.protocol.login"/>
+        <protocol location="com.zfoo.tank.common.protocol.login.LoginRequest"/>
         <protocol id="1001" location="com.zfoo.tank.common.protocol.login.LoginResponse"/>
         <protocol id="1002" location="com.zfoo.tank.common.protocol.login.LogoutRequest"/>
         <protocol id="1003" location="com.zfoo.tank.common.protocol.login.LogoutResponse"/>
-        <protocol id="1004" location="com.zfoo.tank.common.protocol.login.GetPlayerInfoRequest"/>
-        <protocol id="1005" location="com.zfoo.tank.common.protocol.login.GetPlayerInfoResponse"/>
+
+
         <protocol id="1006" location="com.zfoo.tank.common.protocol.battle.BattleResultRequest"/>
         <protocol id="1007" location="com.zfoo.tank.common.protocol.battle.BattleResultResponse"/>
 

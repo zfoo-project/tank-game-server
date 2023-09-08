@@ -13,11 +13,13 @@
 package com.zfoo.tank.common.protocol.common;
 
 import com.zfoo.net.packet.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
  * @version 3.0
  */
+@Protocol(id = 401)
 public class CurrencyVo implements IPacket {
 
     // 能量
