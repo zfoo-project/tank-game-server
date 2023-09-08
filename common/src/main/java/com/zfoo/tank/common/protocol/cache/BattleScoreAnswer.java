@@ -14,11 +14,13 @@
 package com.zfoo.tank.common.protocol.cache;
 
 import com.zfoo.net.packet.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
  * @version 3.0
  */
+@Protocol(id = 3001)
 public class BattleScoreAnswer implements IPacket {
 
     // 如果上榜则给奖励

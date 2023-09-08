@@ -35,18 +35,11 @@
     </module>
 
     <module id="4" name="tankCache">
-        <protocol id="3000" location="com.zfoo.tank.common.protocol.cache.BattleScoreAsk"/>
-        <protocol id="3001" location="com.zfoo.tank.common.protocol.cache.BattleScoreAnswer"/>
-        <protocol id="3002" location="com.zfoo.tank.common.protocol.cache.ScoreRankRequest"/>
-        <protocol id="3003" location="com.zfoo.tank.common.protocol.cache.ScoreRankResponse"/>
+        <protocol location="com.zfoo.tank.common.protocol.cache"/>
     </module>
 
     <module id="5" name="chat">
-        <protocol id="4000" location="com.zfoo.tank.common.protocol.chat.ChatMessage"/>
-        <protocol id="4001" location="com.zfoo.tank.common.protocol.chat.GroupChatMessageNotice"/>
-        <protocol id="4002" location="com.zfoo.tank.common.protocol.chat.GroupChatRequest"/>
-        <protocol id="4003" location="com.zfoo.tank.common.protocol.chat.GroupHistoryMessageRequest"/>
-        <protocol id="4004" location="com.zfoo.tank.common.protocol.chat.GroupHistoryMessageResponse"/>
+        <protocol location="com.zfoo.tank.common.protocol.chat"/>
     </module>
 
 </protocols>

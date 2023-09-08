@@ -14,11 +14,13 @@
 package com.zfoo.tank.common.protocol.cache;
 
 import com.zfoo.net.packet.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
  * @version 3.0
  */
+@Protocol(id = 3000)
 public class BattleScoreAsk implements IPacket {
 
     private long playerId;

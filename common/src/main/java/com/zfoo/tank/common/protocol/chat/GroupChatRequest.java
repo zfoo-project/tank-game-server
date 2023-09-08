@@ -14,11 +14,13 @@
 package com.zfoo.tank.common.protocol.chat;
 
 import com.zfoo.net.packet.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
  * @version 3.0
  */
+@Protocol(id = 4002)
 public class GroupChatRequest implements IPacket {
 
     private String message;

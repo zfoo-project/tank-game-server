@@ -14,12 +14,14 @@
 package com.zfoo.tank.common.protocol.chat;
 
 import com.zfoo.net.packet.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2019-11-17 11:43
  */
+@Protocol(id = 4000)
 public class ChatMessage implements IPacket {
 
     private long id;

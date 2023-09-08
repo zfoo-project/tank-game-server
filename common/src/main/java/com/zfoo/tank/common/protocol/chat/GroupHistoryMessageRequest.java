@@ -14,12 +14,14 @@
 package com.zfoo.tank.common.protocol.chat;
 
 import com.zfoo.net.packet.IPacket;
+import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2020-05-07 10:54
  */
+@Protocol(id = 4003)
 public class GroupHistoryMessageRequest implements IPacket {
 
     /**
