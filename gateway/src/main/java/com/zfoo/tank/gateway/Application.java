@@ -15,7 +15,6 @@ package com.zfoo.tank.gateway;
 
 import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.gateway.WebsocketGatewayServer;
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.net.session.Session;
 import com.zfoo.net.util.NetUtils;
 import com.zfoo.protocol.util.JsonUtils;
@@ -48,7 +47,7 @@ public class Application {
     public static final String GATEWAY_HOST_AND_PORT_STR = GATEWAY_HOST_AND_PORT.toHostAndPortStr();
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
-    public static final BiFunction<Session, IPacket, Boolean> packetFilter = (session, packet) -> {
+    public static final BiFunction<Session, Object, Boolean> packetFilter = (session, packet) -> {
         if (packet.getClass() == LoginRequest.class) {
             if (session.getUid() <= 0) {
                 return false;
