@@ -13,7 +13,6 @@
 
 package com.zfoo.tank.common.protocol.cache;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 import com.zfoo.tank.common.protocol.common.RankInfo;
 
@@ -24,7 +23,7 @@ import java.util.List;
  * @version 3.0
  */
 @Protocol(id = 3003)
-public class ScoreRankResponse implements IPacket {
+public class ScoreRankResponse {
 
     // 排名，按list的先后顺序
     private List<RankInfo> ranks;

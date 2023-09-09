@@ -14,7 +14,6 @@
 package com.zfoo.tank.common.protocol.login;
 
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -23,7 +22,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @since 2019-10-15 17:55
  */
 @Protocol(id = 1001)
-public class LoginResponse implements IPacket {
+public class LoginResponse {
     private String token;
 
     public static LoginResponse valueOf(String token) {

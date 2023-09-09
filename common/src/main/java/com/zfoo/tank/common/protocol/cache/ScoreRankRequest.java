@@ -13,7 +13,6 @@
 
 package com.zfoo.tank.common.protocol.cache;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -21,7 +20,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @version 3.0
  */
 @Protocol(id = 3002)
-public class ScoreRankRequest implements IPacket {
+public class ScoreRankRequest {
 
     public static ScoreRankRequest valueOf() {
         return new ScoreRankRequest();

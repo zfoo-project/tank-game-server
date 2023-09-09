@@ -13,7 +13,6 @@
 
 package com.zfoo.tank.common.protocol.chat;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.List;
  * @since 2019-11-14 10:54
  */
 @Protocol(id = 4004)
-public class GroupHistoryMessageResponse implements IPacket {
+public class GroupHistoryMessageResponse {
 
     private List<ChatMessage> chatMessages;
 

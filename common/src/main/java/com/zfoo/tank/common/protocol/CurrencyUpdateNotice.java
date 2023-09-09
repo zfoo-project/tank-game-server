@@ -10,14 +10,13 @@
 
 package com.zfoo.tank.common.protocol;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.tank.common.protocol.common.CurrencyVo;
 
 /**
  * @author jaysunxiao
  * @version 3.0
  */
-public class CurrencyUpdateNotice implements IPacket {
+public class CurrencyUpdateNotice {
 
     private CurrencyVo currencyVo;
 

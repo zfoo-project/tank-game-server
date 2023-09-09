@@ -14,14 +14,12 @@
 package com.zfoo.tank.common.protocol.login;
 
 
-import com.zfoo.net.packet.IPacket;
-
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2019-10-15 17:55
  */
-public class LogoutResponse implements IPacket {
+public class LogoutResponse {
 
     private long uid;
 

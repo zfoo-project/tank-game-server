@@ -1,13 +1,11 @@
 package com.zfoo.tank.common.protocol.admin;
 
-import com.zfoo.net.packet.IPacket;
-
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2019-12-05 10:43
  */
-public class AdminCurrencyAsk implements IPacket {
+public class AdminCurrencyAsk {
 
     private long userId;
 

@@ -12,7 +12,6 @@
  */
 package com.zfoo.tank.common.protocol.common;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -20,7 +19,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @version 3.0
  */
 @Protocol(id = 401)
-public class CurrencyVo implements IPacket {
+public class CurrencyVo {
 
     // 能量
     private int energy;

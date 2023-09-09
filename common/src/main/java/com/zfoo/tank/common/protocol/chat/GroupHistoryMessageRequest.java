@@ -13,7 +13,6 @@
 
 package com.zfoo.tank.common.protocol.chat;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -22,7 +21,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @since 2020-05-07 10:54
  */
 @Protocol(id = 4003)
-public class GroupHistoryMessageRequest implements IPacket {
+public class GroupHistoryMessageRequest {
 
     /**
      * 最老消息的id

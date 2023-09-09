@@ -10,13 +10,11 @@
 
 package com.zfoo.tank.common.protocol.battle;
 
-import com.zfoo.net.packet.IPacket;
-
 /**
  * @author jaysunxiao
  * @version 3.0
  */
-public class BattleResultRequest implements IPacket {
+public class BattleResultRequest {
 
     private int score;
 

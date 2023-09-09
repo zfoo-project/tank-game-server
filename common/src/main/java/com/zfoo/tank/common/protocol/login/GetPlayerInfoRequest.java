@@ -15,7 +15,6 @@ package com.zfoo.tank.common.protocol.login;
 
 
 import com.zfoo.net.core.gateway.IGatewayLoadBalancer;
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 import com.zfoo.tank.common.util.TokenUtils;
 
@@ -25,7 +24,7 @@ import com.zfoo.tank.common.util.TokenUtils;
  * @since 2019-10-15 17:55
  */
 @Protocol(id = 1004)
-public class GetPlayerInfoRequest implements IPacket, IGatewayLoadBalancer {
+public class GetPlayerInfoRequest implements IGatewayLoadBalancer {
 
     private String token;
 

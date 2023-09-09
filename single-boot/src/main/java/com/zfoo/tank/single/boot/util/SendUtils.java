@@ -11,7 +11,6 @@
 package com.zfoo.tank.single.boot.util;
 
 import com.zfoo.net.NetContext;
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.net.util.SessionUtils;
 import com.zfoo.tank.common.entity.PlayerEntity;
 
@@ -24,7 +23,7 @@ public abstract class SendUtils {
     /**
      * 用于主动发送消息给客户端，会自己创建一个新的gatewayAttachment，如果用户没用登录，则不会发送信息
      */
-    public static void sendToPlayer(PlayerEntity playerEntity, IPacket packet) {
+    public static void sendToPlayer(PlayerEntity playerEntity, Object packet) {
         var sid = playerEntity.sid;
         var session = playerEntity.session;
         var uid = playerEntity.getId();

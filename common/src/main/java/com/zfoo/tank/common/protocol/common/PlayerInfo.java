@@ -14,7 +14,6 @@
 package com.zfoo.tank.common.protocol.common;
 
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -23,7 +22,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @since 2019-10-28 09:58
  */
 @Protocol(id = 400)
-public class PlayerInfo implements IPacket {
+public class PlayerInfo {
 
     public static final PlayerInfo DEFAULT_INSTANCE = new PlayerInfo();
     private long id;

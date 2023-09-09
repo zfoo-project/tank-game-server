@@ -10,7 +10,6 @@
 
 package com.zfoo.tank.common.protocol;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -18,7 +17,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @version 3.0
  */
 @Protocol(id = 1301, enhance = false)
-public class TestResponse implements IPacket {
+public class TestResponse {
 
     public String message;
 

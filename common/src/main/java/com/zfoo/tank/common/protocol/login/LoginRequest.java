@@ -15,7 +15,6 @@ package com.zfoo.tank.common.protocol.login;
 
 
 import com.zfoo.net.core.gateway.IGatewayLoadBalancer;
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -24,7 +23,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @since 2019-10-15 17:55
  */
 @Protocol(id = 1000)
-public class LoginRequest implements IPacket, IGatewayLoadBalancer {
+public class LoginRequest implements IGatewayLoadBalancer {
 
     private String account;
     private String password;

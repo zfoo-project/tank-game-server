@@ -13,14 +13,12 @@
 
 package com.zfoo.tank.common.protocol.admin;
 
-import com.zfoo.net.packet.IPacket;
-
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2019-12-05 10:43
  */
-public class AdminPlayerLevelAsk implements IPacket {
+public class AdminPlayerLevelAsk {
 
     private long userId;
     private int playerLevel;

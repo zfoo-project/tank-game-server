@@ -13,7 +13,6 @@
 
 package com.zfoo.tank.common.protocol.chat;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -21,7 +20,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @version 3.0
  */
 @Protocol(id = 4002)
-public class GroupChatRequest implements IPacket {
+public class GroupChatRequest {
 
     private String message;
 

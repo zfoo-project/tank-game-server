@@ -10,13 +10,11 @@
 
 package com.zfoo.tank.common.protocol;
 
-import com.zfoo.net.packet.IPacket;
-
 /**
  * @author jaysunxiao
  * @version 3.0
  */
-public class PlayerExpNotice implements IPacket {
+public class PlayerExpNotice {
     private int level;
     private long exp;
 

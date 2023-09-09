@@ -13,7 +13,6 @@
 
 package com.zfoo.tank.common.protocol.common;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -21,7 +20,7 @@ import com.zfoo.protocol.anno.Protocol;
  * @version 3.0
  */
 @Protocol(id = 402)
-public class RankInfo implements IPacket {
+public class RankInfo {
 
     private PlayerInfo playerInfo;
 
