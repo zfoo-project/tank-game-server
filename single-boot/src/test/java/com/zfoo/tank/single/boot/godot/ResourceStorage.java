@@ -12,7 +12,6 @@
 
 package com.zfoo.tank.single.boot.godot;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.protocol.anno.Note;
 
 import java.util.Map;
@@ -23,7 +22,7 @@ import java.util.Map;
  * @author godotg
  * @version 3.0
  */
-public class ResourceStorage implements IPacket {
+public class ResourceStorage {
 
     @Note("Map<Integer, GodotResource>")
     public Map<Integer, GodotObjectResource> objectResources;

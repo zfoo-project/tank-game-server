@@ -12,7 +12,6 @@
 
 package com.zfoo.tank.single.boot.godot;
 
-import com.zfoo.net.packet.IPacket;
 import com.zfoo.storage.anno.Id;
 import com.zfoo.storage.anno.Storage;
 
@@ -21,7 +20,7 @@ import com.zfoo.storage.anno.Storage;
  * @version 3.0
  */
 @Storage
-public class GodotCommonResource implements IPacket {
+public class GodotCommonResource {
 
     @Id
     public String key;
