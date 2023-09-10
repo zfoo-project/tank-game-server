@@ -16,6 +16,8 @@ import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
+import com.zfoo.tank.common.protocol.PlayerExpNotice;
+import com.zfoo.tank.common.protocol.battle.BattleResultResponse;
 import com.zfoo.tank.common.protocol.cache.ScoreRankResponse;
 import com.zfoo.tank.common.protocol.login.GetPlayerInfoResponse;
 import com.zfoo.tank.common.protocol.login.LoginResponse;
@@ -56,13 +58,23 @@ public class MyTankClientController {
 
 
     @PacketReceiver
+    public void atBattleResultResponse(Session session, BattleResultResponse response) {
+        logger.info("战斗结果[{}]", JsonUtils.object2String(response));
+    }
+
+    @PacketReceiver
     public void atScoreRankResponse(Session session, ScoreRankResponse response) {
         logger.info("排行榜信息[{}]", JsonUtils.object2String(response));
     }
 
     @PacketReceiver
-    public void atCurrencyUpdateNotice(Session session, CurrencyUpdateNotice response) {
-        logger.info("currency update [{}]", JsonUtils.object2String(response));
+    public void atCurrencyUpdateNotice(Session session, CurrencyUpdateNotice notice) {
+        logger.info("currency update [{}]", JsonUtils.object2String(notice));
+    }
+
+    @PacketReceiver
+    public void atPlayerExpNotice(Session session, PlayerExpNotice response) {
+        logger.info("player exp update [{}]", JsonUtils.object2String(response));
     }
 
 
