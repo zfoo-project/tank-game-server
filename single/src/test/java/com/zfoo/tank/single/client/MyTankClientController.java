@@ -15,6 +15,7 @@ package com.zfoo.tank.single.client;
 import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.protocol.util.JsonUtils;
+import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.protocol.cache.ScoreRankResponse;
 import com.zfoo.tank.common.protocol.login.GetPlayerInfoResponse;
 import com.zfoo.tank.common.protocol.login.LoginResponse;
@@ -57,6 +58,11 @@ public class MyTankClientController {
     @PacketReceiver
     public void atScoreRankResponse(Session session, ScoreRankResponse response) {
         logger.info("排行榜信息[{}]", JsonUtils.object2String(response));
+    }
+
+    @PacketReceiver
+    public void atCurrencyUpdateNotice(Session session, CurrencyUpdateNotice response) {
+        logger.info("currency update [{}]", JsonUtils.object2String(response));
     }
 
 

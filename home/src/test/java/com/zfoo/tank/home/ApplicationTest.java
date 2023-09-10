@@ -13,10 +13,8 @@
 
 package com.zfoo.tank.home;
 
-import com.zfoo.tank.common.constant.TankDeployEnum;
-import com.zfoo.tank.common.generate.ProtobufXml;
-import com.zfoo.tank.common.generate.ProtocolXml;
 import com.zfoo.protocol.util.ThreadUtils;
+import com.zfoo.tank.common.constant.TankDeployEnum;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -31,17 +29,6 @@ public class ApplicationTest {
     static {
         TankDeployEnum.initDefaultEnv();
     }
-
-    @Test
-    public void createProtocolXML() {
-        ProtocolXml.createProtocolXML();
-    }
-
-    @Test
-    public void createProtobufXML() {
-        ProtobufXml.createProtobufXML();
-    }
-
 
     @Test
     public void startApplication1() {

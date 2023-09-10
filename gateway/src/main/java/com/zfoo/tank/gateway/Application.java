@@ -63,11 +63,11 @@ public class Application {
 
         var uid = session.getUid();
         if (uid <= 0) {
-            return false;
+            logger.error("[session:{}发送了错误的包，因为没有登录或者是非法包[packet:{}]]", session, JsonUtils.object2String(packet));
+            return true;
         }
 
-        logger.error("[session:{}发送了错误的包，因为没有登录或者是非法包[packet:{}]]", session, JsonUtils.object2String(packet));
-        return true;
+        return false;
     };
 
     public static void main(String[] args) {
