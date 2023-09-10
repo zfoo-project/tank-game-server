@@ -34,6 +34,8 @@ import com.zfoo.tank.common.protocol.cache.ScoreRankRequest;
 import com.zfoo.tank.common.protocol.cache.ScoreRankResponse;
 import com.zfoo.tank.common.protocol.common.PlayerInfo;
 import com.zfoo.tank.common.protocol.common.RankInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +50,7 @@ import java.util.stream.Collectors;
  */
 @Component
 public class BattleController implements ApplicationListener<AppStartEvent> {
-
+    private static final Logger logger = LoggerFactory.getLogger(BattleController.class);
     private static final int RANK_SIZE = 20;
 
     private volatile int rankLimit = 0;
@@ -94,6 +96,9 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
 
     @PacketReceiver
     public void atScoreRankRequest(Session session, ScoreRankRequest request, GatewayAttachment gatewayAttachment) {
+        var uid = session.getUid();
+        var sid = session.getSid();
+        logger.info("c[{}][{}]排行榜信息查询", uid, sid);
         NetContext.getRouter().send(session, ScoreRankResponse.valueOf(rankCache.get()), gatewayAttachment);
     }
 

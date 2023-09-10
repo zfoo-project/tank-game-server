@@ -16,9 +16,11 @@ import com.zfoo.net.NetContext;
 import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.tcp.TcpClient;
 import com.zfoo.net.util.NetUtils;
+import com.zfoo.protocol.util.RandomUtils;
 import com.zfoo.protocol.util.ThreadUtils;
 import com.zfoo.scheduler.util.TimeUtils;
 import com.zfoo.tank.common.constant.TankDeployEnum;
+import com.zfoo.tank.common.protocol.battle.BattleResultRequest;
 import com.zfoo.tank.common.protocol.cache.ScoreRankRequest;
 import com.zfoo.tank.common.protocol.login.LoginRequest;
 import com.zfoo.tank.single.boot.Application;
@@ -49,6 +51,10 @@ public class MyTankClientTest {
         NetContext.getRouter().send(myTankSession, loginRequest);
         ThreadUtils.sleep(2 * TimeUtils.MILLIS_PER_SECOND);
 
+        // 发送一个战斗结果请求
+        var battleResultRequest = BattleResultRequest.valueOf(RandomUtils.randomInt());
+        NetContext.getRouter().send(myTankSession, battleResultRequest);
+        ThreadUtils.sleep(2 * TimeUtils.MILLIS_PER_SECOND);
 
         // 发送一个获取分数排行榜的信息
         var scoreRankRequest = ScoreRankRequest.valueOf();

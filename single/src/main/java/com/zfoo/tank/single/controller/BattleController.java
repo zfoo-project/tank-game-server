@@ -103,6 +103,9 @@ public class BattleController implements ApplicationListener<AppStartEvent> {
 
     @PacketReceiver
     public void atScoreRankRequest(Session session, ScoreRankRequest request) {
+        var uid = session.getUid();
+        var sid = session.getSid();
+        logger.info("c[{}][{}]排行榜信息查询", uid, sid);
         NetContext.getRouter().send(session, ScoreRankResponse.valueOf(rankCache.get()));
     }
 

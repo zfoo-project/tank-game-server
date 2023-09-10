@@ -18,6 +18,12 @@ public class BattleResultRequest {
 
     private int score;
 
+    public static BattleResultRequest valueOf(int score) {
+        var request = new BattleResultRequest();
+        request.score = score;
+        return request;
+    }
+
     public int getScore() {
         return score;
     }
