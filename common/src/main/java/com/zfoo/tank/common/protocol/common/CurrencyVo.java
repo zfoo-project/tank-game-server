@@ -16,7 +16,6 @@ import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 @Protocol(id = 401)
 public class CurrencyVo {

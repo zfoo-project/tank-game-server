@@ -19,7 +19,6 @@ import org.springframework.core.env.Environment;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 @Configuration
 public class AutoConfiguration {

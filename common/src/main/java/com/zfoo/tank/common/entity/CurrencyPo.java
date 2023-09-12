@@ -16,7 +16,6 @@ import com.zfoo.tank.common.protocol.common.CurrencyVo;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 public class CurrencyPo {
 

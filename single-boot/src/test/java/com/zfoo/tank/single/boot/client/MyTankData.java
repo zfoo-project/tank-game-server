@@ -17,7 +17,6 @@ import com.zfoo.tank.common.protocol.common.PlayerInfo;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 public class MyTankData {
 

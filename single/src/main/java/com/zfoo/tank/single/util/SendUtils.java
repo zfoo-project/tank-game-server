@@ -16,7 +16,6 @@ import com.zfoo.tank.common.entity.PlayerEntity;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 public abstract class SendUtils {
 

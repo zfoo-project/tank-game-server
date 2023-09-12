@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 @Configuration
 public class AutoConfiguration {

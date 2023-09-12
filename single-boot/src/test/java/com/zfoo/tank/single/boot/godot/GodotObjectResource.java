@@ -17,7 +17,6 @@ import com.zfoo.storage.anno.Storage;
 
 /**
  * @author godotg
- * @version 3.0
  */
 @Storage
 public class GodotObjectResource {

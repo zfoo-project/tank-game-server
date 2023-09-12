@@ -20,7 +20,6 @@ import java.util.List;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 @Protocol(id = 3003)
 public class ScoreRankResponse {

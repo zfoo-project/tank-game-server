@@ -51,7 +51,6 @@ import java.util.stream.Collectors;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 @Component
 public class BattleController implements ApplicationListener<AppStartEvent> {

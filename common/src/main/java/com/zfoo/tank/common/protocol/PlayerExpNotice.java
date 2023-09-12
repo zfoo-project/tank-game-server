@@ -12,7 +12,6 @@ package com.zfoo.tank.common.protocol;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 public class PlayerExpNotice {
     private int level;

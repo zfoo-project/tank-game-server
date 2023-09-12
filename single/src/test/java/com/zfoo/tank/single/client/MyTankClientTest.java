@@ -37,7 +37,6 @@ import java.util.function.Consumer;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 @Ignore
 public class MyTankClientTest {

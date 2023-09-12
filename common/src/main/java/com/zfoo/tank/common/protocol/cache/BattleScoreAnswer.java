@@ -17,7 +17,6 @@ import com.zfoo.protocol.anno.Protocol;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 @Protocol(id = 3001)
 public class BattleScoreAnswer {

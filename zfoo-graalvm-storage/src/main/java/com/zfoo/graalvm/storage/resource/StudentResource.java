@@ -19,7 +19,6 @@ import java.util.List;
 
 /**
  * @author godotg
- * @version 3.0
  */
 @Storage
 @GraalvmNativeStorage("classpath:excel/StudentResource.xlsx")

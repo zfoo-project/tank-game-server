@@ -21,7 +21,6 @@ import com.zfoo.orm.model.IEntity;
 
 /**
  * @author jaysunxiao
- * @version 3.0
  */
 @EntityCache
 @GraalvmNativeEntityCache

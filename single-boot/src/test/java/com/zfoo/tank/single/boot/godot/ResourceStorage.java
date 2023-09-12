@@ -20,7 +20,6 @@ import java.util.Map;
  * 所有配置的聚合
  *
  * @author godotg
- * @version 3.0
  */
 public class ResourceStorage {
 

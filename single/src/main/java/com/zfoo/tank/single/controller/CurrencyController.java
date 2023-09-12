@@ -33,7 +33,6 @@ import java.util.function.BiConsumer;
 
 /**
  * @author godotg
- * @version 3.0
  */
 @Component
 public class CurrencyController {
