@@ -12,6 +12,7 @@
 
 package com.zfoo.graalvm.storage;
 
+import com.zfoo.graalvm.storage.resource.StudentCsvResource;
 import com.zfoo.graalvm.storage.resource.TestResource;
 import com.zfoo.protocol.util.AssertionUtils;
 import com.zfoo.protocol.util.JsonUtils;
@@ -42,7 +43,7 @@ public class ApplicationContext {
         logger.info(StringUtils.MULTIPLE_HYPHENS);
 
         // 通过索引找对应的行
-        var csvValuesByIndex = studentCsvResources.getIndex("name", "james0");
+        var csvValuesByIndex = studentCsvResources.getIndexes(StudentCsvResource::getName, "james0");
         logger.info(JsonUtils.object2String(csvValuesByIndex));
 
         // Excel的映射内容需要在被Spring管理的bean的方法上加上@ResInjection注解，即可自动注入Excel对应的对象
