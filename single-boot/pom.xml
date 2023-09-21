@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <zfoo.version>3.1.2</zfoo.version>
+        <zfoo.version>3.1.4</zfoo.version>
         <!-- spring and spring boot -->
         <spring.version>6.0.11</spring.version>
         <spring.boot.version>3.1.3</spring.boot.version>
@@ -54,7 +54,7 @@
         <!-- encoding and java version -->
         <project.build.sourceEncoding>${file.encoding}</project.build.sourceEncoding>
         <maven.compiler.encoding>${file.encoding}</maven.compiler.encoding>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <file.encoding>UTF-8</file.encoding>
     </properties>
 
