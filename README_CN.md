@@ -11,15 +11,14 @@
 - 后端依赖 [zfoo](https://github.com/zfoo-project/zfoo) ，运行前先使用Maven
   install [zfoo](https://github.com/zfoo-project/zfoo)
   前端依赖 [lux-admin-vuetify3](https://github.com/yangjiakai/lux-admin-vuetify3)，目标创造最优秀的 vuetify3 的 Admin 开源模板
-- JDK 11+
-- MongoDB 4.2
-- Zookeeper 3.6.1
+- JDK 17+
+- MongoDB 4+
+- Zookeeper 3.6+
 
 ### Ⅲ. 本地单服运行
 
 - [admin](./admin/src/test/java/com/zfoo/tank/admin/ApplicationTest.java)为web资源服务器提供游戏入口和后台管理系统
-- [single](./single/src/test/java/com/zfoo/tank/single/ApplicationTest.java)为单服游戏服务器，single-boot是用了spring
-  boot自动化配置的single，代码一致
+- [single](./single/src/test/java/com/zfoo/tank/single/ApplicationTest.java)为单服游戏服务器，single-boot是用了spring boot自动化配置的single，代码一致
 - 本地运行从test下运行，原因看[FAQ](https://github.com/zfoo-project/zfoo/blob/main/doc/FAQ.md) ，实在有问题可以看看手把手的
   [zfoo 框架视频教程](https://github.com/zfoo-project/zfoo/blob/main/doc/video-tutorial.md)
 

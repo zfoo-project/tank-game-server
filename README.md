@@ -12,9 +12,9 @@ English | [简体中文](./README_CN.md)
 - server dependencies [zfoo](https://github.com/zfoo-project/zfoo) ，Use Maven install before
   running [zfoo](https://github.com/zfoo-project/zfoo)
 - web frontend using [lux-admin-vuetify3](https://github.com/yangjiakai/lux-admin-vuetify3), Creating the best Vuetify 3 Admin open-source template.
-- JDK 11+
-- MongoDB 4.2
-- Zookeeper 3.6.1
+- JDK 17+
+- MongoDB 4+
+- Zookeeper 3.6+
 
 ### Ⅲ. Single-server
 
