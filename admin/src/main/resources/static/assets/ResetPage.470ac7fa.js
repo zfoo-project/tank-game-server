@@ -1,0 +1,1 @@
+import{_ as e,a as t,o as s}from"./index.557c98b1.js";const a={};function r(c,n){return s(),t("div",null,"Reset")}const _=e(a,[["render",r],["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/auth/ResetPage.vue"]]);export{_ as default};

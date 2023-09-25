@@ -1,0 +1,1 @@
+import{d as a,i as s,k as t,o,_ as n}from"./index.557c98b1.js";import{u as r,E as i}from"./EmailList.f75ba1c8.js";const m=a({__name:"SendPage",setup(c){const e=r();return(_,l)=>(o(),s(i,{emails:t(e).getInboxList},null,8,["emails"]))}}),f=n(m,[["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/app/email/pages/SendPage.vue"]]);export{f as default};

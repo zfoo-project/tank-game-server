@@ -1,0 +1,1 @@
+import{_ as e,a as o,o as s}from"./index.557c98b1.js";const t={},c={class:""};function n(r,a){return s(),o("div",c)}const i=e(t,[["render",n],["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/app/booking/BookingApp.vue"]]);export{i as default};

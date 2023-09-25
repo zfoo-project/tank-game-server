@@ -1,0 +1,1 @@
+import{_ as e,a as t,o as r}from"./index.557c98b1.js";const s={},c={class:""};function a(o,n){return r(),t("div",c,"EchartOthers")}const h=e(s,[["render",a],["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/chart/EchartOthers.vue"]]);export{h as default};
