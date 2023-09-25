@@ -1,0 +1,1 @@
+import{_ as e,a as t,o as r}from"./index.78d81d6b.js";const o={},s={class:""};function c(i,a){return r(),t("div",s,"Nitori")}const _=e(o,[["render",c],["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/app/nitori/NitoriApp.vue"]]);export{_ as default};

@@ -1,1 +1,0 @@
-import{_ as e,a as n,o as a}from"./index.557c98b1.js";const t={};function c(r,s){return a(),n("div",null,"Maintenance")}const o=e(t,[["render",c],["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/utility/MaintenancePage.vue"]]);export{o as default};

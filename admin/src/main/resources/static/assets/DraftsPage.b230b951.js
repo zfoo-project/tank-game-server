@@ -1,0 +1,1 @@
+import{d as a,i as s,k as t,o as r,_ as o}from"./index.78d81d6b.js";import{u as i,E as n}from"./EmailList.2db5d82a.js";const m=a({__name:"DraftsPage",setup(c){const e=i();return(_,l)=>(r(),s(n,{emails:t(e).getInboxList},null,8,["emails"]))}}),u=o(m,[["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/app/email/pages/DraftsPage.vue"]]);export{u as default};

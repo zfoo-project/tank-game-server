@@ -1,1 +1,0 @@
-import{d as a,i as s,k as t,o as r,_ as o}from"./index.557c98b1.js";import{u as i,E as n}from"./EmailList.f75ba1c8.js";const m=a({__name:"TrashPage",setup(c){const e=i();return(_,l)=>(r(),s(n,{emails:t(e).getInboxList},null,8,["emails"]))}}),f=o(m,[["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/app/email/pages/TrashPage.vue"]]);export{f as default};

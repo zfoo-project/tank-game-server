@@ -1,1 +1,0 @@
-import{_ as e,a as s,o as a}from"./index.557c98b1.js";const t={},c={class:""};function r(n,o){return a(),s("div",c,"Me")}const i=e(t,[["render",r],["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/app/unsplash/MyPage.vue"]]);export{i as default};

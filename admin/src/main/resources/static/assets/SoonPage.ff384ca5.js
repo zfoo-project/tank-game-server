@@ -1,0 +1,1 @@
+import{_ as e,a as o,o as t}from"./index.78d81d6b.js";const n={};function r(a,c){return t(),o("div",null,"Soon")}const _=e(n,[["render",r],["__file","D:/Project/tank-game-server-ts/admin-vue3-ts/src/views/utility/SoonPage.vue"]]);export{_ as default};
