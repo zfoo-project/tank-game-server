@@ -19,6 +19,7 @@
 
 - [admin](./admin/src/test/java/com/zfoo/tank/admin/ApplicationTest.java)为web资源服务器提供游戏入口和后台管理系统
 - [single](./single/src/test/java/com/zfoo/tank/single/ApplicationTest.java)为单服游戏服务器，single-boot是用了spring boot自动化配置的single，代码一致
+- 单服启动不依赖zookeeper，所以无法和admin通信
 - 本地运行从test下运行，原因看[FAQ](https://github.com/zfoo-project/zfoo/blob/main/doc/FAQ.md) ，实在有问题可以看看手把手的
   [zfoo 框架视频教程](https://github.com/zfoo-project/zfoo/blob/main/doc/video-tutorial.md)
 

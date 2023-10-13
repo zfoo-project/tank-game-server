@@ -24,6 +24,8 @@ English | [简体中文](./README_CN.md)
 - [single](./single/src/test/java/com/zfoo/tank/single/ApplicationTest.java) for single-server game servers, single-boot
   is a single configured with spring boot automation, and the code is consistent
 
+- single server startup does not rely on zookeeper, so it cannot communicate with admin
+- 
 - runs the test
 
 ```
