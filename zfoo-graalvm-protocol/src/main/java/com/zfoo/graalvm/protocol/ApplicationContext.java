@@ -35,6 +35,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfigurati
 import org.springframework.context.annotation.ImportRuntimeHints;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -64,7 +65,7 @@ public class ApplicationContext {
         var buffer = new UnpooledHeapByteBuf(ByteBufAllocator.DEFAULT, 100, 1_0000);
         buffer.writeBytes(bytes);
 
-        ProtocolManager.initProtocolAuto(Set.of(ComplexObject.class, NormalObject.class, SimpleObject.class), GenerateOperation.NO_OPERATION);
+        ProtocolManager.initProtocolAuto(List.of(ComplexObject.class, NormalObject.class, SimpleObject.class), GenerateOperation.NO_OPERATION);
 
         var packet = ProtocolManager.read(buffer);
 
