@@ -28,7 +28,9 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * @author godotg
@@ -60,7 +62,7 @@ public class ExportExcelGodot {
     @Test
     public void exportAll() {
         // 生成协议
-        var protocols = new HashSet<Class<?>>();
+        var protocols = new ArrayList<Class<?>>();
         protocols.add(ResourceStorage.class);
         protocols.addAll(storageManager.storageMap().keySet());
         var operation = new GenerateOperation();
@@ -89,7 +91,7 @@ public class ExportExcelGodot {
     @Test
     public void exportExcel() {
         // 初始化协议
-        var protocols = new HashSet<Class<?>>();
+        var protocols = new ArrayList<Class<?>>();
         protocols.add(ResourceStorage.class);
         protocols.addAll(storageManager.storageMap().keySet());
         ProtocolManager.initProtocolAuto(protocols, GenerateOperation.NO_OPERATION);
