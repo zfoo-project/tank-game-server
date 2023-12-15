@@ -32,11 +32,9 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositori
 import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration;
-import org.springframework.context.annotation.ImportRuntimeHints;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 需要先使用下面这行生成hint文件
@@ -59,7 +57,7 @@ public class ApplicationContext {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(ApplicationContext.class, args);
 
-        var bytes = IOUtils.toByteArray(ClassUtils.getFileFromClassPath("ComplexObjectBytes.protocol"));
+        var bytes = IOUtils.toByteArray(ClassUtils.getFileFromClassPath("ComplexObjectBinaryData.bytes"));
         logger.info("字节数组读取长度 [{}]", bytes.length);
 
         var buffer = new UnpooledHeapByteBuf(ByteBufAllocator.DEFAULT, 100, 1_0000);
