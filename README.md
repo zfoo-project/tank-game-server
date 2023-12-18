@@ -32,7 +32,8 @@ English | [简体中文](./README_CN.md)
 1. Run the game in a browser using the server startup entry for websockets，ApplicationTest.startWebsocketApplication()
 2. The server boot entry that uses TCP runs on the UNTIY species，ApplicationTest.startApplication()
 
-Local game entry，http://localhost:9600/game/index.html
+Local playtest entry，https://github.com/zfoo-project/tank-game-server/blob/main/single-boot/src/test/java/com/zfoo/tank/single/boot/client/MyTankClientTest.java
+Local game entry，http://localhost:9600/game/index.html, Older versions of Unity are deprecated because they cannot be downloaded
 Local web management url，http://localhost:9600/
 ```
 
@@ -45,7 +46,8 @@ Local web management url，http://localhost:9600/
 - [home](./home/src/test/java/com/zfoo/tank/cache/ApplicationTest.java) provides basic business logic services
 
 ```
-Local game entry，http://localhost:9600/game/index.html
+Local playtest entry，https://github.com/zfoo-project/tank-game-server/blob/main/single-boot/src/test/java/com/zfoo/tank/single/boot/client/MyTankClientTest.java
+Local game entry，http://localhost:9600/game/index.html, Older versions of Unity are deprecated because they cannot be downloaded
 Local web management url，http://localhost:9600/
 ```
 
