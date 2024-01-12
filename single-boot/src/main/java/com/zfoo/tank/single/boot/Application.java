@@ -55,7 +55,7 @@ public class Application {
 
     /**
      * java -Dspring.profiles.active=dev -jar single-boot-1.0.jar
-     * <p>
+     * <p
      * 为什么部署的时候才用main，平时开发的时候从test启动？
      * 1.可以很好的隔离部署环境和开发测试环境
      * 2.通过main启动需要加上jvm启动参数 -Dspring.profiles.active=dev ，日志输出的路径为当前工作目录
