@@ -56,7 +56,7 @@
         </net:providers>
 
         <net:consumers>
-            <net:consumer protocol-module="tankCache" consumer="tankCacheProvider"/>
+            <net:consumer consumer="tankCacheProvider"/>
         </net:consumers>
 
     </net:config>

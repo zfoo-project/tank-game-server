@@ -50,7 +50,7 @@
         </net:registry>
 
         <net:consumers>
-            <net:consumer protocol-module="tankHome" load-balancer="consistent-hash" consumer="tankHomeProvider"/>
+            <net:consumer load-balancer="consistent-hash" consumer="tankHomeProvider"/>
         </net:consumers>
     </net:config>
 
