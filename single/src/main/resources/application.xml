@@ -51,9 +51,7 @@
     </storage:storage>
 
 
-    <net:config id="tankCache" protocol-location="protocol.xml"
-                code-languages="${net.code.languages}"
-                fold-protocol="${net.fold.protocol}">
+    <net:config id="tankCache" protocol-location="protocol.xml">
 
     </net:config>
 
