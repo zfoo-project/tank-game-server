@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!-- native为内部消息，common是公共消息每个模块都能使用，js是web通信用的协议会生成js协议文件 -->
+<protocols>
+
+    <module id="1" name="native">
+        <protocol location="com.zfoo.net.router.attachment.SignalAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.GatewayAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.UdpAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.HttpAttachment"/>
+        <protocol location="com.zfoo.net.router.attachment.NoAnswerAttachment"/>
+
+
+        <protocol location="com.zfoo.net.core.gateway.model.AuthUidToGatewayCheck"/>
+        <protocol location="com.zfoo.net.core.gateway.model.AuthUidToGatewayConfirm"/>
+        <protocol location="com.zfoo.net.core.gateway.model.AuthUidAsk"/>
+        <protocol location="com.zfoo.net.core.gateway.model.GatewaySessionInactiveAsk"/>
+        <protocol location="com.zfoo.net.core.gateway.model.GatewaySynchronizeSidAsk"/>
+    </module>
+
+    <!-- 在xml文件中写协议号是为了统一规划协议号，更加直观；不写协议号也没有影响 -->
+    <module id="2" name="common">
+        <protocol id="100" location="com.zfoo.net.packet.common.Message"/>
+        <protocol id="101" location="com.zfoo.net.packet.common.Error"/>
+        <protocol id="102" location="com.zfoo.net.packet.common.Heartbeat"/>
+        <protocol id="103" location="com.zfoo.net.packet.common.Ping"/>
+        <protocol id="104" location="com.zfoo.net.packet.common.Pong"/>
+
+        <protocol id="110" location="com.zfoo.net.packet.common.PairIntLong"/>
+        <protocol id="111" location="com.zfoo.net.packet.common.PairLong"/>
+        <protocol id="112" location="com.zfoo.net.packet.common.PairString"/>
+        <protocol id="113" location="com.zfoo.net.packet.common.PairLS"/>
+        <protocol id="114" location="com.zfoo.net.packet.common.TripleLong"/>
+        <protocol id="115" location="com.zfoo.net.packet.common.TripleString"/>
+        <protocol id="116" location="com.zfoo.net.packet.common.TripleLSS"/>
+
+    </module>
+
+    <module id="3" name="test">
+        <protocol id="1110" location="com.zfoo.net.packet.CM_Int" enhance="false"/>
+        <protocol id="1111" location="com.zfoo.net.packet.SM_Int" enhance="false"/>
+        <protocol id="1112" location="com.zfoo.net.packet.CM_Float" enhance="false"/>
+        <protocol id="1113" location="com.zfoo.net.packet.SM_Float" enhance="false"/>
+        <protocol id="1114" location="com.zfoo.net.packet.CM_Object" enhance="false"/>
+        <protocol id="1115" location="com.zfoo.net.packet.SM_Object" enhance="false"/>
+        <protocol id="1116" location="com.zfoo.net.packet.ObjectA"/>
+        <protocol id="1117" location="com.zfoo.net.packet.ObjectB"/>
+        <protocol id="1118" location="com.zfoo.net.packet.CM_List" enhance="false"/>
+        <protocol id="1119" location="com.zfoo.net.packet.CM_Array" enhance="false"/>
+        <protocol id="1120" location="com.zfoo.net.packet.CM_Map" enhance="false"/>
+        <protocol id="1121" location="com.zfoo.net.packet.CM_Set" enhance="false"/>
+
+
+        <protocol id="1150" location="com.zfoo.net.packet.tcp.SyncMessAsk" enhance="false"/>
+        <protocol id="1151" location="com.zfoo.net.packet.tcp.SyncMessAnswer" enhance="false"/>
+        <protocol id="1152" location="com.zfoo.net.packet.tcp.AsyncMessAsk" enhance="false"/>
+        <protocol id="1153" location="com.zfoo.net.packet.tcp.AsyncMessAnswer" enhance="false"/>
+
+        <protocol id="1200" location="com.zfoo.net.packet.udp.UdpHelloRequest"/>
+        <protocol id="1201" location="com.zfoo.net.packet.udp.UdpHelloResponse"/>
+
+        <protocol id="1300" location="com.zfoo.net.packet.tcp.TcpHelloRequest"/>
+        <protocol id="1301" location="com.zfoo.net.packet.tcp.TcpHelloResponse"/>
+
+        <protocol id="1400" location="com.zfoo.net.packet.websocket.WebsocketHelloRequest"/>
+        <protocol id="1401" location="com.zfoo.net.packet.websocket.WebsocketHelloResponse"/>
+
+        <protocol id="1600" location="com.zfoo.net.packet.json.JsonHelloRequest"/>
+        <protocol id="1601" location="com.zfoo.net.packet.json.JsonHelloResponse"/>
+
+        <protocol id="1700" location="com.zfoo.net.packet.http.HttpHelloRequest"/>
+        <protocol id="1701" location="com.zfoo.net.packet.http.HttpHelloResponse"/>
+    </module>
+
+    <module id="4" name="js">
+        <protocol id="2070" location="com.zfoo.net.packet.websocket.WebSocketPacketRequest" enhance="false"/>
+        <protocol id="2071" location="com.zfoo.net.packet.websocket.WebSocketObjectA" enhance="false"/>
+        <protocol id="2072" location="com.zfoo.net.packet.websocket.WebSocketObjectB" enhance="false"/>
+    </module>
+
+    <module id="5" name="myProviderModule">
+        <protocol id="4000" location="com.zfoo.net.packet.provider.ProviderMessAsk" enhance="false"/>
+        <protocol id="4001" location="com.zfoo.net.packet.provider.ProviderMessAnswer" enhance="false"/>
+
+        <protocol id="5000" location="com.zfoo.net.packet.gateway.GatewayToProviderRequest" enhance="false"/>
+        <protocol id="5001" location="com.zfoo.net.packet.gateway.GatewayToProviderResponse" enhance="false"/>
+    </module>
+
+</protocols>

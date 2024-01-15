@@ -1,0 +1,23 @@
+syntax = "proto3";
+package test.message;
+
+message OneMessage {
+  Proj value = 1;
+}
+
+message SimpleObject {
+  int64 aa = 1;
+}
+
+// 如果字段的tag超过1000，则视这个字段为需要兼容的协议字段
+message Proj {
+  // 这是属性的注释
+  int64 id = 1;
+  string name = 2;
+  string repoPath = 3;
+  //zzzzzzz
+  repeated int32 a = 4;
+  map<int32, int64> b = 5;
+  map<int32, string> c = 1000;
+  map<int32, SimpleObject> d = 1001;
+}

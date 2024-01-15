@@ -1,0 +1,12 @@
+syntax = "proto3";
+package test.message;
+
+message OneMap {
+  map<string, Project> value = 1;
+}
+
+message Project {
+  int64 id = 1;
+  string name = 2;
+  string repoPath = 3;
+}

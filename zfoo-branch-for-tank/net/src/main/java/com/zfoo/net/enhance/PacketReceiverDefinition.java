@@ -1,0 +1,124 @@
+/*
+ * Copyright (C) 2020 The zfoo Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the License.
+ */
+
+package com.zfoo.net.enhance;
+
+import com.zfoo.net.anno.Task;
+import com.zfoo.net.session.Session;
+import com.zfoo.protocol.util.ReflectionUtils;
+
+import java.lang.reflect.Method;
+
+/**
+ * EN:Dynamic proxy methods annotated by PacketReceiver annotations, to avoid reflection, will eventually use javassist bytecode enhanced methods to proxy this class
+ * CN:动态代理被PacketReceiver注解标注的方法，为了避免反射最终会用javassist字节码增强的方法去代理PacketReceiverDefinition
+ *
+ * @author godotg
+ */
+public class PacketReceiverDefinition implements IPacketReceiver {
+
+    /**
+     * A controller bean
+     */
+    private Object bean;
+
+    /**
+     * Methods annotated by PacketReceiver annotations, eg: public void atTcpHelloRequest(Session session, TcpHelloRequest request)
+     */
+    private Method method;
+
+    /**
+     * packet receiver type
+     */
+    private Task task;
+
+    /**
+     * The protocol class that receives the package, eg: TcpHelloRequest
+     */
+    private Class<?> packetClazz;
+
+    /**
+     * attachment class, eg: GatewayAttachment
+     */
+    private Class<?> attachmentClazz;
+
+    public PacketReceiverDefinition(Object bean, Method method, Task task, Class<?> packetClazz, Class<?> attachmentClazz) {
+        this.bean = bean;
+        this.method = method;
+        this.task = task;
+        this.packetClazz = packetClazz;
+        this.attachmentClazz = attachmentClazz;
+        ReflectionUtils.makeAccessible(method);
+    }
+
+    @Override
+    public Task task() {
+        return task;
+    }
+
+    @Override
+    public Class<?> attachment() {
+        return attachmentClazz;
+    }
+
+
+    @Override
+    public void invoke(Session session, Object packet, Object attachment) {
+        if (attachmentClazz == null) {
+            ReflectionUtils.invokeMethod(bean, method, session, packet);
+        } else {
+            ReflectionUtils.invokeMethod(bean, method, session, packet, attachment);
+        }
+    }
+
+    public Object getBean() {
+        return bean;
+    }
+
+    public void setBean(Object bean) {
+        this.bean = bean;
+    }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    public void setMethod(Method method) {
+        this.method = method;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    public Class<?> getPacketClazz() {
+        return packetClazz;
+    }
+
+    public void setPacketClazz(Class<?> packetClazz) {
+        this.packetClazz = packetClazz;
+    }
+
+    public Class<?> getAttachmentClazz() {
+        return attachmentClazz;
+    }
+
+    public void setAttachmentClazz(Class<?> attachmentClazz) {
+        this.attachmentClazz = attachmentClazz;
+    }
+
+}

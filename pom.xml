@@ -20,6 +20,8 @@
         <module>cache</module>
         <module>single</module>
         <module>single-boot</module>
+        <module>zfoo-branch-for-tank</module>
+
         <module>zfoo-graalvm-asimple</module>
         <module>zfoo-graalvm-event</module>
         <module>zfoo-graalvm-storage</module>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="false" debug="false">
+
+    <contextName>com.zfoo.boot</contextName>
+
+    <property name="PATTERN_CONSOLE"
+              value="%d{yyyy-MM-dd HH:mm:ss} [%highlight(%5level)] [%thread] %logger.%M\\(%F:%line\\) - %msg%n"/>
+
+    <appender name="zfoo_console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN_CONSOLE}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="zfoo_console"/>
+    </root>
+
+</configuration>
