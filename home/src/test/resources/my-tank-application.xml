@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:net="http://www.zfoo.com/schema/net"
+       xmlns="http://www.springframework.org/schema/beans"
+
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+
+    http://www.zfoo.com/schema/net
+    http://www.zfoo.com/schema/net-1.0.xsd">
+
+    <context:property-placeholder location="classpath:deploy-${spring.profiles.active}.properties"/>
+
+    <context:component-scan base-package="com.zfoo.tank.home.pressure"/>
+
+    <net:config id="tankCache" protocol-location="protocol.xml">
+    </net:config>
+</beans>
