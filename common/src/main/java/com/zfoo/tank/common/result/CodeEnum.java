@@ -45,7 +45,7 @@ public enum CodeEnum {
      * 1000-1100为登录相关
      */
     SIGN_IN_FAIL(1000, "账号密码错误"),
-
+    login_19(1006, "账号已存在"),
     ;
 
     private final int code;

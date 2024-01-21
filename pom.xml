@@ -18,9 +18,11 @@
         <module>gateway</module>
         <module>home</module>
         <module>cache</module>
+        <module>login</module>
+
+        <module>zfoo-branch-for-tank</module>
         <module>single</module>
         <module>single-boot</module>
-        <module>zfoo-branch-for-tank</module>
 
         <module>zfoo-graalvm-asimple</module>
         <module>zfoo-graalvm-event</module>
