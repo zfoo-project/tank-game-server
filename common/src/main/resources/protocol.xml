@@ -48,6 +48,9 @@
         <protocol id="1006" location="com.zfoo.tank.common.protocol.battle.BattleResultRequest"/>
         <protocol id="1007" location="com.zfoo.tank.common.protocol.battle.BattleResultResponse"/>
 
+        <protocol id="1008" location="com.zfoo.tank.common.protocol.login.LoginByHttpTokenRequest"/>
+        <protocol id="1009" location="com.zfoo.tank.common.protocol.login.LoginByHttpTokenResponse"/>
+
 
         <protocol id="1100" location="com.zfoo.tank.common.protocol.CurrencyUpdateNotice"/>
         <protocol id="1101" location="com.zfoo.tank.common.protocol.PlayerExpNotice"/>

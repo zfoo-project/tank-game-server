@@ -15,6 +15,10 @@ import com.zfoo.net.NetContext;
 import com.zfoo.net.core.gateway.model.GatewaySessionInactiveEvent;
 import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.tank.common.protocol.login.LogoutRequest;
+import com.zfoo.tank.gateway.event.GatewaySessionLoginEvent;
+import com.zfoo.tank.gateway.server.MyGatewayRouteHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,6 +26,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class GatewayController {
+    private static final Logger logger = LoggerFactory.getLogger(GatewayController.class);
+    @EventReceiver
+    public void onGatewaySessionLoginEvent(GatewaySessionLoginEvent event) {
+        var uid = event.getUid();
+        var sid = event.getSid();
+
+        logger.info("网关用户登录 [uid:{}] [sid:{}]", uid, sid);
+    }
 
     @EventReceiver
     public void onGatewaySessionInactiveEvent(GatewaySessionInactiveEvent event) {
