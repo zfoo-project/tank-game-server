@@ -13,16 +13,17 @@
 
 package com.zfoo.net.consumer.balancer;
 
-import com.zfoo.net.NetContext;
 import com.zfoo.net.session.Session;
 import com.zfoo.net.util.ConsistentHash;
 import com.zfoo.net.util.FastTreeMapIntLong;
 import com.zfoo.net.util.HashUtils;
 import com.zfoo.protocol.ProtocolManager;
-import com.zfoo.protocol.collection.CollectionUtils;
+import com.zfoo.protocol.collection.HashSetLong;
 import com.zfoo.protocol.exception.RunException;
 import com.zfoo.protocol.model.Pair;
 import com.zfoo.protocol.registration.ProtocolModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
@@ -38,11 +39,23 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
  */
 public class ConsistentHashLoadBalancer extends AbstractConsumerLoadBalancer {
 
+    private static final Logger logger = LoggerFactory.getLogger(ConsistentHashLoadBalancer.class);
+
     public static final ConsistentHashLoadBalancer INSTANCE = new ConsistentHashLoadBalancer();
 
-    private volatile int lastClientSessionChangeId = 0;
-    private static final AtomicReferenceArray<FastTreeMapIntLong> consistentHashMap = new AtomicReferenceArray<>(ProtocolManager.MAX_MODULE_NUM);
+    // 数组下标为ProtocolModule的id
+    private static final AtomicReferenceArray<ConsistentCache> consistentHashMap = new AtomicReferenceArray<>(ProtocolManager.MAX_MODULE_NUM);
     private static final int VIRTUAL_NODE_NUMS = 200;
+
+    public static class ConsistentCache {
+        public HashSetLong providerSids;
+        public FastTreeMapIntLong treeMap;
+
+        public ConsistentCache(HashSetLong providerSids, FastTreeMapIntLong treeMap) {
+            this.providerSids = providerSids;
+            this.treeMap = treeMap;
+        }
+    }
 
     public ConsistentHashLoadBalancer() {
     }
@@ -61,69 +74,54 @@ public class ConsistentHashLoadBalancer extends AbstractConsumerLoadBalancer {
     @Override
     public Session selectProvider(List<Session> providers, Object packet, Object argument) {
         if (argument == null) {
+            logger.warn("selectProvider:[{}] argument is null and use random load balancer", packet.getClass().getSimpleName());
             return RandomLoadBalancer.getInstance().selectProvider(providers, packet, argument);
         }
 
-        updateConsistentHashMap(providers);
-
         var module = ProtocolManager.moduleByProtocol(packet.getClass());
-        var fastTreeMap = consistentHashMap.get(module.getId());
-        if (fastTreeMap == null) {
-            fastTreeMap = updateModuleToConsistentHash(providers, module);
+        var consistentCache = consistentHashMap.get(module.getId());
+        if (consistentCache == null) {
+            consistentCache = updateModuleToConsistentHash(providers, module);
         }
-        if (fastTreeMap == null) {
-            throw new RunException("ConsistentHashLoadBalancer [protocol:{}][argument:{}], no service provides the [module:{}]", packet.getClass(), argument, module);
+        var providerSids = consistentCache.providerSids;
+        // providers和consistentHashMap的服务提供者不一致同样进行更新操作
+        if (providerSids.size() != providers.size() || providers.stream().anyMatch(it -> !providerSids.contains(it.getSid()))) {
+            consistentCache = updateModuleToConsistentHash(providers, module);
         }
-        var nearestIndex = fastTreeMap.indexOfNearestCeilingKey(HashUtils.fnvHash(argument));
+        var treeMap = consistentCache.treeMap;
+        var nearestIndex = treeMap.indexOfNearestCeilingKey(HashUtils.fnvHash(argument));
         if (nearestIndex < 0) {
             throw new RunException("no service provides the [module:{}]", module);
         }
-        var sid = fastTreeMap.getByIndex(nearestIndex);
-        var session = NetContext.getSessionManager().getClientSession(sid);
-        if (session == null) {
-            throw new RunException("unknown no service provides the [module:{}]", module);
-        }
-        return session;
+        var sid = treeMap.getByIndex(nearestIndex);
+        // 因为每次都会对比sid，一定会从providers获得session
+        return providers.stream().filter(it -> it.getSid() == sid).findFirst().get();
     }
-
-    private void updateConsistentHashMap(List<Session> providers) {
-        // 如果更新时间不匹配，则更新到最新的服务提供者
-        var currentClientSessionChangeId = NetContext.getSessionManager().getClientSessionChangeId();
-        if (currentClientSessionChangeId != lastClientSessionChangeId) {
-            for (byte i = 0; i < ProtocolManager.MAX_MODULE_NUM; i++) {
-                var consistentHash = consistentHashMap.get(i);
-                if (consistentHash == null) {
-                    continue;
-                }
-                var module = ProtocolManager.moduleByModuleId(i);
-                updateModuleToConsistentHash(providers, module);
-            }
-            lastClientSessionChangeId = currentClientSessionChangeId;
-        }
-    }
-
 
     @Nullable
-    private FastTreeMapIntLong updateModuleToConsistentHash(List<Session> providers, ProtocolModule module) {
+    private ConsistentCache updateModuleToConsistentHash(List<Session> providers, ProtocolModule module) {
         var sessionStringList = providers.stream()
-                .map(session -> new Pair<>(session.getConsumerAttribute().toString(), session.getSid()))
+                .map(session -> new Pair<>(session.getConsumerRegister().toString(), session.getSid()))
                 .sorted((a, b) -> a.getKey().compareTo(b.getKey()))
                 .toList();
 
         var consistentHash = new ConsistentHash<>(sessionStringList, VIRTUAL_NODE_NUMS);
         var virtualNodeTreeMap = consistentHash.getVirtualNodeTreeMap();
-        if (CollectionUtils.isEmpty(virtualNodeTreeMap)) {
-            consistentHashMap.set(module.getId(), null);
-            return null;
-        }
+
         var virtualTreeMap = new TreeMap<Integer, Long>();
         for (var entry : virtualNodeTreeMap.entrySet()) {
             virtualTreeMap.put(entry.getKey(), entry.getValue().getValue());
         }
+
+        // 缓存服务提供者的sid
+        var sidSet = new HashSetLong(16);
+        providers.forEach(it -> sidSet.add(it.getSid()));
         // 使用更高性能的tree map
         var fastTreeMap = new FastTreeMapIntLong(virtualTreeMap);
-        consistentHashMap.set(module.getId(), fastTreeMap);
-        return fastTreeMap;
+
+        var consistentCache = new ConsistentCache(sidSet, fastTreeMap);
+        consistentHashMap.set(module.getId(), consistentCache);
+        return consistentCache;
     }
 
 }

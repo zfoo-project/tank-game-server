@@ -56,12 +56,7 @@ public abstract class GenerateGoUtils {
     }
 
     public static void init(GenerateOperation generateOperation) {
-        // if not specify output path, then use current default path
-        if (StringUtils.isNotEmpty(generateOperation.getProtocolPath())) {
-            protocolOutputPath = FileUtils.joinPath(generateOperation.getProtocolPath(), protocolOutputRootPath);
-        } else {
-            protocolOutputPath = generateOperation.getProtocolPath();
-        }
+        protocolOutputPath = FileUtils.joinPath(generateOperation.getProtocolPath(), protocolOutputRootPath);
         FileUtils.deleteFile(new File(protocolOutputPath));
 
         goSerializerMap = new HashMap<>();
@@ -94,7 +89,7 @@ public abstract class GenerateGoUtils {
 
         for (var fileName : list) {
             var fileInputStream = ClassUtils.getFileFromClassPath(fileName);
-            var createFile = new File(StringUtils.format("{}/{}", protocolOutputRootPath, StringUtils.substringAfterFirst(fileName, "go/")));
+            var createFile = new File(StringUtils.format("{}/{}", protocolOutputPath, StringUtils.substringAfterFirst(fileName, "go/")));
             FileUtils.writeInputStreamToFile(createFile, fileInputStream);
         }
 
@@ -105,7 +100,7 @@ public abstract class GenerateGoUtils {
 
         var protocolManagerTemplate = ClassUtils.getFileFromClassPathToString("go/ProtocolManagerTemplate.go");
         protocolManagerTemplate = StringUtils.format(protocolManagerTemplate, initProtocolBuilder.toString().trim());
-        var file = new File(StringUtils.format("{}/{}", protocolOutputRootPath, "ProtocolManager.go"));
+        var file = new File(StringUtils.format("{}/{}", protocolOutputPath, "ProtocolManager.go"));
         FileUtils.writeStringToFile(file, protocolManagerTemplate, true);
         logger.info("Generated Golang protocol manager file:[{}] is in path:[{}]", file.getName(), file.getAbsolutePath());
     }

@@ -16,6 +16,7 @@ package com.zfoo.net.consumer.registry;
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.consumer.event.ConsumerStartEvent;
+import com.zfoo.net.consumer.event.ProviderStartEvent;
 import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.tcp.TcpClient;
 import com.zfoo.net.core.tcp.TcpServer;
@@ -102,9 +103,9 @@ public class ZookeeperRegistry implements IRegistry {
      */
     private CuratorCache providerCuratorCache;
     /**
-     * consumer需要消费的provider集合
+     * 本地consumer需要消费的provider集合
      */
-    private final Set<RegisterVO> providerHashConsumerSet = new ConcurrentHashSet<>();
+    private final Set<Register> providerRegisterSet = new ConcurrentHashSet<>();
     /**
      * addListener中的cache全部会被添加到这个集合中，这个集合不包括providerCuratorCache
      */
@@ -150,8 +151,10 @@ public class ZookeeperRegistry implements IRegistry {
 
         // 服务提供者也仅仅是一个TcpServer
         // 这里可以看出并没有指定接口，是找一个可用的端口
-        var providerServer = new TcpServer(providerConfig.localHostAndPortOrDefault());
+        var providerHostAndPort = providerConfig.localHostAndPortOrDefault();
+        var providerServer = new TcpServer(providerHostAndPort);
         providerServer.start();
+        EventBus.post(ProviderStartEvent.valueOf(providerHostAndPort));
     }
 
     /**
@@ -308,21 +311,21 @@ public class ZookeeperRegistry implements IRegistry {
                         break;
                     case NODE_CREATED: // 意味着有可能来了自己作为消费者需要关心的服务提供者
                         var providerStr = StringUtils.substringAfterFirst(newData.getPath(), PROVIDER_ROOT_PATH + StringUtils.SLASH);
-                        var provider = RegisterVO.parseString(providerStr);
-                        var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegisterVO();
+                        var providerRegister = Register.parseString(providerStr);
+                        var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegister();
                         // 如果启动的Consumer是自己关心的Consumer，那么就会接下来尝试连接他们
                         // 这意味着：如果有多个Consumer启动，那么最后将全部连接上去
-                        if (RegisterVO.providerHasConsumer(provider, localRegisterVO)) {
-                            providerHashConsumerSet.add(provider);
+                        if (Register.providerHasConsumer(providerRegister, localRegisterVO)) {
+                            providerRegisterSet.add(providerRegister);
                             checkConsumer();
                             logger.info("Discover new subscription service of provider [{}]", providerStr);
                         }
                         break;
                     case NODE_DELETED:
                         var oldProviderStr = StringUtils.substringAfterFirst(oldData.getPath(), PROVIDER_ROOT_PATH + StringUtils.SLASH);
-                        var oldProvider = RegisterVO.parseString(oldProviderStr);
-                        if (providerHashConsumerSet.contains(oldProvider)) {
-                            providerHashConsumerSet.remove(oldProvider);
+                        var oldProvider = Register.parseString(oldProviderStr);
+                        if (providerRegisterSet.contains(oldProvider)) {
+                            providerRegisterSet.remove(oldProvider);
                             checkConsumer();
                             logger.info("Unsubscribe from the service of provider [{}]", oldProviderStr);
                         }
@@ -333,7 +336,7 @@ public class ZookeeperRegistry implements IRegistry {
 
             @Override
             public void initialized() {
-                initZookeeper();
+                SchedulerBus.schedule(() -> initZookeeper(), 3, TimeUnit.SECONDS);
             }
         }, executor);
 
@@ -361,7 +364,7 @@ public class ZookeeperRegistry implements IRegistry {
      * 如果自己是服务提供者，就把自己注册上去
      */
     private void initLocalProvider() throws Exception {
-        var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegisterVO();
+        var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegister();
         if (Objects.nonNull(localRegisterVO.getProviderConfig())) {
             var localProviderVoStr = localRegisterVO.toProviderString();
             var localProviderPath = PROVIDER_ROOT_PATH + StringUtils.SLASH + localProviderVoStr;
@@ -373,7 +376,7 @@ public class ZookeeperRegistry implements IRegistry {
                 curator.create()
                         .withMode(CreateMode.EPHEMERAL)
                         .forPath(localProviderPath, StringUtils.EMPTY.getBytes());
-                logger.info("Registration for the provider successful [{}]", localProviderVoStr);
+                logger.info("Provider register successful at [{}]", localProviderVoStr);
             } else {
                 // 如果服务提供者已经有节点了，防止这个节点是是上次来不及删除的临时节点
                 var curatorSessionId = curator.getZookeeperClient().getZooKeeper().getSessionId();
@@ -399,21 +402,21 @@ public class ZookeeperRegistry implements IRegistry {
      */
     private void initConsumerCache() throws Exception {
         // /zfoo/provider/applicationNameTest | 192.168.1.104:12400 | provider:[myProviderModule-provider1, myProviderModule-provider2]
-        var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegisterVO();
+        var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegister();
         // 初始化providerCacheSet
         // 遍历provider下注册的所有节点
         var remoteProviderSet = curator.getChildren().forPath(PROVIDER_ROOT_PATH).stream()
                 .filter(it -> StringUtils.isNotBlank(it) && !"null".equals(it))
-                .map(it -> RegisterVO.parseString(it))
+                .map(it -> Register.parseString(it))
                 .filter(it -> Objects.nonNull(it))
                 // 检查是否这个节点是自己关心的节点
-                .filter(it -> RegisterVO.providerHasConsumer(it, localRegisterVO))
+                .filter(it -> Register.providerHasConsumer(it, localRegisterVO))
                 .collect(Collectors.toSet());
 
-        providerHashConsumerSet.clear();
+        providerRegisterSet.clear();
 
         // 将自己关心的节点存起来，接下来，将会开启TcpClient去连接这些Provider，连接上后，将会把这个session保存到ClientSessionMap中
-        providerHashConsumerSet.addAll(remoteProviderSet);
+        providerRegisterSet.addAll(remoteProviderSet);
 
         // 初始化consumer，providerCacheSet改变会导致消费者改变
         // 如果自己没有连接上远程消费者，则会一直尝试连接
@@ -445,17 +448,15 @@ public class ZookeeperRegistry implements IRegistry {
             return;
         }
 
-        logger.info("start using providerHashConsumerSet:{} to check [consumer:{}]", providerHashConsumerSet, NetContext.getSessionManager().clientSessionSize());
-
         var recheckFlag = false;
 
-        for (var providerCache : providerHashConsumerSet) {
+        for (var providerCache : providerRegisterSet) {
             // 先排除已经启动的consumer
             var consumerClientList = new ArrayList<Session>();
             NetContext.getSessionManager().forEachClientSession(new Consumer<Session>() {
                 @Override
                 public void accept(Session session) {
-                    if (session.getConsumerAttribute() != null && session.getConsumerAttribute().equals(providerCache)) {
+                    if (session.getConsumerRegister() != null && session.getConsumerRegister().equals(providerCache)) {
                         consumerClientList.add(session);
                     }
                 }
@@ -486,7 +487,8 @@ public class ZookeeperRegistry implements IRegistry {
                     continue;
                 }
 
-                session.setConsumerAttribute(providerCache);
+                session.setConsumerRegister(providerCache);
+                logger.info("Consumer starts consuming the provider:[{}]", providerCache);
                 EventBus.post(ConsumerStartEvent.valueOf(providerCache, session));
             } catch (Throwable t) {
                 logger.error("[consumer:{}] failed to start, wait [{}] seconds to recheck consumer", providerCache, RETRY_SECONDS, t);
@@ -497,7 +499,7 @@ public class ZookeeperRegistry implements IRegistry {
         // 将自己的消费者消息写到 /consumer 的临时节点下
         var consumerConfig = NetContext.getConfigManager().getLocalConfig().getConsumer();
         if (consumerConfig != null && CollectionUtils.isNotEmpty(consumerConfig.getConsumers())) {
-            var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegisterVO();
+            var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegister();
             var path = CONSUMER_ROOT_PATH + StringUtils.SLASH + localRegisterVO.toConsumerString();
             try {
                 var stat = curator.checkExists().forPath(path);
@@ -599,14 +601,15 @@ public class ZookeeperRegistry implements IRegistry {
     @Override
     public List<String> children(String path) {
         try {
-            var children = curator.getChildren().forPath(path).stream()
+            var children = curator.getChildren().forPath(path)
+                    .stream()
                     .filter(it -> StringUtils.isNotBlank(it) && !"null".equals(it))
                     .toList();
             return children;
         } catch (Exception e) {
-            logger.error("unknown exception", e);
+            logger.error("query children unknown exception", e);
         } catch (Throwable t) {
-            logger.error("unknown error", t);
+            logger.error("query children unknown error", t);
         }
         return Collections.emptyList();
     }
@@ -617,20 +620,20 @@ public class ZookeeperRegistry implements IRegistry {
      * @return
      */
     @Override
-    public Set<RegisterVO> remoteProviderRegisterSet() {
+    public List<Register> remoteProviderRegisters() {
         try {
-            var remoteProviderSet = curator.getChildren().forPath(PROVIDER_ROOT_PATH).stream()
-                    .filter(it -> StringUtils.isNotBlank(it) && !"null".equals(it))
-                    .map(it -> RegisterVO.parseString(it))
-                    .filter(it -> Objects.nonNull(it))
-                    .collect(Collectors.toSet());
-            return remoteProviderSet;
+            var remoteProviders = children(PROVIDER_ROOT_PATH)
+                    .stream()
+                    .map(Register::parseString)
+                    .filter(Objects::nonNull)
+                    .toList();
+            return remoteProviders;
         } catch (Exception e) {
-            logger.error("unknown exception", e);
+            logger.error("remoteProviderRegisters unknown exception", e);
         } catch (Throwable t) {
-            logger.error("unknown error", t);
+            logger.error("remoteProviderRegisters unknown error", t);
         }
-        return Collections.emptySet();
+        return Collections.emptyList();
     }
 
     /**
@@ -691,7 +694,7 @@ public class ZookeeperRegistry implements IRegistry {
             return;
         }
         try {
-            var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegisterVO();
+            var localRegisterVO = NetContext.getConfigManager().getLocalConfig().toLocalRegister();
             if (curator.getState() == CuratorFrameworkState.STARTED) {
                 // 删除服务提供者的临时节点
                 if (Objects.nonNull(localRegisterVO.getProviderConfig())) {

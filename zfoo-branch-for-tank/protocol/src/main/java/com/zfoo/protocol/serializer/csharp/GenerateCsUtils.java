@@ -58,12 +58,7 @@ public abstract class GenerateCsUtils {
     }
 
     public static void init(GenerateOperation generateOperation) {
-        // if not specify output path, then use current default path
-        if (StringUtils.isNotEmpty(generateOperation.getProtocolPath())) {
-            protocolOutputPath = FileUtils.joinPath(generateOperation.getProtocolPath(), protocolOutputRootPath);
-        } else {
-            protocolOutputPath = generateOperation.getProtocolPath();
-        }
+        protocolOutputPath = FileUtils.joinPath(generateOperation.getProtocolPath(), protocolOutputRootPath);
         FileUtils.deleteFile(new File(protocolOutputPath));
 
         csSerializerMap = new HashMap<>();
@@ -134,16 +129,14 @@ public abstract class GenerateCsUtils {
 
         var classNote = GenerateProtocolNote.classNote(protocolId, CodeLanguage.CSharp);
         var fieldDefinition = fieldDefinition(registration);
-        var valueOfMethod = valueOfMethod(registration);
         var writeObject = writeObject(registration);
         var readObject = readObject(registration);
         protocolTemplate = StringUtils.format(protocolTemplate, classNote, protocolClazzName, fieldDefinition.trim()
-                , protocolClazzName, valueOfMethod.getKey().trim(), protocolClazzName, valueOfMethod.getValue().trim()
                 , protocolClazzName, protocolId, protocolClazzName, protocolClazzName, writeObject.trim()
                 , protocolClazzName, protocolClazzName, readObject.trim());
 
         var outputPath = StringUtils.format("{}/{}/{}.cs"
-                , protocolOutputRootPath
+                , protocolOutputPath
                 , GenerateProtocolPath.getCapitalizeProtocolPath(protocolId)
                 , protocolClazzName);
         var file = new File(outputPath);

@@ -11,31 +11,29 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.net.core.gateway.model;
+package com.zfoo.net.consumer.event;
 
-import com.zfoo.protocol.anno.Protocol;
+import com.zfoo.event.model.IEvent;
+import com.zfoo.net.core.HostAndPort;
 
 /**
- * 网关登录成功过后，将uid授权给网关的返回
- *
  * @author godotg
  */
-@Protocol(id = 21)
-public class AuthUidToGatewayConfirm {
+public class ProviderStartEvent implements IEvent {
 
-    private long uid;
+    private HostAndPort hostAndPort;
 
-    public static AuthUidToGatewayConfirm valueOf(long uid) {
-        var authUidToGateway = new AuthUidToGatewayConfirm();
-        authUidToGateway.uid = uid;
-        return authUidToGateway;
+    public static ProviderStartEvent valueOf(HostAndPort hostAndPort) {
+        var event = new ProviderStartEvent();
+        event.hostAndPort = hostAndPort;
+        return event;
     }
 
-    public long getUid() {
-        return uid;
+    public HostAndPort getHostAndPort() {
+        return hostAndPort;
     }
 
-    public void setUid(long uid) {
-        this.uid = uid;
+    public void setHostAndPort(HostAndPort hostAndPort) {
+        this.hostAndPort = hostAndPort;
     }
 }

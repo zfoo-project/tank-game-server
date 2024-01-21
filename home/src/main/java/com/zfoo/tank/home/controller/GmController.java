@@ -11,6 +11,7 @@ import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.protocol.PlayerExpNotice;
 import com.zfoo.tank.common.protocol.admin.AdminCurrencyAsk;
 import com.zfoo.tank.common.protocol.admin.AdminPlayerLevelAsk;
+import com.zfoo.tank.common.result.CodeEnum;
 import com.zfoo.tank.home.util.SendUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,7 @@ public class GmController {
 
         playerEntityCaches.update(userEntity);
 
-        NetContext.getRouter().send(session, Message.valueOf(ask, 1, null));
+        NetContext.getRouter().send(session, Message.valueSuccess(CodeEnum.OK.getMessage()));
     }
 
     @PacketReceiver
@@ -68,6 +69,6 @@ public class GmController {
 
         SendUtils.sendToPlayer(userEntity, CurrencyUpdateNotice.valueOf(userEntity.getCurrencyPo().toCurrencyVO()));
 
-        NetContext.getRouter().send(session, Message.valueOf(ask, 1, null));
+        NetContext.getRouter().send(session, Message.valueSuccess(CodeEnum.OK.getMessage()));
     }
 }

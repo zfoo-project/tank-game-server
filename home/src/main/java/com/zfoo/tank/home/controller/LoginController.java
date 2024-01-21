@@ -15,8 +15,6 @@ package com.zfoo.tank.home.controller;
 
 import com.zfoo.event.manager.EventBus;
 import com.zfoo.net.NetContext;
-import com.zfoo.net.core.gateway.model.AuthUidToGatewayCheck;
-import com.zfoo.net.core.gateway.model.AuthUidToGatewayConfirm;
 import com.zfoo.net.packet.common.Error;
 import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.anno.PacketReceiver;
@@ -104,20 +102,16 @@ public class LoginController {
                         return;
                     }
                 }
-                // 授权给网关uid
-                NetContext.getRouter().send(session, AuthUidToGatewayCheck.valueOf(accountEntity.getUid()), gatewayAttachment);
             }
         });
     }
 
     @PacketReceiver
-    public void atAuthUidToGatewayConfirm(Session session, AuthUidToGatewayConfirm confirm, GatewayAttachment gatewayAttachment) {
-        var uid = confirm.getUid();
+    public void atGetPlayerInfoRequest(Session session, GetPlayerInfoRequest request, GatewayAttachment gatewayAttachment) {
         var sid = gatewayAttachment.getSid();
-        if (uid <= 0) {
-            logger.error("授权[uid:{}]异常", uid);
-            return;
-        }
+        var uid = gatewayAttachment.getSid();
+
+        logger.info("c[{}][{}]玩家信息获取", uid, sid);
 
         var player = playerEntityCaches.load(uid);
         player.setLastLoginTime(TimeUtils.now());
@@ -129,27 +123,8 @@ public class LoginController {
             return;
         }
 
-        var token = TokenUtils.set(uid);
-        NetContext.getRouter().send(session, LoginResponse.valueOf(token), gatewayAttachment);
-        NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()), gatewayAttachment);
-    }
-
-    @PacketReceiver
-    public void atGetPlayerInfoRequest(Session session, GetPlayerInfoRequest request, GatewayAttachment gatewayAttachment) {
-        var token = request.getToken();
-
-        logger.info("c[{}][{}]玩家信息[token:{}]", gatewayAttachment.getUid(), gatewayAttachment.getSid(), token);
-
-        if (StringUtils.isBlank(token)) {
-            NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_protocol_param.toString()), gatewayAttachment);
-            return;
-        }
-
-        var triple = TokenUtils.get(token);
-        var uid = triple.getLeft();
-
         // 授权给网关uid
-        NetContext.getRouter().send(session, AuthUidToGatewayCheck.valueOf(uid), gatewayAttachment);
+        NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()), gatewayAttachment);
     }
 
 }
