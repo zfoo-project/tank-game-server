@@ -42,7 +42,7 @@ public class UserController {
     public BaseResponse signIn(@RequestBody SignInRequest signIn) {
 
         if (StringUtils.isBlank(signIn.getUserName()) || StringUtils.isBlank(signIn.getPassword())) {
-            return BaseResponse.valueOf(CodeEnum.SIGN_IN_FAIL);
+            return BaseResponse.valueOf(CodeEnum.login_12);
         }
 
         return loginService.signIn(signIn.getUserName(), signIn.getPassword());

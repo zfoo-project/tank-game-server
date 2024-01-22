@@ -42,7 +42,7 @@ public class LoginService {
 
     public BaseResponse signIn(String userName, String password) {
         if (StringUtils.isBlank(userName)) {
-            return BaseResponse.valueOf(CodeEnum.SIGN_IN_FAIL);
+            return BaseResponse.valueOf(CodeEnum.login_12);
         }
 
         var adminEntity = OrmContext.getAccessor().load(userName, AdminEntity.class);
