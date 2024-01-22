@@ -28,9 +28,11 @@ import com.zfoo.tank.common.protocol.cache.BattleScoreAnswer;
 import com.zfoo.tank.common.protocol.cache.BattleScoreAsk;
 import com.zfoo.tank.common.resource.PlayerExpResource;
 import com.zfoo.tank.home.model.PlayerLevelUpEvent;
-import com.zfoo.tank.home.util.SendUtils;
+import com.zfoo.tank.home.service.PlayerService;
+import com.zfoo.tank.home.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -46,11 +48,13 @@ public class BattleController {
 
     @StorageAutowired
     private IStorage<Integer, PlayerExpResource> playerExpStorage;
+    @Autowired
+    private PlayerService playerService;
 
     @PacketReceiver
     public void atBattleResultRequest(Session session, BattleResultRequest request, GatewayAttachment gatewayAttachment) {
         var uid = gatewayAttachment.getUid();
-        var player = playerEntityCaches.load(uid);
+        var player = playerService.loadPlayer(session, gatewayAttachment);
 
         var score = request.getScore();
 
@@ -100,7 +104,7 @@ public class BattleController {
             EventBus.post(PlayerLevelUpEvent.valueOf(playerEntity, level));
         }
 
-        SendUtils.sendToPlayer(playerEntity, PlayerExpNotice.valueOf(playerEntity.getLevel(), playerEntity.getExp()));
+        CommonUtils.sendToPlayer(playerEntity, PlayerExpNotice.valueOf(playerEntity.getLevel(), playerEntity.getExp()));
     }
 
 }

@@ -12,7 +12,7 @@ import com.zfoo.tank.common.protocol.PlayerExpNotice;
 import com.zfoo.tank.common.protocol.admin.AdminCurrencyAsk;
 import com.zfoo.tank.common.protocol.admin.AdminPlayerLevelAsk;
 import com.zfoo.tank.common.result.CodeEnum;
-import com.zfoo.tank.home.util.SendUtils;
+import com.zfoo.tank.home.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -40,11 +40,11 @@ public class GmController {
             userEntity.setLevel(playerLevel);
             userEntity.setExp(0);
 
-            SendUtils.sendToPlayer(userEntity, PlayerExpNotice.valueOf(userEntity.getLevel(), userEntity.getExp()));
+            CommonUtils.sendToPlayer(userEntity, PlayerExpNotice.valueOf(userEntity.getLevel(), userEntity.getExp()));
         }
         if (playerExp >= 0) {
             userEntity.setExp(playerExp);
-            SendUtils.sendToPlayer(userEntity, PlayerExpNotice.valueOf(userEntity.getLevel(), userEntity.getExp()));
+            CommonUtils.sendToPlayer(userEntity, PlayerExpNotice.valueOf(userEntity.getLevel(), userEntity.getExp()));
         }
 
         playerEntityCaches.update(userEntity);
@@ -67,7 +67,7 @@ public class GmController {
         userEntity.getCurrencyPo().setEnergy(energy);
         playerEntityCaches.update(userEntity);
 
-        SendUtils.sendToPlayer(userEntity, CurrencyUpdateNotice.valueOf(userEntity.getCurrencyPo().toCurrencyVO()));
+        CommonUtils.sendToPlayer(userEntity, CurrencyUpdateNotice.valueOf(userEntity.getCurrencyPo().toCurrencyVO()));
 
         NetContext.getRouter().send(session, Message.valueSuccess(CodeEnum.OK.getMessage()));
     }

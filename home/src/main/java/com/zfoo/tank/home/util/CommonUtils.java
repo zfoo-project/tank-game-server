@@ -18,7 +18,7 @@ import com.zfoo.tank.common.entity.PlayerEntity;
 /**
  * @author jaysunxiao
  */
-public abstract class SendUtils {
+public abstract class CommonUtils {
 
     /**
      * 用于主动发送消息给客户端，会自己创建一个新的gatewayAttachment，如果用户没用登录，则不会发送信息

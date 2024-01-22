@@ -38,8 +38,10 @@ import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.result.CodeEnum;
 import com.zfoo.tank.common.util.HttpLoginUtils;
 import com.zfoo.tank.common.util.TokenUtils;
+import com.zfoo.tank.home.service.PlayerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -61,7 +63,8 @@ public class LoginController {
 
     @Value("${spring.profiles.active}")
     private TankDeployEnum deployEnum;
-
+    @Autowired
+    private PlayerService playerService;
 
     @PacketReceiver
     public void atLoginByHttpTokenRequest(Session session, LoginByHttpTokenRequest request, GatewayAttachment attachment) {
@@ -108,7 +111,7 @@ public class LoginController {
     }
 
     public void loginBefore(PlayerEntity playerEntity, Session session, GatewayAttachment attachment) {
-        // 释放之前的tcp连接
+        // 释放之前的tcp连接，单点登录
         var gateway = playerEntity.getGsid();
         var oldSession = NetContext.getSessionManager().getServerSession(gateway.getConsumerSid());
         if (oldSession != null) {
@@ -135,7 +138,7 @@ public class LoginController {
 
         logger.info("c[{}][{}]玩家信息获取", uid, sid);
 
-        var player = playerEntityCaches.load(uid);
+        var player = playerService.loadPlayer(session, gatewayAttachment);
         player.setLastLoginTime(TimeUtils.now());
         playerEntityCaches.update(player);
         if (player.id() <= 0) {

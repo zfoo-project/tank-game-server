@@ -21,7 +21,7 @@ import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.CurrencyUpdateNotice;
 import com.zfoo.tank.common.resource.PlayerExpResource;
 import com.zfoo.tank.home.model.PlayerLevelUpEvent;
-import com.zfoo.tank.home.util.SendUtils;
+import com.zfoo.tank.home.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -58,7 +58,7 @@ public class CurrencyController {
         currencyPo.addGem(playerExpConfig.getGem());
         playerEntityCaches.update(player);
         // 推送给客户端
-        SendUtils.sendToPlayer(player, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
+        CommonUtils.sendToPlayer(player, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
     }
 
     @Scheduler(cron = "0/30 * * * * ?")
@@ -85,7 +85,7 @@ public class CurrencyController {
                     currencyPo.addEnergy(1);
                     playerEntityCaches.update(player);
                     // 推送给客户端
-                    SendUtils.sendToPlayer(player, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
+                    CommonUtils.sendToPlayer(player, CurrencyUpdateNotice.valueOf(currencyPo.toCurrencyVO()));
                 }
             }
         }));
