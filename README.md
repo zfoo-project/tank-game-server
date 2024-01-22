@@ -1,6 +1,5 @@
 简体中文 | [English](./README.md)
 
-# 本项目已经不再维护!
 
 ### Ⅰ. 进击的坦克（The Fight of Tanks）
 
