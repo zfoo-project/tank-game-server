@@ -16,6 +16,7 @@ package com.zfoo.tank.common.protocol.login;
 
 
 import com.zfoo.net.core.gateway.IGatewayLoadBalancer;
+import com.zfoo.protocol.anno.Note;
 import com.zfoo.protocol.anno.Protocol;
 
 /**
@@ -27,6 +28,14 @@ import com.zfoo.protocol.anno.Protocol;
 public class LoginByHttpTokenRequest {
 
     private String token;
+
+    @Note("0是默认登录，1为断线重连")
+    private int reason;
+    private String confVersion;
+    private String resourceVersion;
+    @Note("客户端版本号")
+    private String appVersion;
+    private String ip;
 
     public static LoginByHttpTokenRequest valueOf(String token) {
         var request = new LoginByHttpTokenRequest();
@@ -40,5 +49,45 @@ public class LoginByHttpTokenRequest {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public int getReason() {
+        return reason;
+    }
+
+    public void setReason(int reason) {
+        this.reason = reason;
+    }
+
+    public String getConfVersion() {
+        return confVersion;
+    }
+
+    public void setConfVersion(String confVersion) {
+        this.confVersion = confVersion;
+    }
+
+    public String getResourceVersion() {
+        return resourceVersion;
+    }
+
+    public void setResourceVersion(String resourceVersion) {
+        this.resourceVersion = resourceVersion;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }

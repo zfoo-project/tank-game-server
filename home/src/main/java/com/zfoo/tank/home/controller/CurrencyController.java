@@ -70,9 +70,6 @@ public class CurrencyController {
         playerEntityCaches.forEach(new BiConsumer<Long, PlayerEntity>() {
             @Override
             public void accept(Long uid, PlayerEntity playerEntity) {
-                if (playerEntity.session == null) {
-                    return;
-                }
                 // 计算需要在哪一个线程池去执行玩家的逻辑
                 var executorIndex = TaskBus.calTaskExecutorHash(playerEntity.id());
                 var list = map.computeIfAbsent(executorIndex, k -> new ArrayList<>());

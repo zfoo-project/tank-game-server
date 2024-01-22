@@ -74,6 +74,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.zfoo</groupId>
+            <artifactId>boot</artifactId>
+            <version>${zfoo.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>

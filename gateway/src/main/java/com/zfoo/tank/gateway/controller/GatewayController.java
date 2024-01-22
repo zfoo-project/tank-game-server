@@ -12,8 +12,12 @@ package com.zfoo.tank.gateway.controller;
 
 import com.zfoo.event.anno.EventReceiver;
 import com.zfoo.net.NetContext;
+import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.core.gateway.model.GatewaySessionInactiveEvent;
 import com.zfoo.net.router.attachment.GatewayAttachment;
+import com.zfoo.net.session.Session;
+import com.zfoo.tank.common.protocol.login.GatewayLogoutAsk;
+import com.zfoo.tank.common.protocol.login.KickPlayerAsk;
 import com.zfoo.tank.common.protocol.login.LogoutRequest;
 import com.zfoo.tank.gateway.event.GatewaySessionLoginEvent;
 import com.zfoo.tank.gateway.server.MyGatewayRouteHandler;
@@ -55,6 +59,18 @@ public class GatewayController {
         var gatewayAttachment = new GatewayAttachment(sid, uid);
         gatewayAttachment.setClient(true);
         NetContext.getRouter().send(providerSession, packet, gatewayAttachment);
+    }
+
+
+
+    @PacketReceiver
+    public void atKickPlayerAsk(Session session, KickPlayerAsk ask) {
+        var sid = ask.getSid();
+        var uid = ask.getUid();
+        var gatewaySession = NetContext.getSessionManager().getServerSession(sid);
+        if (gatewaySession != null) {
+            NetContext.getSessionManager().removeServerSession(gatewaySession);
+        }
     }
 
 }

@@ -24,17 +24,14 @@ public abstract class SendUtils {
      * 用于主动发送消息给客户端，会自己创建一个新的gatewayAttachment，如果用户没用登录，则不会发送信息
      */
     public static void sendToPlayer(PlayerEntity playerEntity, Object packet) {
-        var sid = playerEntity.sid;
-        var session = playerEntity.session;
+        var session = NetContext.getSessionManager().getServerSession(playerEntity.getGsid().getConsumerSid());
         var uid = playerEntity.getId();
 
-        if (sid <= 0 || uid <= 0 || !SessionUtils.isActive(session)) {
-            playerEntity.sid = 0;
-            playerEntity.session = null;
+        if (uid <= 0 || !SessionUtils.isActive(session)) {
             return;
         }
 
-        var gatewayAttachment = new GatewayAttachment(sid, uid);
+        var gatewayAttachment = new GatewayAttachment(playerEntity.getGsid().getGatewaySid(), uid);
         NetContext.getRouter().send(session, packet, gatewayAttachment);
     }
 

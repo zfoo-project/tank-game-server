@@ -19,6 +19,8 @@ import com.zfoo.net.core.gateway.WebsocketGatewayServer;
 import com.zfoo.net.util.NetUtils;
 import com.zfoo.protocol.util.ThreadUtils;
 import com.zfoo.tank.common.constant.TankDeployEnum;
+import com.zfoo.tank.gateway.server.MyGatewayServer;
+import com.zfoo.tank.gateway.server.MyWebsocketGatewayServer;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -42,7 +44,7 @@ public class ApplicationTest {
         context.registerShutdownHook();
 
         // tcp网关
-        var tcpGateway = new GatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT), Application.packetFilter);
+        var tcpGateway = new MyGatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT));
         tcpGateway.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);
@@ -55,7 +57,7 @@ public class ApplicationTest {
         context.registerShutdownHook();
 
         // websocket网关
-        var websocketGateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.WEBSOCKET_SERVER_PORT), Application.packetFilter);
+        var websocketGateway = new MyWebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), Application.WEBSOCKET_SERVER_PORT));
         websocketGateway.start();
 
         ThreadUtils.sleep(Long.MAX_VALUE);

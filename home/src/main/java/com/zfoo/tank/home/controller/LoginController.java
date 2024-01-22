@@ -20,6 +20,7 @@ import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.net.util.HashUtils;
+import com.zfoo.net.util.NetUtils;
 import com.zfoo.orm.OrmContext;
 import com.zfoo.orm.anno.EntityCacheAutowired;
 import com.zfoo.orm.cache.IEntityCache;
@@ -34,6 +35,8 @@ import com.zfoo.tank.common.entity.AccountEntity;
 import com.zfoo.tank.common.entity.PlayerEntity;
 import com.zfoo.tank.common.protocol.login.*;
 import com.zfoo.tank.common.resource.PropertyResource;
+import com.zfoo.tank.common.result.CodeEnum;
+import com.zfoo.tank.common.util.HttpLoginUtils;
 import com.zfoo.tank.common.util.TokenUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,52 +62,71 @@ public class LoginController {
     @Value("${spring.profiles.active}")
     private TankDeployEnum deployEnum;
 
+
+    @PacketReceiver
+    public void atLoginByHttpTokenRequest(Session session, LoginByHttpTokenRequest request, GatewayAttachment attachment) {
+        var token = request.getToken();
+        var reason = request.getReason();
+        var confVersion = request.getConfVersion();
+        var resourceVersion = request.getResourceVersion();
+        var appVersion = StringUtils.trim(request.getAppVersion());
+        var ip = request.getIp();
+
+
+        if (StringUtils.isBlank(token)) {
+            NetContext.getRouter().send(session, LoginByHttpTokenResponse.valueOf(CodeEnum.error_2.getMessage()), attachment);
+            return;
+        }
+        var loginInfo = HttpLoginUtils.fromToken(token);
+        var uid = loginInfo.getUid();
+        var name = loginInfo.getName();
+        var expireTime = loginInfo.getExpireTime();
+
+        var sid = attachment.getSid();
+
+        logger.info("c[{}][{}] atLoginByHttpTokenRequest [token:{}][ip:{}][appVersion:{}] [uid:{}] [expireTime:{}]", uid, sid, token, ip, appVersion, uid, expireTime);
+
+
+        if (TimeUtils.now() >= expireTime) {
+            NetContext.getRouter().send(session, LoginByHttpTokenResponse.valueOf(CodeEnum.error_2.getMessage()), attachment);
+            return;
+        }
+
+
+        var playerEntity = playerEntityCaches.load(uid);
+
+        // 从sdk登录，走特殊流程
+        if (playerEntity.getId() <= 0) {
+            var newUserEntity = PlayerEntity.valueOf(uid, name, 1, TimeUtils.now(),TimeUtils.now());
+            OrmContext.getAccessor().insert(newUserEntity);
+            playerEntityCaches.invalidate(uid);
+            playerEntity = playerEntityCaches.load(uid);
+        }
+
+        loginBefore(playerEntity, session, attachment);
+        NetContext.getRouter().send(session, LoginByHttpTokenResponse.valueOf(CodeEnum.OK.getMessage()), attachment);
+    }
+
+    public void loginBefore(PlayerEntity playerEntity, Session session, GatewayAttachment attachment) {
+        // 释放之前的tcp连接
+        var gateway = playerEntity.getGsid();
+        var oldSession = NetContext.getSessionManager().getServerSession(gateway.getConsumerSid());
+        if (oldSession != null) {
+            NetContext.getRouter().send(oldSession, new KickPlayerAsk(gateway.getGatewaySid(), playerEntity.getId()), null);
+        }
+        // 更新现在的路由信息
+        gateway.update(session.getSid(), attachment.getSid());
+    }
+
     @PacketReceiver
     public void atLogoutRequest(Session session, LogoutRequest request, GatewayAttachment gatewayAttachment) {
         logger.info("c[{}][{}]玩家退出游戏", gatewayAttachment.getUid(), gatewayAttachment.getSid());
 
         var uid = gatewayAttachment.getUid();
         var player = playerEntityCaches.load(uid);
-        player.sid = 0;
-        player.session = null;
         playerEntityCaches.update(player);
     }
 
-    @PacketReceiver
-    public void atLoginRequest(Session session, LoginRequest request, GatewayAttachment gatewayAttachment) {
-        var account = StringUtils.trim(request.getAccount());
-        var password = request.getPassword();
-
-        if (StringUtils.isBlank(account)) {
-            NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()), gatewayAttachment);
-            return;
-        }
-
-        logger.info("c[{}][{}]玩家登录[account:{}][password:{}]", gatewayAttachment.getUid(), gatewayAttachment.getSid(), account, password);
-
-        EventBus.execute(HashUtils.fnvHash(account), new Runnable() {
-            @Override
-            public void run() {
-                var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
-                if (accountEntity == null) {
-                    var id = MongoIdUtils.getIncrementIdFromMongoDefault(PlayerEntity.class);
-
-                    OrmContext.getAccessor().insert(PlayerEntity.valueOf(id, account, 1, TimeUtils.now(), TimeUtils.now()));
-                    accountEntity = AccountEntity.valueOf(account, account, password, id);
-                    OrmContext.getAccessor().insert(accountEntity);
-                }
-
-                if (deployEnum == TankDeployEnum.pro) {
-                    // 验证密码
-                    if (StringUtils.isNotBlank(accountEntity.getPassword()) && !accountEntity.getPassword().trim().equals(password.trim())) {
-                        logger.info("[id:{}][password:{}]账号或密码错误", accountEntity.getUid(), password);
-                        NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_password.toString()), gatewayAttachment);
-                        return;
-                    }
-                }
-            }
-        });
-    }
 
     @PacketReceiver
     public void atGetPlayerInfoRequest(Session session, GetPlayerInfoRequest request, GatewayAttachment gatewayAttachment) {
@@ -115,8 +137,6 @@ public class LoginController {
 
         var player = playerEntityCaches.load(uid);
         player.setLastLoginTime(TimeUtils.now());
-        player.sid = sid;
-        player.session = session;
         playerEntityCaches.update(player);
         if (player.id() <= 0) {
             NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_account_not_exist.toString()), gatewayAttachment);

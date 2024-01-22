@@ -20,6 +20,8 @@ import com.zfoo.net.util.NetUtils;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.tank.common.protocol.login.GetPlayerInfoRequest;
 import com.zfoo.tank.common.protocol.login.LoginRequest;
+import com.zfoo.tank.gateway.server.MyGatewayServer;
+import com.zfoo.tank.gateway.server.MyWebsocketGatewayServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -44,43 +46,18 @@ public class Application {
     public static final int WEBSOCKET_SERVER_PORT = 18000;
 
     public static final HostAndPort GATEWAY_HOST_AND_PORT = HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT);
-    public static final String GATEWAY_HOST_AND_PORT_STR = GATEWAY_HOST_AND_PORT.toHostAndPortStr();
 
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
-    public static final BiFunction<Session, Object, Boolean> packetFilter = (session, packet) -> {
-        if (packet.getClass() == LoginRequest.class) {
-            if (session.getUid() <= 0) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        if (packet.getClass() == GetPlayerInfoRequest.class) {
-            logger.info("[session:{}发送了GetPlayerInfo[{}]", session, packet);
-            return false;
-        }
-
-        var uid = session.getUid();
-        if (uid <= 0) {
-            logger.error("[session:{}发送了错误的包，因为没有登录或者是非法包[packet:{}]]", session, JsonUtils.object2String(packet));
-            return true;
-        }
-
-        return false;
-    };
 
     public static void main(String[] args) {
         var context = new ClassPathXmlApplicationContext("application.xml");
         context.registerShutdownHook();
 
         // tcp网关，启动哪个网关取决于客户端的协议，可以同时启动tcp网关和websocket网关
-        // var tcpGateway = new GatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT), packetFilter);
-        // tcpGateway.start();
+         var tcpGateway = new MyGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
+         tcpGateway.start();
 
-        // websocket网关
-        var websocketGateway = new WebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT), packetFilter);
-        websocketGateway.start();
+//         var websocketGateway = new MyWebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
+//        websocketGateway.start();
     }
 
 }

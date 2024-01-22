@@ -13,11 +13,11 @@
 
 package com.zfoo.tank.common.entity;
 
-import com.zfoo.net.session.Session;
 import com.zfoo.orm.anno.EntityCache;
 import com.zfoo.orm.anno.GraalvmNativeEntityCache;
 import com.zfoo.orm.anno.Id;
 import com.zfoo.orm.model.IEntity;
+import com.zfoo.tank.common.entity.model.GatewaySid2ConsumerSid;
 import com.zfoo.tank.common.protocol.common.PlayerInfo;
 
 /**
@@ -28,10 +28,6 @@ import com.zfoo.tank.common.protocol.common.PlayerInfo;
 @EntityCache
 @GraalvmNativeEntityCache
 public class PlayerEntity implements IEntity<Long> {
-
-    // 记录会话信息
-    public transient long sid = 0;
-    public transient Session session = null;
 
     @Id
     private long id;
@@ -51,6 +47,7 @@ public class PlayerEntity implements IEntity<Long> {
 
     private String message;
 
+    private GatewaySid2ConsumerSid gsid = new GatewaySid2ConsumerSid();
 
     public static PlayerEntity valueOf(long id, String name, int level, long lastLoginTime, long registerTime) {
         var entity = new PlayerEntity();
@@ -164,5 +161,13 @@ public class PlayerEntity implements IEntity<Long> {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public GatewaySid2ConsumerSid getGsid() {
+        return gsid;
+    }
+
+    public void setGsid(GatewaySid2ConsumerSid gsid) {
+        this.gsid = gsid;
     }
 }

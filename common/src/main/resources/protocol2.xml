@@ -31,6 +31,9 @@
         <protocol id="1201" location="com.zfoo.tank.common.protocol.admin.AdminCurrencyAsk"/>
         <protocol id="1300" location="com.zfoo.tank.common.protocol.TestRequest"/>
         <protocol id="1301" location="com.zfoo.tank.common.protocol.TestResponse"/>
+
+        <protocol id="1400" location="com.zfoo.tank.common.protocol.login.KickPlayerAsk"/>
+        <protocol id="1401" location="com.zfoo.tank.common.protocol.login.GatewayLogoutAsk"/>
     </module>
 
     <module id="4" name="tankCache">

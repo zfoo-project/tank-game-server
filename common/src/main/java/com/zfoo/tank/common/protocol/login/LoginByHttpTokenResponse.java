@@ -25,13 +25,19 @@ import com.zfoo.protocol.anno.Protocol;
 @Protocol(id = 1009)
 public class LoginByHttpTokenResponse {
 
-    private boolean successful;
+    private String message;
 
-    public boolean isSuccessful() {
-        return successful;
+    public static LoginByHttpTokenResponse valueOf(String message) {
+        var response = new LoginByHttpTokenResponse();
+        response.message = message;
+        return response;
     }
 
-    public void setSuccessful(boolean successful) {
-        this.successful = successful;
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

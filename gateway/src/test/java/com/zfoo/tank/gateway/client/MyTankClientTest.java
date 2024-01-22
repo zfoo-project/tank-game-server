@@ -61,7 +61,7 @@ public class MyTankClientTest {
 
         // http登录
         var loginResult = loginByHttp("玩家3");
-        log.info("http登录请求 [{}]");
+        log.info("http loginResult:[{}]", JsonUtils.object2String(loginResult));
 
         var myTankClient = new TcpClient(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT));
         var myTankSession = myTankClient.start();
@@ -107,7 +107,7 @@ public class MyTankClientTest {
         loginRequest.setToken(name);
 
         var request = HttpRequest
-                .newBuilder(URI.create("http://localhost:13001/api/login"))
+                .newBuilder(URI.create("http://localhost:13003/api/login"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(JsonUtils.object2String(loginRequest)))
                 .build();
