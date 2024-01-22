@@ -36,7 +36,7 @@ public class MyTankClientController {
 
 
     @PacketReceiver
-    public void aLoginByHttpTokenResponse(Session session, LoginByHttpTokenResponse response) {
+    public void atLoginByHttpTokenResponse(Session session, LoginByHttpTokenResponse response) {
         logger.info("客户端收到服务器的登录返回[{}]", JsonUtils.object2String(response));
     }
 
