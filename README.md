@@ -43,7 +43,8 @@ Local web management url，http://localhost:9600/
   system for web resource server
 - [gateway](./gateway/src/test/java/com/zfoo/tank/gateway/ApplicationTest.java) gateway
 - [cache](./cache/src/test/java/com/zfoo/tank/cache/ApplicationTest.java) provides caching services
-- [home](./home/src/test/java/com/zfoo/tank/cache/ApplicationTest.java) provides basic business logic services
+- [home](./home/src/test/java/com/zfoo/tank/home/ApplicationTest.java) provides basic business logic services
+- [login](./home/src/test/java/com/zfoo/tank/login/Login.java) provide HTTP login service
 
 ```
 Local playtest entry，https://github.com/zfoo-project/tank-game-server/blob/main/single-boot/src/test/java/com/zfoo/tank/single/boot/client/MyTankClientTest.java

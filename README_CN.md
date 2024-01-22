@@ -37,7 +37,8 @@
 - [admin](./admin/src/test/java/com/zfoo/tank/admin/ApplicationTest.java)为web资源服务器提供游戏入口和后台管理系统
 - [gateway](./gateway/src/test/java/com/zfoo/tank/gateway/ApplicationTest.java)网关
 - [cache](./cache/src/test/java/com/zfoo/tank/cache/ApplicationTest.java)提供缓存服务
-- [home](./home/src/test/java/com/zfoo/tank/cache/ApplicationTest.java)提供基本业务逻辑服务
+- [home](./home/src/test/java/com/zfoo/tank/home/ApplicationTest.java)提供基本业务逻辑服务
+- [login](./home/src/test/java/com/zfoo/tank/login/Login.java)提供http登录服务
 - 本地运行从test下运行，原因看[FAQ](https://github.com/zfoo-project/zfoo/blob/main/doc/FAQ.md) ，实在有问题可以看看手把手的
   [zfoo 框架视频教程](https://github.com/zfoo-project/zfoo/blob/main/doc/video-tutorial.md)
 
