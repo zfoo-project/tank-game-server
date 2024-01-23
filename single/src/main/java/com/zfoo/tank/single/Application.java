@@ -15,6 +15,7 @@ package com.zfoo.tank.single;
 
 import com.zfoo.event.model.AppStartEvent;
 import com.zfoo.net.core.HostAndPort;
+import com.zfoo.net.core.tcp.TcpServer;
 import com.zfoo.net.core.websocket.WebsocketServer;
 import com.zfoo.net.util.NetUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,7 +33,7 @@ public class Application {
     public static final int TCP_SERVER_PORT = 16000;
 
     /**
-     * websocket服务器的默认端口
+     * java -Dspring.profiles.active=dev -Djdk.attach.allowAttachSelf=true -jar single-1.0.jar
      */
     public static final int WEBSOCKET_SERVER_PORT = 18000;
 
@@ -42,12 +43,12 @@ public class Application {
         context.publishEvent(new AppStartEvent(context));
 
         // tcp网关，启动哪个网关取决于客户端的协议，也可以同时启动tcp服务器和websocket服务器
-        // var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
-        // tcpServer.start();
+         var tcpServer = new TcpServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
+         tcpServer.start();
 
         // websocket服务器
-        var websocketServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT));
-        websocketServer.start();
+//        var websocketServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT));
+//        websocketServer.start();
     }
 
 }

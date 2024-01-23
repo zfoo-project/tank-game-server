@@ -23,7 +23,7 @@ public class HotService {
 
     @Scheduler(cron = "0/1 * * * * ?")
     public void cronHotswap() throws IOException {
-        var path = "/hotswap";
+        var path = "D:\\DMW\\hotswap";
         var files = FileUtils.getAllReadableFiles(new File(path));
         if (CollectionUtils.isEmpty(files)) {
             return;
