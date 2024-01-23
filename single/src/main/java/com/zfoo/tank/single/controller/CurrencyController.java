@@ -71,7 +71,7 @@ public class CurrencyController {
         playerEntityCaches.forEach(new BiConsumer<Long, PlayerEntity>() {
             @Override
             public void accept(Long uid, PlayerEntity playerEntity) {
-                if (playerEntity.session == null) {
+                if (playerEntity.getGsid().getGatewaySid() <= 0) {
                     return;
                 }
                 // 计算需要在哪一个线程池去执行玩家的逻辑

@@ -120,8 +120,7 @@ public class LoginController {
                 player.setLastLoginTime(TimeUtils.now());
 
                 // 设置sid和session(这2个都是临时的)
-                player.sid = sid;
-                player.session = session;
+                player.getGsid().update(sid, sid);
 
                 session.setUid(uid);
 
@@ -155,8 +154,7 @@ public class LoginController {
         var player = playerEntityCaches.load(uid);
 
         // 设置session
-        player.sid = sid;
-        player.session = session;
+        player.getGsid().update(sid, session.getSid());
         session.setUid(uid);
 
         NetContext.getRouter().send(session, LoginResponse.valueOf(token));
@@ -171,8 +169,7 @@ public class LoginController {
         logger.info("c[{}][{}]玩家退出游戏", uid, sid);
 
         var player = playerEntityCaches.load(uid);
-        player.sid = 0;
-        player.session = null;
+        player.getGsid().update(0, 0);
         playerEntityCaches.update(player);
     }
 
