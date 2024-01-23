@@ -54,7 +54,7 @@ public class Application {
     public static final int WEBSOCKET_SERVER_PORT = 18000;
 
     /**
-     * java -Dspring.profiles.active=dev -jar single-boot-1.0.jar
+     * java -Dspring.profiles.active=dev -Djdk.attach.allowAttachSelf=true -jar single-boot-1.0.jar
      * <p
      * 为什么部署的时候才用main，平时开发的时候从test启动？
      * 1.可以很好的隔离部署环境和开发测试环境
@@ -80,8 +80,8 @@ public class Application {
         tcpServer.start();
 
         // websocket服务器
-        var websocketServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT));
-        websocketServer.start();
+//        var websocketServer = new WebsocketServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), WEBSOCKET_SERVER_PORT));
+//        websocketServer.start();
     }
 
 }
