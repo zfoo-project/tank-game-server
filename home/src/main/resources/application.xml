@@ -44,7 +44,8 @@
     </storage:storage>
 
 
-    <net:config id="tankHome" protocol-location="protocol.xml">
+    <net:config id="tankHome" protocol-location="protocol.xml"
+                code-languages="${net.code.languages}">
 
         <net:registry center="${registry.center}" user="${registry.user}" password="${registry.password}">
             <net:address name="${registry.address.name}" url="${registry.address.url}"/>
