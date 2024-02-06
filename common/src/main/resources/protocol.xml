@@ -74,7 +74,6 @@
     </module>
 
     <module id="6" name="room">
-        <protocol id="6000" location="com.zfoo.tank.common.protocol.room.Admin2RoomStopDsTransfer"/>
         <protocol id="6005" location="com.zfoo.tank.common.protocol.room.CreateRoomRequest"/>
         <protocol id="6006" location="com.zfoo.tank.common.protocol.room.CreateRoomResponse"/>
         <protocol id="6007" location="com.zfoo.tank.common.protocol.room.ExitRoomNotice"/>
@@ -84,6 +83,8 @@
         <protocol id="6011" location="com.zfoo.tank.common.protocol.room.JoinRoomRequest"/>
         <protocol id="6012" location="com.zfoo.tank.common.protocol.room.JoinRoomResponse"/>
         <protocol id="6013" location="com.zfoo.tank.common.protocol.room.Room"/>
+        <protocol id="6014" location="com.zfoo.tank.common.protocol.room.RoomInfoAsk"/>
+        <protocol id="6015" location="com.zfoo.tank.common.protocol.room.RoomInfoAnswer"/>
     </module>
 
     <module id="7" name="push">
@@ -93,6 +94,11 @@
         <protocol id="7211" location="com.zfoo.tank.common.protocol.push.GatewaySessionInactivePush"/>
         <protocol id="7212" location="com.zfoo.tank.common.protocol.push.GatewaySessionUpdatePush"/>
         <protocol id="7224" location="com.zfoo.tank.common.protocol.push.CommonNoticePush"/>
-        <protocol id="7250" location="com.zfoo.tank.common.protocol.room.AdminToRoomTransfer"/>
+        <protocol id="7250" location="com.zfoo.tank.common.protocol.transfer.AdminToRoomTransfer"/>
+        <protocol id="7251" location="com.zfoo.tank.common.protocol.transfer.Home2RoomCreateRoomTransfer"/>
+        <protocol id="7252" location="com.zfoo.tank.common.protocol.transfer.HomeToRoomTransfer"/>
+        <protocol id="7253" location="com.zfoo.tank.common.protocol.transfer.Room2HomeJoinTransfer"/>
+        <protocol id="7254" location="com.zfoo.tank.common.protocol.transfer.RoomToHomeTransfer"/>
+        <protocol id="7255" location="com.zfoo.tank.common.protocol.transfer.Admin2RoomStopRoomTransfer"/>
     </module>
 </protocols>

@@ -1,4 +1,4 @@
-package com.zfoo.tank.common.protocol.room;
+package com.zfoo.tank.common.protocol.transfer;
 
 
 public class AdminToRoomTransfer {
@@ -6,7 +6,7 @@ public class AdminToRoomTransfer {
     private long roomId;
 
     // ---------------------------------------------------------------------------------------------------------------
-    private Admin2RoomStopDsTransfer stopDsTransfer;
+    private Admin2RoomStopRoomTransfer stopDsTransfer;
 
     public AdminToRoomTransfer() {
     }
@@ -24,11 +24,11 @@ public class AdminToRoomTransfer {
         this.roomId = roomId;
     }
 
-    public Admin2RoomStopDsTransfer getStopDsTransfer() {
+    public Admin2RoomStopRoomTransfer getStopDsTransfer() {
         return stopDsTransfer;
     }
 
-    public void setStopDsTransfer(Admin2RoomStopDsTransfer stopDsTransfer) {
+    public void setStopDsTransfer(Admin2RoomStopRoomTransfer stopDsTransfer) {
         this.stopDsTransfer = stopDsTransfer;
     }
 }
