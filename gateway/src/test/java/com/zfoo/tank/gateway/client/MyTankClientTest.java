@@ -10,12 +10,11 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.tank.gateway;
+package com.zfoo.tank.gateway.client;
 
 import com.zfoo.net.NetContext;
 import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.core.tcp.TcpClient;
-import com.zfoo.net.util.NetUtils;
 import com.zfoo.protocol.util.JsonUtils;
 import com.zfoo.protocol.util.RandomUtils;
 import com.zfoo.protocol.util.ThreadUtils;
@@ -24,10 +23,14 @@ import com.zfoo.tank.common.constant.TankDeployEnum;
 import com.zfoo.tank.common.protocol.battle.BattleResultRequest;
 import com.zfoo.tank.common.protocol.cache.ScoreRankRequest;
 import com.zfoo.tank.common.protocol.cache.ScoreRankResponse;
+import com.zfoo.tank.common.protocol.login.GetPlayerInfoRequest;
+import com.zfoo.tank.common.protocol.login.GetPlayerInfoResponse;
 import com.zfoo.tank.common.protocol.login.LoginByHttpTokenRequest;
 
 import static com.zfoo.tank.common.util.HttpLoginUtils.*;
 
+import com.zfoo.tank.common.protocol.room.CreateRoomRequest;
+import com.zfoo.tank.common.protocol.room.CreateRoomResponse;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -63,28 +66,32 @@ public class MyTankClientTest {
 
         var connectUrl = RandomUtils.randomEle(loginResult.getConnectUrls());
         var myTankClient = new TcpClient(HostAndPort.valueOf(connectUrl));
-        var myTankSession = myTankClient.start();
+        var session = myTankClient.start();
 
         // 模拟客户端，发送一个登录请求
         var loginRequest = LoginByHttpTokenRequest.valueOf(loginResult.getMyToken());
-        NetContext.getRouter().send(myTankSession, loginRequest);
+        NetContext.getRouter().send(session, loginRequest);
         ThreadUtils.sleep(2 * TimeUtils.MILLIS_PER_SECOND);
+
+        // 登录过后获取用户信息
+        var getPlayerInfoResponse = NetContext.getRouter().syncAsk(session, new GetPlayerInfoRequest(), GetPlayerInfoResponse.class, null).packet();
+        log.info("sync 获取用户信息 [{}]", JsonUtils.object2String(getPlayerInfoResponse));
 
         // 发送一个战斗结果请求
         var battleResultRequest = BattleResultRequest.valueOf(RandomUtils.randomInt());
-        NetContext.getRouter().send(myTankSession, battleResultRequest);
+        NetContext.getRouter().send(session, battleResultRequest);
         ThreadUtils.sleep(TimeUtils.MILLIS_PER_SECOND);
 
         // 发送一个获取分数排行榜的信息
         var scoreRankRequest = ScoreRankRequest.valueOf();
-        NetContext.getRouter().send(myTankSession, scoreRankRequest);
+        NetContext.getRouter().send(session, scoreRankRequest);
         ThreadUtils.sleep(TimeUtils.MILLIS_PER_SECOND);
 
-        var scoreRankSyncResponse = NetContext.getRouter().syncAsk(myTankSession, scoreRankRequest, ScoreRankResponse.class, null).packet();
+        var scoreRankSyncResponse = NetContext.getRouter().syncAsk(session, scoreRankRequest, ScoreRankResponse.class, null).packet();
         log.info("sync 排行榜 [{}]", JsonUtils.object2String(scoreRankSyncResponse));
         ThreadUtils.sleep(TimeUtils.MILLIS_PER_SECOND);
 
-        NetContext.getRouter().asyncAsk(myTankSession, scoreRankRequest, ScoreRankResponse.class, null)
+        NetContext.getRouter().asyncAsk(session, scoreRankRequest, ScoreRankResponse.class, null)
                 .whenComplete(new Consumer<ScoreRankResponse>() {
                     @Override
                     public void accept(ScoreRankResponse scoreRankResponse) {
@@ -92,6 +99,10 @@ public class MyTankClientTest {
                     }
                 });
         ThreadUtils.sleep(TimeUtils.MILLIS_PER_SECOND);
+
+        var createRoomRequest = new CreateRoomRequest("我的房间", "子标题", "我的描述", true, "", "", 0, 12);
+        var createResponse = NetContext.getRouter().syncAsk(session, createRoomRequest, CreateRoomResponse.class, null).packet();
+        log.info("create room [{}]", JsonUtils.object2String(createResponse));
     }
 
 

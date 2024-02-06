@@ -14,9 +14,7 @@
 package com.zfoo.tank.common.protocol.login;
 
 
-import com.zfoo.net.core.gateway.IGatewayLoadBalancer;
 import com.zfoo.protocol.anno.Protocol;
-import com.zfoo.tank.common.util.TokenUtils;
 
 /**
  * @author jaysunxiao
@@ -24,27 +22,6 @@ import com.zfoo.tank.common.util.TokenUtils;
  * @since 2019-10-15 17:55
  */
 @Protocol(id = 1004)
-public class GetPlayerInfoRequest implements IGatewayLoadBalancer {
+public class GetPlayerInfoRequest {
 
-    private String token;
-
-    public static GetPlayerInfoRequest valueOf(String token) {
-        var packet = new GetPlayerInfoRequest();
-        packet.token = token;
-        return packet;
-    }
-
-    @Override
-    public Object loadBalancerConsistentHashObject() {
-        var triple = TokenUtils.get(token);
-        return triple.getLeft();
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

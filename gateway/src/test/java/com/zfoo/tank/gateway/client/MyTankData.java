@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.tank.gateway;
+package com.zfoo.tank.gateway.client;
 
 import com.zfoo.tank.common.protocol.common.CurrencyVo;
 import com.zfoo.tank.common.protocol.common.PlayerInfo;

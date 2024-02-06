@@ -84,6 +84,7 @@ public enum CodeEnum {
     room_no_resource(1104, "房间服务器资源不够"),
     room_creating(1105, "正在创建房间请稍等"),
     room_no_player(1106, "玩家不在房间"),
+    room_player_range_limit(1107, "房间人数不在合理的范围内"),
     ;
 
     private final int code;
