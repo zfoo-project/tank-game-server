@@ -15,7 +15,6 @@ import com.zfoo.net.NetContext;
 import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.consumer.event.ConsumerStartEvent;
 import com.zfoo.net.core.gateway.model.GatewaySessionInactiveEvent;
-import com.zfoo.net.router.attachment.GatewayAttachment;
 import com.zfoo.net.router.attachment.SignalAttachment;
 import com.zfoo.net.session.Session;
 import com.zfoo.protocol.collection.CollectionUtils;
@@ -23,7 +22,6 @@ import com.zfoo.scheduler.anno.Scheduler;
 import com.zfoo.tank.common.constant.ProviderEnum;
 import com.zfoo.tank.common.protocol.login.GatewayLogoutAsk;
 import com.zfoo.tank.common.protocol.login.KickPlayerAsk;
-import com.zfoo.tank.common.protocol.login.LogoutRequest;
 import com.zfoo.tank.common.protocol.push.GatewaySessionActivePush;
 import com.zfoo.tank.common.protocol.push.GatewaySessionInactivePush;
 import com.zfoo.tank.common.protocol.push.GatewaySessionUpdatePush;
@@ -90,7 +88,7 @@ public class GatewayController {
         if (CollectionUtils.isEmpty(providers)) {
             return;
         }
-        if (providers.stream().noneMatch(it -> it.getProvider().equals(ProviderEnum.push.name()))) {
+        if (providers.stream().noneMatch(it -> it.getProvider().equals(ProviderEnum.tankPushProvider.name()))) {
             return;
         }
 

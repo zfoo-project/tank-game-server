@@ -48,7 +48,7 @@ public class PlayerEntity implements IEntity<Long> {
     private String message;
 
     private GatewaySid2ConsumerSid gsid = new GatewaySid2ConsumerSid();
-
+    private long joinedRoomId;
     public static PlayerEntity valueOf(long id, String name, int level, long lastLoginTime, long registerTime) {
         var entity = new PlayerEntity();
         entity.id = id;
@@ -177,5 +177,13 @@ public class PlayerEntity implements IEntity<Long> {
 
     public void setLastLogoutTime(long lastLogoutTime) {
         this.lastLogoutTime = lastLogoutTime;
+    }
+
+    public long getJoinedRoomId() {
+        return joinedRoomId;
+    }
+
+    public void setJoinedRoomId(long joinedRoomId) {
+        this.joinedRoomId = joinedRoomId;
     }
 }

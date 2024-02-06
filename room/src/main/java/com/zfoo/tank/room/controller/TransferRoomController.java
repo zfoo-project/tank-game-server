@@ -18,25 +18,16 @@ public class TransferRoomController {
     private IEntityCache<Long, RoomEntity> roomEntities;
 
     @PacketReceiver
-    public void atLobbyToRoomTransfer(Session session, HomeToRoomTransfer transfer) {
+    public void atHomeToRoomTransfer(Session session, HomeToRoomTransfer transfer) {
         var uid = transfer.getUid();
         var roomId = transfer.getRoomId();
 
         var roomEntity = roomEntities.load(roomId);
 
-        logger.info("atLobbyToRoomTransfer uid:[{}] roomId:[{}]", uid, roomId);
+        logger.info("atHomeToRoomTransfer uid:[{}] roomId:[{}]", uid, roomId);
         if (transfer.getCreateRoomTransfer() != null) {
             var roomServerAddress = transfer.getCreateRoomTransfer().getRoomServerAddress();
-            logger.info("start dedicated server uid:[{}] roomId:[{}] roomServerAddress:[{}]", uid, roomId, roomServerAddress);
-
-            if (roomEntity.empty()) {
-                logger.error("start dedicated server not found roomId:[{}] not found", roomId);
-                return;
-            }
-            if (!roomServerAddress.equals(roomEntity.getRoomServerAddress())) {
-                logger.error("start dedicated roomId:[{}] roomServerAddress:[{}] not equal to roomServer:[{}]", roomId, roomServerAddress, roomEntity.getRoomServerAddress());
-                return;
-            }
+            logger.info("create room uid:[{}] roomId:[{}] roomServerAddress:[{}]", uid, roomId, roomServerAddress);
             // do something when create room
             return;
         }

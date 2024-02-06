@@ -5,13 +5,13 @@ package com.zfoo.tank.common.constant;
  */
 public enum ProviderEnum {
 
-    cache,
+    tankCacheProvider,
 
-    push,
+    tankPushProvider,
 
-    room,
+    tankRoomProvider,
 
-    home
+    tankHomeProvider
 
     ;
 

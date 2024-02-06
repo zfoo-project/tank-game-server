@@ -71,7 +71,7 @@ public class RoomHomeController {
             if (providerConfig == null) {
                 continue;
             }
-            if (providerConfig.getProviders().stream().noneMatch(it -> it.getProvider().equals(ProviderEnum.room.name()))) {
+            if (providerConfig.getProviders().stream().noneMatch(it -> it.getProvider().equals(ProviderEnum.tankRoomProvider.name()))) {
                 continue;
             }
             roomProviders.add(register);
