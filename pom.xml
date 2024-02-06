@@ -18,6 +18,7 @@
         <module>gateway</module>
         <module>home</module>
         <module>cache</module>
+        <module>push</module>
         <module>login</module>
 
         <module>zfoo-branch-for-tank</module>

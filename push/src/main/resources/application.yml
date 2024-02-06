@@ -1,0 +1,40 @@
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%clr(%5level)] [%thread] %clr(%logger{20}.%M){cyan}\(%F:%line\) - %msg%n'
+
+net:
+  id: tankAdmin
+  protocol-location: protocol.xml
+  registry:
+    center: zookeeper
+    user:
+    password:
+    address:
+      - 127.0.0.1:2181
+  provider:
+    providers:
+      - provider: tankCacheProvider
+        protocol-module: tankCache
+
+orm:
+  id: mongodbConfig
+  entity-package: com.zfoo.tank.common.**.entity
+  host:
+    database: tank
+    user:
+    password:
+    address:
+      - 127.0.0.1:27017
+  caches:
+    - strategy: default
+      size: 6000
+      expire-millisecond: 600000
+  persisters:
+    - strategy: default
+      type: time
+      config: 60000
+
+storage:
+  id: storageManager
+  scanPackage: com.zfoo.tank.common.**.resource
+  resourceLocation: classpath:/excel
