@@ -1,14 +1,14 @@
 
 package com.zfoo.tank.common.protocol.transfer;
 
-public class Admin2RoomStopRoomTransfer {
+public class Admin2RoomCloseRoomTransfer {
 
     private long roomId;
 
-    public Admin2RoomStopRoomTransfer() {
+    public Admin2RoomCloseRoomTransfer() {
     }
 
-    public Admin2RoomStopRoomTransfer(long roomId) {
+    public Admin2RoomCloseRoomTransfer(long roomId) {
         this.roomId = roomId;
     }
 

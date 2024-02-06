@@ -99,6 +99,6 @@
         <protocol id="7252" location="com.zfoo.tank.common.protocol.transfer.HomeToRoomTransfer"/>
         <protocol id="7253" location="com.zfoo.tank.common.protocol.transfer.Room2HomeJoinTransfer"/>
         <protocol id="7254" location="com.zfoo.tank.common.protocol.transfer.RoomToHomeTransfer"/>
-        <protocol id="7255" location="com.zfoo.tank.common.protocol.transfer.Admin2RoomStopRoomTransfer"/>
+        <protocol id="7255" location="com.zfoo.tank.common.protocol.transfer.Admin2RoomCloseRoomTransfer"/>
     </module>
 </protocols>

@@ -6,7 +6,7 @@ public class AdminToRoomTransfer {
     private long roomId;
 
     // ---------------------------------------------------------------------------------------------------------------
-    private Admin2RoomStopRoomTransfer stopDsTransfer;
+    private Admin2RoomCloseRoomTransfer closeRoomTransfer;
 
     public AdminToRoomTransfer() {
     }
@@ -24,11 +24,11 @@ public class AdminToRoomTransfer {
         this.roomId = roomId;
     }
 
-    public Admin2RoomStopRoomTransfer getStopDsTransfer() {
-        return stopDsTransfer;
+    public Admin2RoomCloseRoomTransfer getCloseRoomTransfer() {
+        return closeRoomTransfer;
     }
 
-    public void setStopDsTransfer(Admin2RoomStopRoomTransfer stopDsTransfer) {
-        this.stopDsTransfer = stopDsTransfer;
+    public void setCloseRoomTransfer(Admin2RoomCloseRoomTransfer closeRoomTransfer) {
+        this.closeRoomTransfer = closeRoomTransfer;
     }
 }
