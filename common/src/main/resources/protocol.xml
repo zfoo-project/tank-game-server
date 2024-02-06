@@ -75,7 +75,6 @@
 
     <module id="6" name="room">
         <protocol id="6000" location="com.zfoo.tank.common.protocol.room.Admin2RoomStopDsTransfer"/>
-        <protocol id="6004" location="com.zfoo.tank.common.protocol.room.AdminToRoomTransfer"/>
         <protocol id="6005" location="com.zfoo.tank.common.protocol.room.CreateRoomRequest"/>
         <protocol id="6006" location="com.zfoo.tank.common.protocol.room.CreateRoomResponse"/>
         <protocol id="6007" location="com.zfoo.tank.common.protocol.room.ExitRoomNotice"/>
