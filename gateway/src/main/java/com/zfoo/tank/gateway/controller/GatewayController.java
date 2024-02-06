@@ -13,16 +13,26 @@ package com.zfoo.tank.gateway.controller;
 import com.zfoo.event.anno.EventReceiver;
 import com.zfoo.net.NetContext;
 import com.zfoo.net.anno.PacketReceiver;
+import com.zfoo.net.consumer.event.ConsumerStartEvent;
 import com.zfoo.net.core.gateway.model.GatewaySessionInactiveEvent;
 import com.zfoo.net.router.attachment.GatewayAttachment;
+import com.zfoo.net.router.attachment.SignalAttachment;
 import com.zfoo.net.session.Session;
+import com.zfoo.protocol.collection.CollectionUtils;
+import com.zfoo.scheduler.anno.Scheduler;
+import com.zfoo.tank.common.constant.ProviderEnum;
 import com.zfoo.tank.common.protocol.login.GatewayLogoutAsk;
 import com.zfoo.tank.common.protocol.login.KickPlayerAsk;
 import com.zfoo.tank.common.protocol.login.LogoutRequest;
+import com.zfoo.tank.common.protocol.push.GatewaySessionActivePush;
+import com.zfoo.tank.common.protocol.push.GatewaySessionInactivePush;
+import com.zfoo.tank.common.protocol.push.GatewaySessionUpdatePush;
 import com.zfoo.tank.gateway.event.GatewaySessionLoginEvent;
 import com.zfoo.tank.gateway.server.MyGatewayRouteHandler;
+import com.zfoo.tank.gateway.service.GatewayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,37 +41,76 @@ import org.springframework.stereotype.Component;
 @Component
 public class GatewayController {
     private static final Logger logger = LoggerFactory.getLogger(GatewayController.class);
+
+    @Autowired
+    private GatewayService gatewayService;
+
     @EventReceiver
     public void onGatewaySessionLoginEvent(GatewaySessionLoginEvent event) {
-        var uid = event.getUid();
         var sid = event.getSid();
-
-        logger.info("网关用户登录 [uid:{}] [sid:{}]", uid, sid);
+        var uid = event.getUid();
+        var push = new GatewaySessionActivePush(sid, uid);
+        var providers = NetContext.getConsumer().findProviders(push);
+        providers.stream().forEach(it -> NetContext.getRouter().send(it, push));
     }
 
     @EventReceiver
     public void onGatewaySessionInactiveEvent(GatewaySessionInactiveEvent event) {
         var sid = event.getSid();
         var uid = event.getUid();
-
         if (uid <= 0) {
             return;
         }
 
-        var packet = LogoutRequest.valueOf();
+        // 通知push更新路由信息
+        var push = new GatewaySessionInactivePush(sid, uid);
+        var providers = NetContext.getConsumer().findProviders(push);
+        providers.stream().forEach(it -> NetContext.getRouter().send(it, push));
+        // 通知lobby玩家下线
+        var ask = new GatewayLogoutAsk(uid);
+        var signalAttachment = new SignalAttachment();
+        signalAttachment.setTaskExecutorHash((int) uid);
+        MyGatewayRouteHandler.forwardingPacket(ask, signalAttachment, uid);
+        // 通知room玩家下线
 
-        var providers = NetContext.getConsumer().findProviders(packet);
-        var loadBalancer = NetContext.getConsumer().selectLoadBalancer(providers, packet);
-        var providerSession = loadBalancer.selectProvider(providers, packet, uid);
+    }
 
-        // 包的附加包，通过网关转发到home的包会丢失sid和uid，通过这个GatewayAttachment附带到IPacket后面，home就知道哪个玩家发的包了
-        // 玩家登出
-        var gatewayAttachment = new GatewayAttachment(sid, uid);
-        gatewayAttachment.setClient(true);
-        NetContext.getRouter().send(providerSession, packet, gatewayAttachment);
+    /**
+     * 当push消费者启动，同步网关的信息的push
+     *
+     * @param event 消费者启动事件
+     */
+    @EventReceiver
+    public void onConsumerStartEvent(ConsumerStartEvent event) {
+        var providerConfig = event.getProviderRegister().getProviderConfig();
+        if (providerConfig == null) {
+            return;
+        }
+        var providers = providerConfig.getProviders();
+        if (CollectionUtils.isEmpty(providers)) {
+            return;
+        }
+        if (providers.stream().noneMatch(it -> it.getProvider().equals(ProviderEnum.push.name()))) {
+            return;
+        }
+
+        var session = event.getSession();
+        var list = gatewayService.afterLoginSid2Uids();
+        var push = new GatewaySessionUpdatePush(list);
+        NetContext.getRouter().send(session, push);
     }
 
 
+    @Scheduler(cron = "0 0/5 * * * ?")
+    public void cronHourScheduler() {
+        var list = gatewayService.afterLoginSid2Uids();
+        var push = new GatewaySessionUpdatePush(list);
+
+        logger.info("The gateway synchronizes session information every 5 minutes sessionSize:[{}]", list.size());
+
+        var providers = NetContext.getConsumer().findProviders(push);
+        providers.stream().forEach(it -> NetContext.getRouter().send(it, push));
+    }
 
     @PacketReceiver
     public void atKickPlayerAsk(Session session, KickPlayerAsk ask) {
@@ -71,6 +120,11 @@ public class GatewayController {
         if (gatewaySession != null) {
             NetContext.getSessionManager().removeServerSession(gatewaySession);
         }
+
+        // 把push服务的gateway session关联取消
+        var inactiveAsk = new GatewaySessionInactivePush(sid, uid);
+        var providers = NetContext.getConsumer().findProviders(inactiveAsk);
+        providers.stream().forEach(it -> NetContext.getRouter().send(it, inactiveAsk));
     }
 
 }

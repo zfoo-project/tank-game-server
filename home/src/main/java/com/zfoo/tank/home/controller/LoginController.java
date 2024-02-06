@@ -38,6 +38,7 @@ import com.zfoo.tank.common.resource.PropertyResource;
 import com.zfoo.tank.common.result.CodeEnum;
 import com.zfoo.tank.common.util.HttpLoginUtils;
 import com.zfoo.tank.common.util.TokenUtils;
+import com.zfoo.tank.home.service.LoginService;
 import com.zfoo.tank.home.service.PlayerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +62,10 @@ public class LoginController {
     @EntityCacheAutowired
     private IEntityCache<Long, PlayerEntity> playerEntityCaches;
 
+    @Autowired
     private PlayerService playerService;
+    @Autowired
+    private LoginService loginService;
 
     @PacketReceiver
     public void atLoginByHttpTokenRequest(Session session, LoginByHttpTokenRequest request, GatewayAttachment attachment) {
@@ -118,13 +122,27 @@ public class LoginController {
         gateway.update(session.getSid(), attachment.getSid());
     }
 
-    @PacketReceiver
-    public void atLogoutRequest(Session session, LogoutRequest request, GatewayAttachment gatewayAttachment) {
-        logger.info("c[{}][{}]玩家退出游戏", gatewayAttachment.getUid(), gatewayAttachment.getSid());
 
-        var uid = gatewayAttachment.getUid();
+    @PacketReceiver
+    public void atLogoutRequest(Session session, LogoutRequest request, GatewayAttachment attachment) {
+        var uid = attachment.getUid();
+        var sid = attachment.getSid();
+        logger.info("atLogoutRequest uid:[{}][{}]", uid, sid);
         var player = playerEntityCaches.load(uid);
-        playerEntityCaches.update(player);
+        loginService.logout(player, session);
+        NetContext.getRouter().send(session, new LogoutResponse(CodeEnum.OK.getCode()), attachment);
+    }
+
+    @PacketReceiver
+    public void atGatewayLogoutAsk(Session session, GatewayLogoutAsk ask) {
+        var uid = ask.getUid();
+        var player = playerEntityCaches.load(uid);
+        logger.info("atGatewayLogoutAsk uid:[{}][{}]", uid, 0);
+        // 5秒已经登出了不做任何操作
+        if (TimeUtils.now() - player.getLastLoginTime() < 5 * TimeUtils.MILLIS_PER_SECOND) {
+            return;
+        }
+        loginService.logout(player, session);
     }
 
 

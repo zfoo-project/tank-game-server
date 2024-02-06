@@ -21,23 +21,20 @@ package com.zfoo.tank.common.protocol.login;
  */
 public class LogoutResponse {
 
-    private long uid;
+    private int code;
 
-    private long sid;
-
-    public long getUid() {
-        return uid;
+    public LogoutResponse() {
     }
 
-    public void setUid(long uid) {
-        this.uid = uid;
+    public LogoutResponse(int code) {
+        this.code = code;
     }
 
-    public long getSid() {
-        return sid;
+    public int getCode() {
+        return code;
     }
 
-    public void setSid(long sid) {
-        this.sid = sid;
+    public void setCode(int code) {
+        this.code = code;
     }
 }

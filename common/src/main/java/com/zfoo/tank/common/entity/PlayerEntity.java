@@ -41,7 +41,7 @@ public class PlayerEntity implements IEntity<Long> {
 
     private long lastLoginTime;
     private long registerTime;
-
+    private long lastLogoutTime;
     // 货币钱包，直接new出来给个默认值，可以防止空指针异常
     private CurrencyPo currencyPo = new CurrencyPo();
 
@@ -169,5 +169,13 @@ public class PlayerEntity implements IEntity<Long> {
 
     public void setGsid(GatewaySid2ConsumerSid gsid) {
         this.gsid = gsid;
+    }
+
+    public long getLastLogoutTime() {
+        return lastLogoutTime;
+    }
+
+    public void setLastLogoutTime(long lastLogoutTime) {
+        this.lastLogoutTime = lastLogoutTime;
     }
 }

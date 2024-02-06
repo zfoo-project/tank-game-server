@@ -10,6 +10,10 @@ public class GatewaySid2ConsumerSid {
         this.consumerSid = consumerSid;
     }
 
+    public void clear() {
+        update(0, 0);
+    }
+
     public long getGatewaySid() {
         return gatewaySid;
     }
