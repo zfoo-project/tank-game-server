@@ -77,14 +77,14 @@
         <protocol id="6000" location="com.zfoo.tank.common.protocol.room.Admin2RoomStopDsTransfer"/>
         <protocol id="6004" location="com.zfoo.tank.common.protocol.room.AdminToRoomTransfer"/>
         <protocol id="6005" location="com.zfoo.tank.common.protocol.room.CreateRoomRequest"/>
-        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.CreateRoomResponse"/>
-        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.ExitRoomNotice"/>
-        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.ExitRoomRequest"/>
-        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.ExitRoomResponse"/>
-        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.JoinRoomNotice"/>
-        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.JoinRoomRequest"/>
-        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.JoinRoomResponse"/>
-        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.Room"/>
+        <protocol id="6006" location="com.zfoo.tank.common.protocol.room.CreateRoomResponse"/>
+        <protocol id="6007" location="com.zfoo.tank.common.protocol.room.ExitRoomNotice"/>
+        <protocol id="6008" location="com.zfoo.tank.common.protocol.room.ExitRoomRequest"/>
+        <protocol id="6009" location="com.zfoo.tank.common.protocol.room.ExitRoomResponse"/>
+        <protocol id="6010" location="com.zfoo.tank.common.protocol.room.JoinRoomNotice"/>
+        <protocol id="6011" location="com.zfoo.tank.common.protocol.room.JoinRoomRequest"/>
+        <protocol id="6012" location="com.zfoo.tank.common.protocol.room.JoinRoomResponse"/>
+        <protocol id="6013" location="com.zfoo.tank.common.protocol.room.Room"/>
     </module>
 
     <module id="7" name="push">

@@ -3,7 +3,6 @@ package com.zfoo.tank.common.protocol.room;
 import com.zfoo.protocol.anno.Note;
 import com.zfoo.protocol.anno.Protocol;
 
-@Protocol(id = 550)
 @Note("房间基本信息")
 public class Room {
 
