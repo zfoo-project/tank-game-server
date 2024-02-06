@@ -19,6 +19,8 @@ net:
         load-balancer: consistent-hash
       - consumer: tankPushProvider
         load-balancer: consistent-hash
+      - consumer: tankPushProvider
+        load-balancer: consistent-hash
 
 storage:
   id: storageManager

@@ -56,6 +56,8 @@
         <protocol id="1301" location="com.zfoo.tank.common.protocol.TestResponse"/>
         <protocol id="1400" location="com.zfoo.tank.common.protocol.login.KickPlayerAsk"/>
         <protocol id="1401" location="com.zfoo.tank.common.protocol.login.GatewayLogoutAsk"/>
+        <protocol id="1500" location="com.zfoo.tank.common.protocol.room.CreateRoomRequest"/>
+        <protocol id="1501" location="com.zfoo.tank.common.protocol.room.CreateRoomResponse"/>
     </module>
 
     <module id="4" name="tankCache">
@@ -74,8 +76,6 @@
     </module>
 
     <module id="6" name="room">
-        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.CreateRoomRequest"/>
-        <protocol id="6006" location="com.zfoo.tank.common.protocol.room.CreateRoomResponse"/>
         <protocol id="6007" location="com.zfoo.tank.common.protocol.room.ExitRoomNotice"/>
         <protocol id="6008" location="com.zfoo.tank.common.protocol.room.ExitRoomRequest"/>
         <protocol id="6009" location="com.zfoo.tank.common.protocol.room.ExitRoomResponse"/>

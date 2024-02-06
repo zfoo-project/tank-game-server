@@ -19,6 +19,8 @@ net:
     consumers:
       - consumer: tankCacheProvider
         load-balancer: consistent-hash
+      - consumer: tankPushProvider
+        load-balancer: consistent-hash
 
 orm:
   id: mongodbConfig

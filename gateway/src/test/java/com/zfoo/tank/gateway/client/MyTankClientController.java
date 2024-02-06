@@ -21,6 +21,8 @@ import com.zfoo.tank.common.protocol.battle.BattleResultResponse;
 import com.zfoo.tank.common.protocol.cache.ScoreRankResponse;
 import com.zfoo.tank.common.protocol.login.GetPlayerInfoResponse;
 import com.zfoo.tank.common.protocol.login.LoginByHttpTokenResponse;
+import com.zfoo.tank.common.protocol.room.JoinRoomNotice;
+import com.zfoo.tank.common.protocol.room.JoinRoomResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -38,7 +40,6 @@ public class MyTankClientController {
     public void atLoginByHttpTokenResponse(Session session, LoginByHttpTokenResponse response) {
         logger.info("客户端收到服务器的登录返回[{}]", JsonUtils.object2String(response));
     }
-
 
     @PacketReceiver
     public void atGetPlayerInfoResponse(Session session, GetPlayerInfoResponse response) {
@@ -72,5 +73,14 @@ public class MyTankClientController {
         logger.info("player exp update [{}]", JsonUtils.object2String(response));
     }
 
+    @PacketReceiver
+    public void atJoinRoomResponse(Session session, JoinRoomResponse response) {
+        logger.info("atJoinRoomResponse [{}]", JsonUtils.object2String(response));
+    }
+
+    @PacketReceiver
+    public void atJoinRoomNotice(Session session, JoinRoomNotice notice) {
+        logger.info("atJoinRoomNotice [{}]", JsonUtils.object2String(notice));
+    }
 
 }

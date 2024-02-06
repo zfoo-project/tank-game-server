@@ -100,9 +100,11 @@ public class MyTankClientTest {
                 });
         ThreadUtils.sleep(TimeUtils.MILLIS_PER_SECOND);
 
-        var createRoomRequest = new CreateRoomRequest("我的房间", "子标题", "我的描述", true, "", "", 0, 12);
+        var createRoomRequest = new CreateRoomRequest("我的房间", "子标题", "我的描述", true, "", "", 0, 6);
         var createResponse = NetContext.getRouter().syncAsk(session, createRoomRequest, CreateRoomResponse.class, null).packet();
         log.info("create room [{}]", JsonUtils.object2String(createResponse));
+
+        ThreadUtils.sleep(Long.MAX_VALUE);
     }
 
 
