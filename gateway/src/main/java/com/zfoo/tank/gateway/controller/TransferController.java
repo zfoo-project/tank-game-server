@@ -23,8 +23,8 @@ public class TransferController {
     private GatewayRoomService gatewayRoomService;
 
     @PacketReceiver
-    public void atRoomToLobbyTransfer(Session session, RoomToHomeTransfer transfer) {
-        logger.info("atRoomToLobbyTransfer roomId:[{}] uid:[{}]", transfer.getRoomId(), transfer.getUid());
+    public void atRoomToHomeTransfer(Session session, RoomToHomeTransfer transfer) {
+        logger.info("atRoomToHomeTransfer roomId:[{}] uid:[{}]", transfer.getRoomId(), transfer.getUid());
         var uid = transfer.getUid();
         var signalAttachment = new SignalAttachment();
         signalAttachment.setTaskExecutorHash((int) uid);
@@ -32,12 +32,12 @@ public class TransferController {
     }
 
     @PacketReceiver
-    public void atLobbyToRoomTransfer(Session session, HomeToRoomTransfer transfer) {
+    public void atHomeToRoomTransfer(Session session, HomeToRoomTransfer transfer) {
         if (transfer.getCreateRoomTransfer() != null) {
-            logger.info("Lobby2RoomCreateRoomTransfer uid:[{}] roomId:[{}] roomServerAddress:[{}]", transfer.getUid(), transfer.getRoomId(), transfer.getCreateRoomTransfer().getRoomServerAddress());
+            logger.info("Home2RoomCreateRoomTransfer uid:[{}] roomId:[{}] roomServerAddress:[{}]", transfer.getUid(), transfer.getRoomId(), transfer.getCreateRoomTransfer().getRoomServerAddress());
             gatewayRoomService.addRoomServerAddress(transfer.getRoomId(), transfer.getCreateRoomTransfer().getRoomServerAddress());
         }
-        logger.info("atLobbyToRoomTransfer roomId:[{}] uid:[{}]", transfer.getRoomId(), transfer.getUid());
+        logger.info("atHomeToRoomTransfer roomId:[{}] uid:[{}]", transfer.getRoomId(), transfer.getUid());
         gatewayRoomService.forwardingPacketToRoom(transfer, transfer.getRoomId());
     }
 
