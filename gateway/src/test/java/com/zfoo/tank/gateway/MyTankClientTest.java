@@ -61,7 +61,8 @@ public class MyTankClientTest {
         var loginResult = loginByHttp("玩家3");
         log.info("http loginResult:[{}]", JsonUtils.object2String(loginResult));
 
-        var myTankClient = new TcpClient(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Gateway.TCP_SERVER_PORT));
+        var connectUrl = RandomUtils.randomEle(loginResult.getConnectUrls());
+        var myTankClient = new TcpClient(HostAndPort.valueOf(connectUrl));
         var myTankSession = myTankClient.start();
 
         // 模拟客户端，发送一个登录请求

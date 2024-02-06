@@ -56,7 +56,7 @@ public class Gateway {
         context.registerShutdownHook();
 
         // tcp网关，启动哪个网关取决于客户端的协议，可以同时启动tcp网关和websocket网关
-         var tcpGateway = new MyGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
+         var tcpGateway = new MyGatewayServer(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, TCP_SERVER_PORT));
          tcpGateway.start();
 
 //         var websocketGateway = new MyWebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
