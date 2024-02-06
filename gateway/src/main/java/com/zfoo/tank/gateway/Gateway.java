@@ -16,6 +16,8 @@ package com.zfoo.tank.gateway;
 import com.zfoo.net.core.HostAndPort;
 import com.zfoo.net.util.NetUtils;
 import com.zfoo.tank.gateway.server.MyGatewayServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
@@ -35,7 +37,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
         MongoAutoConfiguration.class
 })
 public class Gateway {
-
+    private static final Logger logger = LoggerFactory.getLogger(Gateway.class);
     /**
      * tcp服务器的默认端口
      */
@@ -59,6 +61,7 @@ public class Gateway {
 
 //         var websocketGateway = new MyWebsocketGatewayServer(HostAndPort.valueOf(NetUtils.getLocalhostStr(), TCP_SERVER_PORT));
 //        websocketGateway.start();
+        logger.info("start gateway application!");
     }
 
 }

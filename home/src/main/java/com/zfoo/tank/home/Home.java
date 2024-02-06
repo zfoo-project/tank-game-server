@@ -14,6 +14,13 @@
 package com.zfoo.tank.home;
 
 import com.zfoo.event.model.AppStartEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -21,12 +28,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @version 1.0
  * @since 2021-01-20 16:00
  */
-public class Application {
-
+@SpringBootApplication(exclude = {
+        // 排除MongoDB自动配置
+        MongoDataAutoConfiguration.class,
+        MongoRepositoriesAutoConfiguration.class,
+        MongoAutoConfiguration.class
+})
+public class Home {
+    private static final Logger logger = LoggerFactory.getLogger(Home.class);
     public static void main(String[] args) {
-        var context = new ClassPathXmlApplicationContext("application.xml");
+        var context = SpringApplication.run(Home.class, args);
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
+        logger.info("start home application!");
     }
 
 }

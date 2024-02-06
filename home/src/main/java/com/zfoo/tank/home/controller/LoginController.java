@@ -61,9 +61,6 @@ public class LoginController {
     @EntityCacheAutowired
     private IEntityCache<Long, PlayerEntity> playerEntityCaches;
 
-    @Value("${spring.profiles.active}")
-    private TankDeployEnum deployEnum;
-    @Autowired
     private PlayerService playerService;
 
     @PacketReceiver

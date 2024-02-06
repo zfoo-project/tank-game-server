@@ -13,8 +13,12 @@ net:
       - 127.0.0.1:2181
   provider:
     providers:
-      - provider: tankCacheProvider
-        protocol-module: tankCache
+      - provider: tankHomeProvider
+        protocol-module: tankHome
+  consumer:
+    consumers:
+      - consumer: tankCacheProvider
+        load-balancer: consistent-hash
 
 orm:
   id: mongodbConfig
