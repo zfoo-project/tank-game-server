@@ -72,6 +72,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.zfoo</groupId>
+            <artifactId>boot</artifactId>
+            <version>${zfoo.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.zfoo.tank</groupId>
             <artifactId>common</artifactId>
             <version>1.0</version>
@@ -81,12 +87,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring.boot.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jackson-databind</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -114,7 +114,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.zfoo.tank.admin.Application</mainClass>
+                    <mainClass>com.zfoo.tank.admin.Admin</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
             </plugin>

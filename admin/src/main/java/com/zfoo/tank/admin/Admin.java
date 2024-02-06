@@ -19,7 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 
 /**
  * 1. 将前端打包好的包copy到static目录
@@ -54,15 +56,18 @@ import org.springframework.context.annotation.ImportResource;
  * @version 1.0
  * @since 2019-03-10 19:43
  */
-@SpringBootApplication
-@ImportResource(locations = {"app.xml"})
-public class Application {
+@SpringBootApplication(exclude = {
+        MongoDataAutoConfiguration.class,
+        MongoRepositoriesAutoConfiguration.class,
+        MongoAutoConfiguration.class
+})
+public class Admin {
 
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    private static final Logger logger = LoggerFactory.getLogger(Admin.class);
 
 
     public static void main(String[] args) {
-        var context = SpringApplication.run(Application.class, args);
+        var context = SpringApplication.run(Admin.class, args);
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
         logger.info("Start Web Application!");

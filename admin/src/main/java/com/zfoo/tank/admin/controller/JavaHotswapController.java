@@ -48,9 +48,6 @@ public class JavaHotswapController {
     @Autowired
     private LoginService loginService;
 
-    @Value("${spring.profiles.active}")
-    private TankDeployEnum deployEnum;
-
 
     /**
      * java服务器class文件热更新
@@ -63,10 +60,6 @@ public class JavaHotswapController {
 
         if (ArrayUtils.isEmpty(files)) {
             return BaseResponse.valueOf(CodeEnum.FAIL, "上传的java文件是空的");
-        }
-
-        if (deployEnum == TankDeployEnum.zfoo) {
-            return BaseResponse.valueOf(CodeEnum.PARAMETER_ENV_ERROR);
         }
 
         // 先检查文件的格式

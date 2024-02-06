@@ -53,9 +53,6 @@ public class ExcelHotswapController {
     @Autowired
     private LoginService loginService;
 
-    @Value("${spring.profiles.active}")
-    private TankDeployEnum deployEnum;
-
     /**
      * Excel热更新
      */
@@ -69,10 +66,6 @@ public class ExcelHotswapController {
             return BaseResponse.valueOf(CodeEnum.FAIL, "上传的excel文件是空的");
         }
 
-
-        if (deployEnum == TankDeployEnum.zfoo) {
-            return BaseResponse.valueOf(CodeEnum.PARAMETER_ENV_ERROR);
-        }
 
         var clazzSimpleNameMap = HotUtils.configSimpleClazzNameMap();
 
