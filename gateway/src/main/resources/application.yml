@@ -17,7 +17,7 @@ net:
         load-balancer: cached-consistent-hash
       - consumer: tankCacheProvider
         load-balancer: consistent-hash
-      - consumer: tankPushProvider
+      - consumer: tankRoomProvider
         load-balancer: consistent-hash
       - consumer: tankPushProvider
         load-balancer: consistent-hash

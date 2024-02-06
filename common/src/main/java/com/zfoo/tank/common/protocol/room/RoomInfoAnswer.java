@@ -5,15 +5,13 @@ public class RoomInfoAnswer {
 
     private Room room;
     private String roomServerAddress;
-    private String dsServerAddress;
 
     public RoomInfoAnswer() {
     }
 
-    public RoomInfoAnswer(Room room, String roomServerAddress, String dsServerAddress) {
+    public RoomInfoAnswer(Room room, String roomServerAddress) {
         this.room = room;
         this.roomServerAddress = roomServerAddress;
-        this.dsServerAddress = dsServerAddress;
     }
 
     public Room getRoom() {
@@ -30,13 +28,5 @@ public class RoomInfoAnswer {
 
     public void setRoomServerAddress(String roomServerAddress) {
         this.roomServerAddress = roomServerAddress;
-    }
-
-    public String getDsServerAddress() {
-        return dsServerAddress;
-    }
-
-    public void setDsServerAddress(String dsServerAddress) {
-        this.dsServerAddress = dsServerAddress;
     }
 }

@@ -75,7 +75,7 @@
         <protocol id="4004" location="com.zfoo.tank.common.protocol.chat.GroupHistoryMessageResponse"/>
     </module>
 
-    <module id="6" name="room">
+    <module id="6" name="tankRoom">
         <protocol id="6007" location="com.zfoo.tank.common.protocol.room.ExitRoomNotice"/>
         <protocol id="6008" location="com.zfoo.tank.common.protocol.room.ExitRoomRequest"/>
         <protocol id="6009" location="com.zfoo.tank.common.protocol.room.ExitRoomResponse"/>

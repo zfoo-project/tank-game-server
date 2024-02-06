@@ -1,10 +1,10 @@
-package com.zfoo.tank.cache.controller;
+package com.zfoo.tank.push.controller;
 
 import com.zfoo.net.NetContext;
 import com.zfoo.net.anno.PacketReceiver;
 import com.zfoo.net.session.Session;
 import com.zfoo.net.util.SessionUtils;
-import com.zfoo.tank.cache.service.PushService;
+import com.zfoo.tank.push.service.PushService;
 import com.zfoo.tank.common.protocol.push.CommonNoticePush;
 import com.zfoo.tank.common.protocol.transfer.AdminToRoomTransfer;
 import org.slf4j.Logger;

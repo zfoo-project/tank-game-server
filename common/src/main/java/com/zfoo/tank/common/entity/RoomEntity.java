@@ -63,6 +63,17 @@ public class RoomEntity implements IEntity<Long> {
         return id;
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    public PlayerInfo matchPlayerById(long uid) {
+        return players.stream()
+                .filter(it -> it.getId() == uid)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Long> toPlayerIds() {
+        return players.stream().map(it -> it.getId()).toList();
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     public Room toRoom() {

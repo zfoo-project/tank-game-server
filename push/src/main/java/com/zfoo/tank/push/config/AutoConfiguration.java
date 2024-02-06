@@ -1,6 +1,6 @@
 
 
-package com.zfoo.tank.cache.config;
+package com.zfoo.tank.push.config;
 
 import com.zfoo.net.config.model.NetConfig;
 import com.zfoo.orm.config.OrmConfig;

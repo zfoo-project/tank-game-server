@@ -1,4 +1,4 @@
-package com.zfoo.tank.cache;/*
+/*
  * Copyright (C) 2020 The zfoo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
@@ -11,6 +11,7 @@ package com.zfoo.tank.cache;/*
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
+package com.zfoo.tank.room;
 
 import com.zfoo.event.model.AppStartEvent;
 import org.slf4j.Logger;
@@ -32,15 +33,13 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
         MongoRepositoriesAutoConfiguration.class,
         MongoAutoConfiguration.class
 })
-public class Push {
-
-    private static final Logger logger = LoggerFactory.getLogger(Push.class);
-
+public class Room {
+    private static final Logger logger = LoggerFactory.getLogger(Room.class);
     public static void main(String[] args) {
-        var context = SpringApplication.run(Push.class, args);
+        var context = SpringApplication.run(Room.class, args);
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
-        logger.info("start push application!");
+        logger.info("start home application!");
     }
 
 }
