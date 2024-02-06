@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package com.zfoo.tank.gateway.client;
+package com.zfoo.tank.gateway;
 
 import com.zfoo.net.NetContext;
 import com.zfoo.net.core.HostAndPort;
@@ -28,7 +28,6 @@ import com.zfoo.tank.common.protocol.login.LoginByHttpTokenRequest;
 
 import static com.zfoo.tank.common.util.HttpLoginUtils.*;
 
-import com.zfoo.tank.gateway.Gateway;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
