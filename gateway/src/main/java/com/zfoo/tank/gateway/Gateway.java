@@ -14,26 +14,27 @@
 package com.zfoo.tank.gateway;
 
 import com.zfoo.net.core.HostAndPort;
-import com.zfoo.net.core.gateway.WebsocketGatewayServer;
-import com.zfoo.net.session.Session;
 import com.zfoo.net.util.NetUtils;
-import com.zfoo.protocol.util.JsonUtils;
-import com.zfoo.tank.common.protocol.login.GetPlayerInfoRequest;
-import com.zfoo.tank.common.protocol.login.LoginRequest;
 import com.zfoo.tank.gateway.server.MyGatewayServer;
-import com.zfoo.tank.gateway.server.MyWebsocketGatewayServer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.function.BiFunction;
 
 /**
  * @author jaysunxiao
  * @version 1.0
  * @since 2019-11-10 14:21
  */
-public class Application {
+@SpringBootApplication(exclude = {
+        // 排除MongoDB自动配置
+        MongoDataAutoConfiguration.class,
+        MongoRepositoriesAutoConfiguration.class,
+        MongoAutoConfiguration.class
+})
+public class Gateway {
 
     /**
      * tcp服务器的默认端口
@@ -49,7 +50,7 @@ public class Application {
 
 
     public static void main(String[] args) {
-        var context = new ClassPathXmlApplicationContext("application.xml");
+        var context = SpringApplication.run(Gateway.class, args);
         context.registerShutdownHook();
 
         // tcp网关，启动哪个网关取决于客户端的协议，可以同时启动tcp网关和websocket网关

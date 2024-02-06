@@ -25,11 +25,10 @@ import com.zfoo.tank.common.protocol.battle.BattleResultRequest;
 import com.zfoo.tank.common.protocol.cache.ScoreRankRequest;
 import com.zfoo.tank.common.protocol.cache.ScoreRankResponse;
 import com.zfoo.tank.common.protocol.login.LoginByHttpTokenRequest;
-import com.zfoo.tank.common.protocol.login.LoginRequest;
 
 import static com.zfoo.tank.common.util.HttpLoginUtils.*;
 
-import com.zfoo.tank.gateway.Application;
+import com.zfoo.tank.gateway.Gateway;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -63,7 +62,7 @@ public class MyTankClientTest {
         var loginResult = loginByHttp("玩家3");
         log.info("http loginResult:[{}]", JsonUtils.object2String(loginResult));
 
-        var myTankClient = new TcpClient(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Application.TCP_SERVER_PORT));
+        var myTankClient = new TcpClient(HostAndPort.valueOf(NetUtils.LOCAL_LOOPBACK_IP, Gateway.TCP_SERVER_PORT));
         var myTankSession = myTankClient.start();
 
         // 模拟客户端，发送一个登录请求
