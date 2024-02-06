@@ -14,8 +14,10 @@ net:
   consumer:
     consumers:
       - consumer: tankHomeProvider
-        load-balancer: consistent-hash
+        load-balancer: cached-consistent-hash
       - consumer: tankCacheProvider
+        load-balancer: consistent-hash
+      - consumer: tankPushProvider
         load-balancer: consistent-hash
 
 storage:

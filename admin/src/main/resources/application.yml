@@ -32,7 +32,7 @@ spring:
 
 
 net:
-  id: tankAdmin
+  id: admin
   protocol-location: protocol.xml
   registry:
     center: zookeeper

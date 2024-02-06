@@ -70,7 +70,7 @@ public class Admin {
         var context = SpringApplication.run(Admin.class, args);
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
-        logger.info("Start Web Application!");
+        logger.info("Start Admin Application!");
     }
 
 

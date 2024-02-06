@@ -25,7 +25,7 @@ public class Login {
         var context = SpringApplication.run(Login.class, args);
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
-        logger.info("start web application!");
+        logger.info("start login application!");
     }
 
 }

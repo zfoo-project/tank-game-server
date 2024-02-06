@@ -40,7 +40,7 @@ public class Push {
         var context = SpringApplication.run(Push.class, args);
         context.registerShutdownHook();
         context.publishEvent(new AppStartEvent(context));
-        logger.info("start cache application!");
+        logger.info("start push application!");
     }
 
 }

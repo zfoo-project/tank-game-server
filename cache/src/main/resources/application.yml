@@ -3,7 +3,7 @@ logging:
     console: '%d{yyyy-MM-dd HH:mm:ss} [%clr(%5level)] [%thread] %clr(%logger{20}.%M){cyan}\(%F:%line\) - %msg%n'
 
 net:
-  id: tankAdmin
+  id: cache
   protocol-location: protocol.xml
   registry:
     center: zookeeper

@@ -14,12 +14,6 @@ import org.springframework.context.annotation.Configuration;
 public class AutoConfiguration {
 
     @Bean
-    @ConfigurationProperties(prefix = "storage")
-    public StorageConfig storageConfig() {
-        return new StorageConfig();
-    }
-
-    @Bean
     @ConfigurationProperties(prefix = "net")
     public NetConfig netConfig() {
         return new NetConfig();
