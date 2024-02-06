@@ -17,8 +17,8 @@ import com.zfoo.orm.anno.EntityCache;
 import com.zfoo.orm.anno.GraalvmNativeEntityCache;
 import com.zfoo.orm.anno.Id;
 import com.zfoo.orm.model.IEntity;
-import com.zfoo.tank.common.entity.model.GatewaySid2ConsumerSid;
 import com.zfoo.tank.common.protocol.common.PlayerInfo;
+import com.zfoo.tank.common.protocol.gateway.GatewaySid2ConsumerSid;
 
 /**
  * @author jaysunxiao

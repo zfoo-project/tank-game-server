@@ -13,5 +13,5 @@ net:
       - 127.0.0.1:2181
   provider:
     providers:
-      - provider: tankCacheProvider
-        protocol-module: tankCache
+      - provider: tankPushProvider
+        protocol-module: push
