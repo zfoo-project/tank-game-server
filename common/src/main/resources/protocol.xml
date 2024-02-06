@@ -73,4 +73,27 @@
         <protocol id="4004" location="com.zfoo.tank.common.protocol.chat.GroupHistoryMessageResponse"/>
     </module>
 
+    <module id="6" name="room">
+        <protocol id="6000" location="com.zfoo.tank.common.protocol.room.Admin2RoomStopDsTransfer"/>
+        <protocol id="6004" location="com.zfoo.tank.common.protocol.room.AdminToRoomTransfer"/>
+        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.CreateRoomRequest"/>
+        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.CreateRoomResponse"/>
+        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.ExitRoomNotice"/>
+        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.ExitRoomRequest"/>
+        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.ExitRoomResponse"/>
+        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.JoinRoomNotice"/>
+        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.JoinRoomRequest"/>
+        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.JoinRoomResponse"/>
+        <protocol id="6005" location="com.zfoo.tank.common.protocol.room.Room"/>
+    </module>
+
+    <module id="7" name="push">
+        <protocol id="7200" location="com.zfoo.tank.common.protocol.gateway.GatewaySid2ConsumerSid"/>
+        <protocol id="7201" location="com.zfoo.tank.common.protocol.gateway.GatewaySid2Uid"/>
+        <protocol id="7210" location="com.zfoo.tank.common.protocol.push.GatewaySessionActivePush"/>
+        <protocol id="7211" location="com.zfoo.tank.common.protocol.push.GatewaySessionInactivePush"/>
+        <protocol id="7212" location="com.zfoo.tank.common.protocol.push.GatewaySessionUpdatePush"/>
+        <protocol id="7224" location="com.zfoo.tank.common.protocol.push.CommonNoticePush"/>
+        <protocol id="7250" location="com.zfoo.tank.common.protocol.room.AdminToRoomTransfer"/>
+    </module>
 </protocols>

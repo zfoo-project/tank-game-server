@@ -15,26 +15,3 @@ net:
     providers:
       - provider: tankCacheProvider
         protocol-module: tankCache
-
-orm:
-  id: mongodbConfig
-  entity-package: com.zfoo.tank.common.**.entity
-  host:
-    database: tank
-    user:
-    password:
-    address:
-      - 127.0.0.1:27017
-  caches:
-    - strategy: default
-      size: 6000
-      expire-millisecond: 600000
-  persisters:
-    - strategy: default
-      type: time
-      config: 60000
-
-storage:
-  id: storageManager
-  scanPackage: com.zfoo.tank.common.**.resource
-  resourceLocation: classpath:/excel
