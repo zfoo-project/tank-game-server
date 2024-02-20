@@ -121,7 +121,6 @@ public class LoginController {
 
                 // 设置sid和session(这2个都是临时的)
                 player.getGsid().update(sid, sid);
-
                 session.setUid(uid);
 
                 if (player.id() <= 0) {
@@ -138,18 +137,10 @@ public class LoginController {
 
     @PacketReceiver
     public void atGetPlayerInfoRequest(Session session, GetPlayerInfoRequest request) {
-        var token = request.getToken();
-
-        if (StringUtils.isBlank(token)) {
-            NetContext.getRouter().send(session, Error.valueOf(I18nEnum.error_protocol_param.toString()));
-            return;
-        }
-
-        var triple = TokenUtils.get(token);
-        var uid = triple.getLeft();
+        var uid = session.getUid();
         var sid = session.getSid();
 
-        logger.info("c[{}][{}]玩家信息[token:{}]", uid, sid, token);
+        logger.info("c[{}][{}]玩家信息请求", uid, sid);
 
         var player = playerEntityCaches.load(uid);
 
@@ -157,7 +148,6 @@ public class LoginController {
         player.getGsid().update(sid, session.getSid());
         session.setUid(uid);
 
-        NetContext.getRouter().send(session, LoginResponse.valueOf(token));
         NetContext.getRouter().send(session, GetPlayerInfoResponse.valueOf(player.toPlayerInfo(), player.getCurrencyPo().toCurrencyVO()));
     }
 
