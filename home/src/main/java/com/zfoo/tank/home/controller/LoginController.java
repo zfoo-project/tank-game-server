@@ -119,7 +119,7 @@ public class LoginController {
             NetContext.getRouter().send(oldSession, new KickPlayerAsk(gateway.getGatewaySid(), playerEntity.getId()), null);
         }
         // 更新现在的路由信息
-        gateway.update(session.getSid(), attachment.getSid());
+        gateway.update(attachment.getSid(), session.getSid());
     }
 
 
