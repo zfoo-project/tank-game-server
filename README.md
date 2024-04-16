@@ -47,7 +47,7 @@
 
 ```
 本地游戏测试入口，https://github.com/zfoo-project/tank-game-server/blob/main/single-boot/src/test/java/com/zfoo/tank/single/boot/client/MyTankClientTest.java
-本地游戏入口，http://localhost:9600/game/index.html
+本地游戏入口，http://localhost:9600/game/index.html ，老版本unity无法下载已经弃用，现已弃用
 本地后台入口，http://localhost:9600/
 ```
 
