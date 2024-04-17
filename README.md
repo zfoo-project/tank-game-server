@@ -1,5 +1,6 @@
 简体中文 | [English](./README.md)
 
+# Note：unity客户端用的2019的版本，因为协议和服务器对不上，已经停止维护
 
 ### Ⅰ. 进击的坦克（The Fight of Tanks）
 
