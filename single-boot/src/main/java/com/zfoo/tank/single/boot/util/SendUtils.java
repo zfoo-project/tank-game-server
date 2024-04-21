@@ -32,6 +32,9 @@ public abstract class SendUtils {
         }
 
         var session = NetContext.getSessionManager().getServerSession(sid);
+        if (session == null) {
+            return;
+        }
 
         NetContext.getRouter().send(session, packet);
     }
