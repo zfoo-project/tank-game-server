@@ -21,15 +21,7 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoCo
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration;
 
-@SpringBootApplication(exclude = {
-        // 排除MongoDB自动配置
-        MongoDataAutoConfiguration.class,
-        MongoRepositoriesAutoConfiguration.class,
-        MongoAutoConfiguration.class,
-        MongoReactiveAutoConfiguration.class,
-        MongoReactiveDataAutoConfiguration.class,
-        MongoReactiveRepositoriesAutoConfiguration.class
-})
+@SpringBootApplication
 public class ApplicationContext {
 
     public static void main(String[] args) {

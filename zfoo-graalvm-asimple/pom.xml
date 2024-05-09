@@ -70,6 +70,12 @@
             <groupId>com.zfoo</groupId>
             <artifactId>boot</artifactId>
             <version>${zfoo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.zfoo</groupId>
+                    <artifactId>orm</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
