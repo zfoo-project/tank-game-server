@@ -92,7 +92,7 @@ public class LoginController {
 
         var sid = session.getSid();
 
-        EventBus.execute(HashUtils.fnvHash(account), new Runnable() {
+        EventBus.asyncExecute(HashUtils.fnvHash(account), new Runnable() {
             @Override
             public void run() {
                 var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);

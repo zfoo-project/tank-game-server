@@ -85,7 +85,7 @@ public class LoginController {
         var sid = session.getSid();
 
         // 由于uid还没确定下来，现在只能用account线程去处理
-        EventBus.execute(HashUtils.fnvHash(account), new Runnable() {
+        EventBus.asyncExecute(HashUtils.fnvHash(account), new Runnable() {
             @Override
             public void run() {
                 var accountEntity = OrmContext.getAccessor().load(account, AccountEntity.class);
