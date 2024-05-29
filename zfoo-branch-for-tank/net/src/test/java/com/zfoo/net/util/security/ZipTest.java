@@ -43,4 +43,15 @@ public class ZipTest {
         Assert.assertEquals(new String(bytes), str);
     }
 
+
+    @Test
+    public void zipTest() {
+        var sourceFiles = new String[]{"./src","./README.md"};
+        ZipUtils.zip(sourceFiles, "./my-source.zip");
+    }
+
+    @Test
+    public void unzipTest() {
+        ZipUtils.unzip("D:\\Project\\aaa\\ai-simulator.zip", "D:\\Project\\aaa\\bbb");
+    }
 }

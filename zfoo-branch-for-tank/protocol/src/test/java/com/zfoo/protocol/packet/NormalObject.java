@@ -58,13 +58,13 @@ public class NormalObject {
     private Set<Integer> s;
     private Set<String> ssss;
 
-//    @Compatible(1)
-//    public int outCompatibleValue;
+    @Compatible(1)
+    public int outCompatibleValue;
 
 
 
-//    @Compatible(2)
-//    public int outCompatibleValue2;
+    @Compatible(2)
+    public int outCompatibleValue2;
 
     public byte getA() {
         return a;

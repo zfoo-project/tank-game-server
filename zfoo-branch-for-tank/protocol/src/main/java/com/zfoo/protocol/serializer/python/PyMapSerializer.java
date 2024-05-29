@@ -18,7 +18,6 @@ import com.zfoo.protocol.registration.field.IFieldRegistration;
 import com.zfoo.protocol.registration.field.MapField;
 import com.zfoo.protocol.serializer.CodeLanguage;
 import com.zfoo.protocol.serializer.CutDownMapSerializer;
-
 import com.zfoo.protocol.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -52,16 +51,16 @@ public class PyMapSerializer implements IPySerializer {
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("buffer.writeInt(len({}))", objectStr)).append(LS);
 
-        String key = "key" + GenerateProtocolFile.index.getAndIncrement();
-        String value = "value" + GenerateProtocolFile.index.getAndIncrement();
+        String key = "key" + GenerateProtocolFile.localVariableId++;
+        String value = "value" + GenerateProtocolFile.localVariableId++;
 
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("for {} in {}:", key, objectStr)).append(LS);
         GenerateProtocolFile.addTab(builder, deep + 2);
         builder.append(StringUtils.format("{} = {}[{}]", value, objectStr, key)).append(LS);
-        GeneratePyUtils.pySerializer(mapField.getMapKeyRegistration().serializer())
+        CodeGeneratePython.pySerializer(mapField.getMapKeyRegistration().serializer())
                 .writeObject(builder, key, deep + 2, field, mapField.getMapKeyRegistration());
-        GeneratePyUtils.pySerializer(mapField.getMapValueRegistration().serializer())
+        CodeGeneratePython.pySerializer(mapField.getMapValueRegistration().serializer())
                 .writeObject(builder, value, deep + 2, field, mapField.getMapValueRegistration());
     }
 
@@ -74,26 +73,26 @@ public class PyMapSerializer implements IPySerializer {
         }
 
         MapField mapField = (MapField) fieldRegistration;
-        String result = "result" + GenerateProtocolFile.index.getAndIncrement();
+        String result = "result" + GenerateProtocolFile.localVariableId++;
 
         builder.append(StringUtils.format("{} = {}", result)).append(LS);
 
         GenerateProtocolFile.addTab(builder, deep);
-        String size = "size" + GenerateProtocolFile.index.getAndIncrement();
+        String size = "size" + GenerateProtocolFile.localVariableId++;
         builder.append(StringUtils.format("{} = buffer.readInt()", size)).append(LS);
 
         GenerateProtocolFile.addTab(builder, deep);
         builder.append(StringUtils.format("if {} > 0:", size)).append(LS);
 
-        String i = "index" + GenerateProtocolFile.index.getAndIncrement();
+        String i = "index" + GenerateProtocolFile.localVariableId++;
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("for {} in range({}):", i, size)).append(LS);
 
-        String keyObject = GeneratePyUtils.pySerializer(mapField.getMapKeyRegistration().serializer())
+        String keyObject = CodeGeneratePython.pySerializer(mapField.getMapKeyRegistration().serializer())
                 .readObject(builder, deep + 2, field, mapField.getMapKeyRegistration());
 
 
-        String valueObject = GeneratePyUtils.pySerializer(mapField.getMapValueRegistration().serializer())
+        String valueObject = CodeGeneratePython.pySerializer(mapField.getMapValueRegistration().serializer())
                 .readObject(builder, deep + 2, field, mapField.getMapValueRegistration());
         GenerateProtocolFile.addTab(builder, deep + 2);
 

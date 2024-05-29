@@ -12,6 +12,14 @@
 
 package com.zfoo.protocol.serializer;
 
+import com.zfoo.protocol.serializer.cpp.CodeGenerateCpp;
+import com.zfoo.protocol.serializer.csharp.CodeGenerateCsharp;
+import com.zfoo.protocol.serializer.ecmascript.CodeGenerateEcmaScript;
+import com.zfoo.protocol.serializer.javascript.CodeGenerateJavaScript;
+import com.zfoo.protocol.serializer.lua.CodeGenerateLua;
+import com.zfoo.protocol.serializer.python.CodeGeneratePython;
+import com.zfoo.protocol.serializer.typescript.CodeGenerateTypeScript;
+
 /**
  * @author godotg
  */
@@ -20,30 +28,34 @@ public enum CodeLanguage {
     /**
      * Javassist字节码增强
      */
-    Enhance(1),
+    Enhance(1, null),
 
-    Cpp(1 << 1),
+    Cpp(1 << 1, CodeGenerateCpp.class),
 
-    Go(1 << 2),
+    Go(1 << 2, null),
 
-    JavaScript(1 << 3),
+    JavaScript(1 << 3, CodeGenerateJavaScript.class),
 
-    TypeScript(1 << 4),
+    EcmaScript(1 << 4, CodeGenerateEcmaScript.class),
 
-    Lua(1 << 5),
+    TypeScript(1 << 5, CodeGenerateTypeScript.class),
 
-    CSharp(1 << 6),
+    Lua(1 << 10, CodeGenerateLua.class),
 
-    GdScript(1 << 7),
+    CSharp(1 << 11, CodeGenerateCsharp.class),
 
-    Python(1 << 8),
+    GdScript(1 << 12, null),
 
-    Protobuf(1 << 12);
+    Python(1 << 13, CodeGeneratePython.class),
+
+    Protobuf(1 << 30, null);
 
     public final int id;
+    public final Class<? extends ICodeGenerate> codeGenerateClass;
 
-    private CodeLanguage(int id) {
+    private CodeLanguage(int id, Class<? extends ICodeGenerate> codeGenerateClass) {
         this.id = id;
+        this.codeGenerateClass = codeGenerateClass;
     }
 
 }

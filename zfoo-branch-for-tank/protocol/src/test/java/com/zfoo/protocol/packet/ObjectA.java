@@ -31,8 +31,8 @@ public record ObjectA(
 
         ObjectB objectB
 
-//  ,
-//        @Compatible(1)
-//        int innerCompatibleValue
+  ,
+        @Compatible(1)
+        int innerCompatibleValue
 ) {
 }

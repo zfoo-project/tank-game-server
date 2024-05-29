@@ -6,8 +6,10 @@ const ObjectA = function() {
     this.innerCompatibleValue = 0; // number
 };
 
+ObjectA.PROTOCOL_ID = 102;
+
 ObjectA.prototype.protocolId = function() {
-    return 102;
+    return ObjectA.PROTOCOL_ID;
 };
 
 ObjectA.write = function(buffer, packet) {

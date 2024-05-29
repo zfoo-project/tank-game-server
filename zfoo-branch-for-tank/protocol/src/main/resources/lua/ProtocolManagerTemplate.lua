@@ -14,7 +14,7 @@ end
 function ProtocolManager.getProtocol(protocolId)
     local protocol = protocols[protocolId]
     if protocol == nil then
-        error("[protocolId:" + protocolId + "]协议不存在")
+        error("[protocolId:" + protocolId + "] not exist")
     end
     return protocol
 end
@@ -32,10 +32,9 @@ function ProtocolManager.read(buffer)
     return ProtocolManager.getProtocol(protocolId):read(buffer)
 end
 
-function initProtocol()
-    {}
-    {}
+function ProtocolManager.initProtocol()
+    ${protocol_imports}
+    ${protocol_manager_registrations}
 end
 
-ProtocolManager.initProtocol = initProtocol
 return ProtocolManager

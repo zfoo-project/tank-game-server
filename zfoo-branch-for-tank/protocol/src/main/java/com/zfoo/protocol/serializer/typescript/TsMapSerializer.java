@@ -32,7 +32,7 @@ public class TsMapSerializer implements ITsSerializer {
 
     @Override
     public Triple<String, String, String> field(Field field, IFieldRegistration fieldRegistration) {
-        var type = StringUtils.format(": {}", GenerateTsUtils.toTsClassName(field.getGenericType().toString()));
+        var type = StringUtils.format(": {}", CodeGenerateTypeScript.toTsClassName(field.getGenericType().toString()));
         return new Triple<>(type, field.getName(), "new Map()");
     }
 
@@ -54,14 +54,14 @@ public class TsMapSerializer implements ITsSerializer {
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("buffer.writeInt({}.size);", objectStr)).append(LS);
 
-        String key = "key" + GenerateProtocolFile.index.getAndIncrement();
-        String value = "value" + GenerateProtocolFile.index.getAndIncrement();
+        String key = "key" + GenerateProtocolFile.localVariableId++;
+        String value = "value" + GenerateProtocolFile.localVariableId++;
 
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("{}.forEach(({}, {}) => {", objectStr, value, key)).append(LS);
-        GenerateTsUtils.tsSerializer(mapField.getMapKeyRegistration().serializer())
+        CodeGenerateTypeScript.tsSerializer(mapField.getMapKeyRegistration().serializer())
                 .writeObject(builder, key, deep + 2, field, mapField.getMapKeyRegistration());
-        GenerateTsUtils.tsSerializer(mapField.getMapValueRegistration().serializer())
+        CodeGenerateTypeScript.tsSerializer(mapField.getMapValueRegistration().serializer())
                 .writeObject(builder, value, deep + 2, field, mapField.getMapValueRegistration());
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append("});").append(LS);
@@ -78,26 +78,26 @@ public class TsMapSerializer implements ITsSerializer {
         }
 
         MapField mapField = (MapField) fieldRegistration;
-        String result = "result" + GenerateProtocolFile.index.getAndIncrement();
-        var typeName = GenerateTsUtils.toTsClassName(mapField.getType().toString());
+        String result = "result" + GenerateProtocolFile.localVariableId++;
+        var typeName = CodeGenerateTypeScript.toTsClassName(mapField.getType().toString());
         builder.append(StringUtils.format("const {} = new {}();", result, typeName)).append(LS);
 
         GenerateProtocolFile.addTab(builder, deep);
-        String size = "size" + GenerateProtocolFile.index.getAndIncrement();
+        String size = "size" + GenerateProtocolFile.localVariableId++;
         builder.append(StringUtils.format("const {} = buffer.readInt();", size)).append(LS);
 
         GenerateProtocolFile.addTab(builder, deep);
         builder.append(StringUtils.format("if ({} > 0) {", size)).append(LS);
 
-        String i = "index" + GenerateProtocolFile.index.getAndIncrement();
+        String i = "index" + GenerateProtocolFile.localVariableId++;
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("for (let {} = 0; {} < {}; {}++) {", i, i, size, i)).append(LS);
 
-        String keyObject = GenerateTsUtils.tsSerializer(mapField.getMapKeyRegistration().serializer())
+        String keyObject = CodeGenerateTypeScript.tsSerializer(mapField.getMapKeyRegistration().serializer())
                 .readObject(builder, deep + 2, field, mapField.getMapKeyRegistration());
 
 
-        String valueObject = GenerateTsUtils.tsSerializer(mapField.getMapValueRegistration().serializer())
+        String valueObject = CodeGenerateTypeScript.tsSerializer(mapField.getMapValueRegistration().serializer())
                 .readObject(builder, deep + 2, field, mapField.getMapValueRegistration());
         GenerateProtocolFile.addTab(builder, deep + 2);
 

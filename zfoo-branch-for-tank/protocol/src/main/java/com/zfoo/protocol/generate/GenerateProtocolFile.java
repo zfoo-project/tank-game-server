@@ -13,28 +13,21 @@
 package com.zfoo.protocol.generate;
 
 import com.zfoo.protocol.ProtocolManager;
+import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.protocol.exception.UnknownException;
 import com.zfoo.protocol.registration.IProtocolRegistration;
 import com.zfoo.protocol.registration.ProtocolAnalysis;
 import com.zfoo.protocol.registration.ProtocolRegistration;
 import com.zfoo.protocol.serializer.CodeLanguage;
-import com.zfoo.protocol.serializer.cpp.GenerateCppUtils;
-import com.zfoo.protocol.serializer.csharp.GenerateCsUtils;
 import com.zfoo.protocol.serializer.gdscript.GenerateGdUtils;
 import com.zfoo.protocol.serializer.go.GenerateGoUtils;
-import com.zfoo.protocol.serializer.javascript.GenerateJsUtils;
-import com.zfoo.protocol.serializer.lua.GenerateLuaUtils;
-import com.zfoo.protocol.serializer.python.GeneratePyUtils;
-import com.zfoo.protocol.serializer.typescript.GenerateTsUtils;
 import com.zfoo.protocol.util.FileUtils;
+import com.zfoo.protocol.util.ReflectionUtils;
 import com.zfoo.protocol.util.StringUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static com.zfoo.protocol.util.StringUtils.TAB;
@@ -51,7 +44,7 @@ public abstract class GenerateProtocolFile {
      */
     public static Predicate<IProtocolRegistration> generateProtocolFilter = registration -> true;
 
-    public static AtomicInteger index = new AtomicInteger();
+    public static int localVariableId = 0;
 
     public static StringBuilder addTab(StringBuilder builder, int deep) {
         builder.append(TAB.repeat(Math.max(0, deep)));
@@ -79,10 +72,6 @@ public abstract class GenerateProtocolFile {
         return builder.toString();
     }
 
-    public static void clear() {
-        generateProtocolFilter = null;
-        index = null;
-    }
 
     /**
      * EN: Generate protocol files to various languages
@@ -115,97 +104,50 @@ public abstract class GenerateProtocolFile {
         allGenerateProtocols.addAll(insideGenerateProtocols);
 
         // 通过协议号，从小到大排序
-        var allSortedGenerateProtocols = allGenerateProtocols.stream()
+        var generateProtocols = allGenerateProtocols.stream()
                 .sorted((a, b) -> a.protocolId() - b.protocolId())
+                .map(it -> (ProtocolRegistration) it)
                 .toList();
 
         // 解析协议的文档注释
-        GenerateProtocolNote.initProtocolNote(allSortedGenerateProtocols);
-
-
+        GenerateProtocolNote.initProtocolNote(generateProtocols);
         // 计算协议生成的路径
-        if (generateOperation.isFoldProtocol()) {
-            GenerateProtocolPath.initProtocolPath(allSortedGenerateProtocols);
-        }
+        GenerateProtocolPath.initProtocolPath(generateProtocols);
 
-        // 生成C++协议
         var generateLanguages = generateOperation.getGenerateLanguages();
-        if (generateLanguages.contains(CodeLanguage.Cpp)) {
-            GenerateCppUtils.init(generateOperation);
-            GenerateCppUtils.createProtocolManager(allSortedGenerateProtocols);
-            for (var protocolRegistration : allSortedGenerateProtocols) {
-                GenerateCppUtils.createCppProtocolFile((ProtocolRegistration) protocolRegistration);
-            }
-        }
 
         // 生成Golang协议
         if (generateLanguages.contains(CodeLanguage.Go)) {
             GenerateGoUtils.init(generateOperation);
-            GenerateGoUtils.createProtocolManager(allSortedGenerateProtocols);
-            for (var protocolRegistration : allSortedGenerateProtocols) {
+            GenerateGoUtils.createProtocolManager(generateProtocols);
+            for (var protocolRegistration : generateProtocols) {
                 GenerateGoUtils.createGoProtocolFile((ProtocolRegistration) protocolRegistration);
-            }
-        }
-
-        // 生成C#协议
-        if (generateLanguages.contains(CodeLanguage.CSharp)) {
-            GenerateCsUtils.init(generateOperation);
-            GenerateCsUtils.createProtocolManager(allSortedGenerateProtocols);
-            for (var protocolRegistration : allSortedGenerateProtocols) {
-                GenerateCsUtils.createCsProtocolFile((ProtocolRegistration) protocolRegistration);
-            }
-        }
-
-        // 生成Javascript协议
-        if (generateLanguages.contains(CodeLanguage.JavaScript)) {
-            GenerateJsUtils.init(generateOperation);
-            for (var protocolRegistration : allSortedGenerateProtocols) {
-                GenerateJsUtils.createJsProtocolFile((ProtocolRegistration) protocolRegistration);
-            }
-            GenerateJsUtils.createProtocolManager(allSortedGenerateProtocols);
-        }
-
-        // 生成TypeScript协议
-        if (generateLanguages.contains(CodeLanguage.TypeScript)) {
-            GenerateTsUtils.init(generateOperation);
-            for (var protocolRegistration : allSortedGenerateProtocols) {
-                GenerateTsUtils.createTsProtocolFile((ProtocolRegistration) protocolRegistration);
-            }
-            GenerateTsUtils.createProtocolManager(allSortedGenerateProtocols);
-        }
-
-        // 生成Lua协议
-        if (generateLanguages.contains(CodeLanguage.Lua)) {
-            GenerateLuaUtils.init(generateOperation);
-            if (generateOperation.isOneProtocol()) {
-                GenerateLuaUtils.createProtocolManagerInOneFile(allSortedGenerateProtocols);
-                GenerateLuaUtils.createLuaProtocolsInOneFile(allSortedGenerateProtocols);
-            } else {
-                GenerateLuaUtils.createProtocolManager(allSortedGenerateProtocols);
-                for (var protocolRegistration : allSortedGenerateProtocols) {
-                    GenerateLuaUtils.createLuaProtocolFile((ProtocolRegistration) protocolRegistration);
-                }
             }
         }
 
         // 生成GdScript协议
         if (generateLanguages.contains(CodeLanguage.GdScript)) {
             GenerateGdUtils.init(generateOperation);
-            GenerateGdUtils.createProtocolManager(allSortedGenerateProtocols);
-            for (var protocolRegistration : allSortedGenerateProtocols) {
+            GenerateGdUtils.createProtocolManager(generateProtocols);
+            for (var protocolRegistration : generateProtocols) {
                 GenerateGdUtils.createGdProtocolFile((ProtocolRegistration) protocolRegistration);
             }
         }
 
-        // 生成Python协议
-        if (generateLanguages.contains(CodeLanguage.Python)) {
-            GeneratePyUtils.init(generateOperation);
-            GeneratePyUtils.createProtocolManager(allSortedGenerateProtocols);
-            for (var protocolRegistration : allSortedGenerateProtocols) {
-                GeneratePyUtils.createPyProtocolFile((ProtocolRegistration) protocolRegistration);
+        for (var language : generateOperation.getGenerateLanguages()) {
+            if (language.codeGenerateClass == null) {
+                continue;
+            }
+            var codeGenerate = ReflectionUtils.newInstance(language.codeGenerateClass);
+            codeGenerate.init(generateOperation);
+            if (generateOperation.isMergeProtocol()) {
+                codeGenerate.mergerProtocol(generateProtocols);
+            } else if (generateOperation.isFoldProtocol()) {
+                codeGenerate.foldProtocol(generateProtocols);
+            } else {
+                codeGenerate.defaultProtocol(generateProtocols);
             }
         }
-
 
         // 预留参数，以后可能会用，比如给Lua修改一个后缀名称
         var protocolParam = generateOperation.getProtocolParam();
@@ -219,6 +161,28 @@ public abstract class GenerateProtocolFile {
             }
         }
         throw new UnknownException();
+    }
+
+    // 子协议优先生成
+    public static List<ProtocolRegistration> subProtocolFirst(List<ProtocolRegistration> registrations) {
+        var registrations1 = new ArrayList<ProtocolRegistration>(registrations);
+        var subFirstRegistrations = new ArrayList<ProtocolRegistration>();
+        var set = new HashSet<Short>();
+        while (!registrations1.isEmpty()) {
+            for (var i = 0; i < registrations1.size(); i++) {
+                var registration = registrations1.get(i);
+                var protocolId = registration.protocolId();
+                var subProtocols = ProtocolAnalysis.getAllSubProtocolIds(protocolId);
+                subProtocols.removeAll(set);
+                if (CollectionUtils.isEmpty(subProtocols)) {
+                    subFirstRegistrations.add(registration);
+                    set.add(protocolId);
+                    registrations1.remove(registration);
+                    break;
+                }
+            }
+        }
+        return subFirstRegistrations;
     }
 
 }

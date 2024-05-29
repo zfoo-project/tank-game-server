@@ -4,8 +4,10 @@ const ObjectB = function() {
     this.innerCompatibleValue = 0; // number
 };
 
+ObjectB.PROTOCOL_ID = 103;
+
 ObjectB.prototype.protocolId = function() {
-    return 103;
+    return ObjectB.PROTOCOL_ID;
 };
 
 ObjectB.write = function(buffer, packet) {

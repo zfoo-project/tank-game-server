@@ -35,7 +35,7 @@
 <dependency>
     <groupId>com.zfoo</groupId>
     <artifactId>boot</artifactId>
-    <version>3.3.0</version>
+    <version>3.3.2</version>
 </dependency>
 ```
 
@@ -45,7 +45,7 @@
 <dependency>
     <groupId>com.zfoo</groupId>
     <artifactId>protocol</artifactId>
-    <version>3.3.0</version>
+    <version>3.3.2</version>
 </dependency>
 ```
 
@@ -67,9 +67,6 @@
 
 - [godot-bird](https://github.com/zfoo-project/godot-bird) 鸟了个鸟，客户端使用godot开发，服务器依然使用的tank-game-server
 
-- [cocos-fivechess](https://github.com/zfoo-project/fivechess) 五子棋，客户端使用cocos开发
-
-- [zapp](https://github.com/zfoo-project/zapp) 图片分享聊天网站，标准的https企业级网站，难度5星
 
 Ⅴ. 使用⭐
 ------------
@@ -115,7 +112,7 @@ NetContext.getCosumer()
 HotSwapUtils.hotswapClass(bytes);
 ```
 
-#### 4. [orm](orm/README.md) 基于mongodb的自动映射框架，使用 [caffeine](https://github.com/ben-manes/caffeine) 设计了二级缓存，充分释放数据库压力
+#### 4. [orm](orm/README.md) 基于mongodb的自动映射框架
 
 ```
 // 无需自己写sql和任何配置，直接通过注解定义在数据库中定义一张表

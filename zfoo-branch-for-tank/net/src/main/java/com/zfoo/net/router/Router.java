@@ -43,7 +43,6 @@ import com.zfoo.protocol.exception.ExceptionUtils;
 import com.zfoo.protocol.exception.RunException;
 import com.zfoo.protocol.util.*;
 import io.netty.util.collection.ShortObjectHashMap;
-import io.netty.util.concurrent.FastThreadLocal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.Nullable;
@@ -63,14 +62,14 @@ public class Router implements IRouter {
 
     public static final long DEFAULT_TIMEOUT = 3000;
 
-    private final ShortObjectHashMap<IPacketReceiver> receiverMap = new ShortObjectHashMap<>();
+    protected final ShortObjectHashMap<IPacketReceiver> receiverMap = new ShortObjectHashMap<>();
 
     /**
      * 作为服务器接收方，会把receive收到的attachment存储在这个地方，只针对task线程。
      * atReceiver会设置attachment，但是在方法调用完成会取消，不需要过多关注。
      * asyncAsk会再次设置attachment，需要重点关注。
      */
-    private final FastThreadLocal<Object> serverReceiverAttachmentThreadLocal = new FastThreadLocal<>();
+    protected final FastThreadLocalAdapter<Object> serverReceiverAttachmentThreadLocal = new FastThreadLocalAdapter<>();
 
     /**
      * 在服务端收到数据后，会调用这个方法. 这个方法在BaseRouteHandler.java的channelRead中被调用
@@ -126,10 +125,10 @@ public class Router implements IRouter {
                 gatewayAttachment.setClient(false);
                 dispatchByTaskExecutorHash(gatewayAttachment.taskExecutorHash(), task);
             } else {
-                // 这里是：别的服务提供者提供授权给网关，比如：在玩家登录后，home服查到了玩家uid，然后发给Gateway服
+                // 这里是：别的服务提供者提供授权给网关，比如：在用户或玩家登录后，home服查到了玩家uid，然后发给Gateway服
                 var gatewaySession = NetContext.getSessionManager().getServerSession(gatewayAttachment.getSid());
                 if (gatewaySession == null) {
-                    logger.warn("gateway receives packet:[{}] and attachment:[{}] from server" + ", but serverSessionMap has no session[id:{}], perhaps client disconnected from gateway.", JsonUtils.object2String(packet), JsonUtils.object2String(attachment), gatewayAttachment.getSid());
+                    logger.error("gateway receives packet:[{}] and attachment:[{}] from server" + ", but serverSessionMap has no session[id:{}], perhaps client disconnected from gateway.", JsonUtils.object2String(packet), JsonUtils.object2String(attachment), gatewayAttachment.getSid());
                     return;
                 }
                 send(gatewaySession, packet, gatewayAttachment.getSignalAttachment());
@@ -160,7 +159,7 @@ public class Router implements IRouter {
      * 在zfoo这套线程模型中，保证了服务器所接收到的Packet（最终被包装成PacketReceiverTask任务），永远只会在同一条线程处理，
      * TaskBus通过AbstractTaskDispatch去派发PacketReceiverTask任务，具体在哪个线程处理通过IAttachment的taskExecutorHash计算。
      * <p>
-     * 这种流水线做法对cpu缓存非常友好，java线程能大部分时间跑在一个cpu核心，而玩家又和线程一一对应，这样就可以最大限度提高cpu缓存命中率。
+     * 这种流水线做法对cpu缓存非常友好，java线程能大部分时间跑在一个cpu核心，而用户逻辑又和线程一一对应，这样就可以最大限度提高cpu缓存命中率。
      * cpu的cache越大命中率就越高，性能提高就越明显。
      * <p>
      * 单线程热点问题，在负载足够大的情况下，比如5000人同时在线的8核服务器，因为样本足够大每个核心分配的人数差距并不会太大。
@@ -187,6 +186,7 @@ public class Router implements IRouter {
 
         switch (receiver.task()) {
             case TaskBus -> TaskBus.execute(taskExecutorHash, packetReceiverTask);
+            case EventBus -> EventBus.asyncExecute(taskExecutorHash, packetReceiverTask);
             case NettyIO -> atReceiver(packetReceiverTask);
 //            case VirtualThread -> Thread.ofVirtual().name("virtual-at" + clazz.getSimpleName()).start(() -> atReceiver(packetReceiverTask));
         }
@@ -359,32 +359,38 @@ public class Router implements IRouter {
 
         // The routing of the message
         var receiver = receiverMap.get(ProtocolManager.protocolId(packet.getClass()));
-        var threadLocalAttachment = attachment != null && receiver.task() != Task.VirtualThread;
         try {
-
             // 接收者（服务器）同步和异步消息的接收
-            if (threadLocalAttachment) {
-                serverReceiverAttachmentThreadLocal.set(attachment);
-            }
+            serverReceiverAttachmentThreadLocal.set(attachment);
 
+            // 虚拟线程赋值给ThreadLocal会出错，这里给使用者一个提示
             if (receiver.task() == Task.VirtualThread && receiver.attachment() == null) {
-                logger.warn("virtual thread task can not set Attachment, may cause some sync and async timeout exception, please use attachment in receiver method signature and use attachment in sync and async request");
+                logger.warn("virtual thread task can not set Attachment to ThreadLocal, may cause some sync and async timeout exception, please use attachment in receiver method signature and use attachment in sync and async request");
             }
 
             receiver.invoke(session, packet, attachment);
         } catch (Exception e) {
-            EventBus.post(ServerExceptionEvent.valueOf(session, packet, attachment, e));
-            logger.error(StringUtils.format("at{} e[uid:{}][sid:{}] invoke exception"
-                    , StringUtils.capitalize(packet.getClass().getSimpleName()),session.getUid(), session.getSid()), e);
+            exceptionHandler(e, packetReceiverTask);
         } catch (Throwable t) {
-            logger.error(StringUtils.format("at{} e[uid:{}][sid:{}] invoke error"
-                    , StringUtils.capitalize(packet.getClass().getSimpleName()),session.getUid(), session.getSid()), t);
+            throwableHandler(t, packetReceiverTask);
         } finally {
             // 如果有服务器在处理同步或者异步消息的时候由于错误没有返回给客户端消息，则可能会残留serverAttachment，所以先移除
-            if (threadLocalAttachment) {
-                serverReceiverAttachmentThreadLocal.set(null);
-            }
+            serverReceiverAttachmentThreadLocal.set(null);
         }
+    }
+
+    protected void exceptionHandler(Exception e, PacketReceiverTask packetReceiverTask){
+        var session = packetReceiverTask.getSession();
+        var packet = packetReceiverTask.getPacket();
+        var attachment = packetReceiverTask.getAttachment();
+        EventBus.post(ServerExceptionEvent.valueOf(session, packet, attachment, e));
+        logger.error("at{} e[uid:{}][sid:{}] invoke exception", StringUtils.capitalize(packet.getClass().getSimpleName()), session.getUid(), session.getSid(), e);
+    }
+
+    protected void throwableHandler(Throwable t, PacketReceiverTask packetReceiverTask){
+        var session = packetReceiverTask.getSession();
+        var packet = packetReceiverTask.getPacket();
+        logger.error("at{} e[uid:{}][sid:{}] invoke error", StringUtils.capitalize(packet.getClass().getSimpleName()), session.getUid(), session.getSid(), t);
     }
 
 

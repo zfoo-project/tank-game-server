@@ -54,20 +54,20 @@ public class CsListSerializer implements ICsSerializer {
         builder.append(StringUtils.format("buffer.WriteInt({}.Count);", objectStr)).append(LS);
 
         GenerateProtocolFile.addTab(builder, deep + 1);
-        String length = "length" + GenerateProtocolFile.index.getAndIncrement();
+        String length = "length" + GenerateProtocolFile.localVariableId++;
         builder.append(StringUtils.format("int {} = {}.Count;", length, objectStr)).append(LS);
 
         GenerateProtocolFile.addTab(builder, deep + 1);
-        String i = "i" + GenerateProtocolFile.index.getAndIncrement();
+        String i = "i" + GenerateProtocolFile.localVariableId++;
         builder.append(StringUtils.format("for (int {} = 0; {} < {}; {}++)", i, i, length, i)).append(LS);
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append("{").append(LS);
 
         GenerateProtocolFile.addTab(builder, deep + 2);
-        String element = "element" + GenerateProtocolFile.index.getAndIncrement();
+        String element = "element" + GenerateProtocolFile.localVariableId++;
         builder.append(StringUtils.format("var {} = {}[{}];", element, objectStr, i)).append(LS);
 
-        GenerateCsUtils.csSerializer(listField.getListElementRegistration().serializer())
+        CodeGenerateCsharp.csSerializer(listField.getListElementRegistration().serializer())
                 .writeObject(builder, element, deep + 2, field, listField.getListElementRegistration());
 
         GenerateProtocolFile.addTab(builder, deep + 1);
@@ -85,12 +85,12 @@ public class CsListSerializer implements ICsSerializer {
         }
 
         var listField = (ListField) fieldRegistration;
-        var result = "result" + GenerateProtocolFile.index.getAndIncrement();
+        var result = "result" + GenerateProtocolFile.localVariableId++;
 
-        var typeName = GenerateCsUtils.toCsClassName(listField.getType().toString());
+        var typeName = CodeGenerateCsharp.toCsClassName(listField.getType().toString());
 
-        var i = "index" + GenerateProtocolFile.index.getAndIncrement();
-        var size = "size" + GenerateProtocolFile.index.getAndIncrement();
+        var i = "index" + GenerateProtocolFile.localVariableId++;
+        var size = "size" + GenerateProtocolFile.localVariableId++;
 
         builder.append(StringUtils.format("int {} = buffer.ReadInt();", size)).append(LS);
         GenerateProtocolFile.addTab(builder, deep);
@@ -105,7 +105,7 @@ public class CsListSerializer implements ICsSerializer {
         builder.append(StringUtils.format("for (int {} = 0; {} < {}; {}++)", i, i, size, i)).append(LS);
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append("{").append(LS);
-        var readObject = GenerateCsUtils.csSerializer(listField.getListElementRegistration().serializer())
+        var readObject = CodeGenerateCsharp.csSerializer(listField.getListElementRegistration().serializer())
                 .readObject(builder, deep + 2, field, listField.getListElementRegistration());
         GenerateProtocolFile.addTab(builder, deep + 2);
         builder.append(StringUtils.format("{}.Add({});", result, readObject)).append(LS);

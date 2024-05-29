@@ -56,7 +56,7 @@ public class CsMapSerializer implements ICsSerializer {
         builder.append(StringUtils.format("buffer.WriteInt({}.Count);", objectStr)).append(LS);
 
 
-        String i = "i" + GenerateProtocolFile.index.getAndIncrement();
+        String i = "i" + GenerateProtocolFile.localVariableId++;
 
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("foreach (var {} in {})", i, objectStr)).append(LS);
@@ -65,16 +65,16 @@ public class CsMapSerializer implements ICsSerializer {
         builder.append("{").append(LS);
 
         GenerateProtocolFile.addTab(builder, deep + 2);
-        String key = "keyElement" + GenerateProtocolFile.index.getAndIncrement();
-        String value = "valueElement" + GenerateProtocolFile.index.getAndIncrement();
+        String key = "keyElement" + GenerateProtocolFile.localVariableId++;
+        String value = "valueElement" + GenerateProtocolFile.localVariableId++;
         builder.append(StringUtils.format("var {} = {}.Key;", key, i)).append(LS);
 
         GenerateProtocolFile.addTab(builder, deep + 2);
         builder.append(StringUtils.format("var {} = {}.Value;", value, i)).append(LS);
 
-        GenerateCsUtils.csSerializer(mapField.getMapKeyRegistration().serializer())
+        CodeGenerateCsharp.csSerializer(mapField.getMapKeyRegistration().serializer())
                 .writeObject(builder, key, deep + 2, field, mapField.getMapKeyRegistration());
-        GenerateCsUtils.csSerializer(mapField.getMapValueRegistration().serializer())
+        CodeGenerateCsharp.csSerializer(mapField.getMapValueRegistration().serializer())
                 .writeObject(builder, value, deep + 2, field, mapField.getMapValueRegistration());
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append("}").append(LS);
@@ -92,11 +92,11 @@ public class CsMapSerializer implements ICsSerializer {
         }
 
         MapField mapField = (MapField) fieldRegistration;
-        String result = "result" + GenerateProtocolFile.index.getAndIncrement();
+        String result = "result" + GenerateProtocolFile.localVariableId++;
 
-        var typeName = GenerateCsUtils.toCsClassName(mapField.getType().toString());
+        var typeName = CodeGenerateCsharp.toCsClassName(mapField.getType().toString());
 
-        String size = "size" + GenerateProtocolFile.index.getAndIncrement();
+        String size = "size" + GenerateProtocolFile.localVariableId++;
         builder.append(StringUtils.format("int {} = buffer.ReadInt();", size)).append(LS);
 
         GenerateProtocolFile.addTab(builder, deep);
@@ -108,17 +108,17 @@ public class CsMapSerializer implements ICsSerializer {
         GenerateProtocolFile.addTab(builder, deep);
         builder.append("{").append(LS);
 
-        String i = "index" + GenerateProtocolFile.index.getAndIncrement();
+        String i = "index" + GenerateProtocolFile.localVariableId++;
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("for (var {} = 0; {} < {}; {}++)", i, i, size, i)).append(LS);
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append("{").append(LS);
 
-        String keyObject = GenerateCsUtils.csSerializer(mapField.getMapKeyRegistration().serializer())
+        String keyObject = CodeGenerateCsharp.csSerializer(mapField.getMapKeyRegistration().serializer())
                 .readObject(builder, deep + 2, field, mapField.getMapKeyRegistration());
 
 
-        String valueObject = GenerateCsUtils.csSerializer(mapField.getMapValueRegistration().serializer())
+        String valueObject = CodeGenerateCsharp.csSerializer(mapField.getMapValueRegistration().serializer())
                 .readObject(builder, deep + 2, field, mapField.getMapValueRegistration());
         GenerateProtocolFile.addTab(builder, deep + 2);
 

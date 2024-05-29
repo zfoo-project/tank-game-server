@@ -19,14 +19,13 @@ import com.zfoo.protocol.generate.GenerateOperation;
 import com.zfoo.protocol.generate.GenerateProtocolFile;
 import com.zfoo.protocol.generate.GenerateProtocolNote;
 import com.zfoo.protocol.generate.GenerateProtocolPath;
-import com.zfoo.protocol.registration.IProtocolRegistration;
 import com.zfoo.protocol.registration.ProtocolAnalysis;
 import com.zfoo.protocol.registration.ProtocolRegistration;
 import com.zfoo.protocol.registration.field.IFieldRegistration;
 import com.zfoo.protocol.serializer.CodeLanguage;
 import com.zfoo.protocol.serializer.enhance.EnhanceObjectProtocolSerializer;
 import com.zfoo.protocol.serializer.reflect.*;
-import com.zfoo.protocol.serializer.typescript.GenerateTsUtils;
+import com.zfoo.protocol.serializer.typescript.CodeGenerateTypeScript;
 import com.zfoo.protocol.util.ClassUtils;
 import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.ReflectionUtils;
@@ -86,7 +85,7 @@ public abstract class GenerateGdUtils {
         protocolOutputPath = null;
     }
 
-    public static void createProtocolManager(List<IProtocolRegistration> protocolList) throws IOException {
+    public static void createProtocolManager(List<ProtocolRegistration> protocolList) throws IOException {
         var byteBufferFile = new File(StringUtils.format("{}/{}", protocolOutputPath, "ByteBuffer.gd"));
         var byteBufferTemplate = ClassUtils.getFileFromClassPathToString("gdscript/buffer/ByteBuffer.gd");
         FileUtils.writeStringToFile(byteBufferFile, StringUtils.format(byteBufferTemplate, protocolOutputRootPath), false);
@@ -97,8 +96,7 @@ public abstract class GenerateGdUtils {
         for (var protocol : protocolList) {
             var protocolId = protocol.protocolId();
             var name = protocol.protocolConstructor().getDeclaringClass().getSimpleName();
-            var path = GenerateProtocolPath.protocolAbsolutePath(protocolId, CodeLanguage.GdScript);
-            importBuilder.append(StringUtils.format("const {} = preload(\"res://{}/{}.gd\")", name, protocolOutputRootPath, path)).append(LS);
+            importBuilder.append(StringUtils.format("const {} = preload(\"res://{}/{}/{}.gd\")", name, protocolOutputRootPath, GenerateProtocolPath.protocolPathSlash(protocolId), name)).append(LS);
             initList.add(StringUtils.format("{}{}: {}", TAB_ASCII, protocolId, name));
         }
         var initProtocols = StringUtils.joinWith(StringUtils.COMMA + LS, initList.toArray());
@@ -109,15 +107,12 @@ public abstract class GenerateGdUtils {
     }
 
     public static void createGdProtocolFile(ProtocolRegistration registration) throws IOException {
-        // 初始化index
-        GenerateProtocolFile.index.set(0);
-
         var protocolId = registration.protocolId();
         var registrationConstructor = registration.getConstructor();
         var protocolClazzName = registrationConstructor.getDeclaringClass().getSimpleName();
 
         var includeSubProtocol = includeSubProtocol(registration);
-        var classNote = GenerateProtocolNote.classNote(protocolId, CodeLanguage.GdScript);
+        var classNote = GenerateProtocolNote.classNote(protocolId, CodeLanguage.GdScript, TAB_ASCII, 0);
         var fieldDefinition = fieldDefinition(registration);
         var toStringJsonTemplate = toStringJsonTemplate(registration);
         var toStringParams = toStringParams(registration);
@@ -128,7 +123,7 @@ public abstract class GenerateGdUtils {
         protocolTemplate = StringUtils.format(protocolTemplate, protocolId, protocolClazzName, includeSubProtocol, classNote, fieldDefinition.trim(),
                 toStringJsonTemplate, toStringParams, StringUtils.EMPTY_JSON, writeObject.trim(), readObject.trim());
 
-        var outputPath = StringUtils.format("{}/{}/{}.gd", protocolOutputPath, GenerateProtocolPath.getProtocolPath(protocolId), protocolClazzName);
+        var outputPath = StringUtils.format("{}/{}/{}.gd", protocolOutputPath, GenerateProtocolPath.protocolPathSlash(protocolId), protocolClazzName);
         var file = new File(outputPath);
         FileUtils.writeStringToFile(file, protocolTemplate, true);
         logger.info("Generated GdScript protocol file:[{}] is in path:[{}]", file.getName(), file.getAbsolutePath());
@@ -144,8 +139,7 @@ public abstract class GenerateGdUtils {
         var gdBuilder = new StringBuilder();
         for (var subProtocolId : subProtocols) {
             var name = EnhanceObjectProtocolSerializer.getProtocolClassSimpleName(subProtocolId);
-            var path = GenerateProtocolPath.protocolAbsolutePath(subProtocolId, CodeLanguage.GdScript);
-            gdBuilder.append(StringUtils.format("const {} = preload(\"res://{}/{}.gd\")", name, protocolOutputRootPath, path)).append(LS);
+            gdBuilder.append(StringUtils.format("const {} = preload(\"res://{}/{}/{}.gd\")", name, protocolOutputRootPath, GenerateProtocolPath.protocolPathSlash(protocolId), name)).append(LS);
         }
         return gdBuilder.toString();
     }
@@ -162,15 +156,15 @@ public abstract class GenerateGdUtils {
             IFieldRegistration fieldRegistration = fieldRegistrations[GenerateProtocolFile.indexOf(fields, field)];
             var fieldName = field.getName();
             // 生成注释
-            var fieldNote = GenerateProtocolNote.fieldNote(protocolId, fieldName, CodeLanguage.GdScript);
-            if (StringUtils.isNotBlank(fieldNote)) {
+            var fieldNotes = GenerateProtocolNote.fieldNotes(protocolId, fieldName, CodeLanguage.GdScript);
+            for (var fieldNote : fieldNotes) {
                 gdBuilder.append(fieldNote).append(LS);
             }
             var fieldType = gdSerializer(fieldRegistration.serializer()).fieldType(field, fieldRegistration);
             // 生成类型的注释
             gdBuilder.append(StringUtils.format("var {}: {}", fieldName, fieldType));
             if (fieldType.equals("Dictionary") || fieldType.equals("Array")) {
-                var typeNote = GenerateTsUtils.toTsClassName(field.getGenericType().toString());
+                var typeNote = CodeGenerateTypeScript.toTsClassName(field.getGenericType().toString());
                 gdBuilder.append(StringUtils.format(TAB_ASCII + "# {}", typeNote));
             }
             gdBuilder.append(LS);
@@ -225,6 +219,7 @@ public abstract class GenerateGdUtils {
     }
 
     private static String writeObject(ProtocolRegistration registration) {
+        GenerateProtocolFile.localVariableId = 0;
         var fields = registration.getFields();
         var fieldRegistrations = registration.getFieldRegistrations();
         var gdBuilder = new StringBuilder();
@@ -246,6 +241,7 @@ public abstract class GenerateGdUtils {
     }
 
     private static String readObject(ProtocolRegistration registration) {
+        GenerateProtocolFile.localVariableId = 0;
         var fields = registration.getFields();
         var fieldRegistrations = registration.getFieldRegistrations();
         var gdBuilder = new StringBuilder();

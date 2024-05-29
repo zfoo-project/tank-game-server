@@ -39,6 +39,7 @@ import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.types.ObjectId;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.type.AnnotationMetadata;
@@ -118,7 +119,10 @@ public class OrmManager implements IOrmManager {
 
         // 设置数据库账号密码
         if (StringUtils.isNotBlank(hostConfig.getUser()) && StringUtils.isNotBlank(hostConfig.getPassword())) {
-            mongoBuilder.credential(MongoCredential.createCredential(hostConfig.getUser(), "admin", hostConfig.getPassword().toCharArray()));
+            var authSource = "admin";
+            if (hostConfig.getAuthSource() != null)
+                authSource = hostConfig.getAuthSource();
+            mongoBuilder.credential(MongoCredential.createCredential(hostConfig.getUser(), authSource, hostConfig.getPassword().toCharArray()));
         }
 
         // 设置连接池的大小
@@ -405,6 +409,8 @@ public class OrmManager implements IOrmManager {
             idFiledValue = RandomUtils.randomDouble();
         } else if (idFieldType.equals(String.class)) {
             idFiledValue = RandomUtils.randomString(10);
+        } else if (idFieldType.equals(ObjectId.class)) {
+            idFiledValue = new ObjectId();
         } else {
             throw new RunException("orm only supports int long float double String");
         }
@@ -533,7 +539,9 @@ public class OrmManager implements IOrmManager {
                 }
 
                 checkSubEntity(clazz, valueType);
-            } else {
+            } else if (ObjectId.class.isAssignableFrom(fieldType)){
+                // do nothing
+            }else {
                 checkEntity(fieldType);
             }
         }

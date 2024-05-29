@@ -15,7 +15,7 @@ package com.zfoo.protocol.generate;
 import com.zfoo.protocol.collection.CollectionUtils;
 import com.zfoo.protocol.collection.tree.GeneralTree;
 import com.zfoo.protocol.collection.tree.TreeNode;
-import com.zfoo.protocol.registration.IProtocolRegistration;
+import com.zfoo.protocol.registration.ProtocolRegistration;
 import com.zfoo.protocol.serializer.CodeLanguage;
 import com.zfoo.protocol.serializer.enhance.EnhanceObjectProtocolSerializer;
 import com.zfoo.protocol.util.AssertionUtils;
@@ -43,67 +43,24 @@ public abstract class GenerateProtocolPath {
         protocolPathMap = null;
     }
 
-    public static String protocolAbsolutePath(short protocolId, CodeLanguage language) {
-        var path = getProtocolPath(protocolId);
-        var name = EnhanceObjectProtocolSerializer.getProtocolClassSimpleName(protocolId);
-        if (StringUtils.isBlank(path)) {
-            path = name;
-        } else {
-            path = StringUtils.format("{}/{}", path, name);
-        }
-
-        switch (language) {
-            case Cpp:
-                break;
-            case Go:
-                break;
-            case JavaScript:
-                break;
-            case TypeScript:
-                break;
-            case CSharp:
-                break;
-            case Protobuf:
-                break;
-            case Lua:
-                break;
-            case GdScript:
-                break;
-            case Python:
-                if (StringUtils.isBlank(getProtocolPath(protocolId))) {
-                    path = StringUtils.PERIOD;
-                } else {
-                    path = StringUtils.substringBeforeLast(path, StringUtils.SLASH);
-                    path = path.replaceAll(StringUtils.SLASH, StringUtils.PERIOD);
-                }
-                break;
-            case Enhance:
-                break;
-        }
-        return path;
-    }
-
     /**
      * 获取协议生成的路径
      */
-    public static String getProtocolPath(short protocolId) {
-        AssertionUtils.notNull(protocolPathMap
-                , "[{}]The initialization has been completed. Get Protocol Path cannot be called after the initialization is completed."
-                , GenerateProtocolPath.class.getSimpleName());
+    public static String protocolPathPeriod(short protocolId) {
+        return protocolPathMap.get(protocolId);
+    }
 
+
+    public static String protocolPathSlash(short protocolId) {
         var protocolPath = protocolPathMap.get(protocolId);
-        if (StringUtils.isBlank(protocolPath)) {
-            return StringUtils.EMPTY;
-        }
-
         return protocolPath.replaceAll(StringUtils.PERIOD_REGEX, StringUtils.SLASH);
     }
 
     /**
      * 获取协议生成的首字母大写的路径
      */
-    public static String getCapitalizeProtocolPath(short protocolId) {
-        return StringUtils.joinWith(StringUtils.SLASH, Arrays.stream(getProtocolPath(protocolId).split(StringUtils.SLASH)).map(it -> StringUtils.capitalize(it)).toArray());
+    public static String capitalizeProtocolPathFold(short protocolId) {
+        return StringUtils.joinWith(StringUtils.SLASH, Arrays.stream(protocolPathSlash(protocolId).split(StringUtils.SLASH)).map(it -> StringUtils.capitalize(it)).toArray());
     }
 
     public static String getRelativePath(short protocolId, short relativeProtocolId) {
@@ -132,18 +89,24 @@ public abstract class GenerateProtocolPath {
         return builder.toString();
     }
 
+    public static Map<String, Set<Short>> mergerProtocolPathMap() {
+        var oneProtocolMap = new HashMap<String, Set<Short>>();
+        for(var entry : protocolPathMap.entrySet()) {
+            var protocolId = entry.getKey();
+            var path = entry.getValue();
+            oneProtocolMap.computeIfAbsent(path, it -> new HashSet<>()).add(protocolId);
+        }
+        return oneProtocolMap;
+    }
+
     /**
      * 解析协议的路径
      *
      * @param protocolRegistrations 需要解析的路径
      */
-    public static void initProtocolPath(List<IProtocolRegistration> protocolRegistrations) {
-        AssertionUtils.notNull(protocolPathMap
-                , "[{}]The initialization has been completed. Get Protocol Path cannot be called after the initialization is completed."
-                , GenerateProtocolPath.class.getSimpleName());
-
+    public static void initProtocolPath(List<ProtocolRegistration> protocolRegistrations) {
         // 将需要生成的协议的路径添加到多叉树中
-        var protocolPathTree = new GeneralTree<IProtocolRegistration>();
+        var protocolPathTree = new GeneralTree<ProtocolRegistration>();
         protocolRegistrations.forEach(it -> protocolPathTree.addNode(it.protocolConstructor().getDeclaringClass().getCanonicalName(), it));
 
         var rootTreeNode = protocolPathTree.getRootNode();
@@ -154,28 +117,28 @@ public abstract class GenerateProtocolPath {
 
         var queue = new LinkedList<>(rootTreeNode.getChildren());
         while (!queue.isEmpty()) {
-            var childTreeNode = queue.poll();
-            var childChildren = childTreeNode.getChildren();
+            var treeNode = queue.poll();
+            var childChildren = treeNode.getChildren();
             // 如果子节点为空，则以当前节点为路径
             if (CollectionUtils.isEmpty(childChildren)) {
-                toProtocolPath(childTreeNode);
+                toProtocolPath(treeNode);
                 continue;
             }
 
             // 如果子节点的协议数据有一个不为空的，则以当前节点为路径
             if (childChildren.stream().anyMatch(it -> it.getData() != null)) {
-                toProtocolPath(childTreeNode);
+                toProtocolPath(treeNode);
                 continue;
             }
 
             // 继续深度便利子节点的路径
-            for (var subClassId : childTreeNode.getChildren()) {
-                queue.offer(subClassId);
+            for (var child : childChildren) {
+                queue.offer(child);
             }
         }
     }
 
-    private static void toProtocolPath(TreeNode<IProtocolRegistration> protocolTreeNode) {
+    private static void toProtocolPath(TreeNode<ProtocolRegistration> protocolTreeNode) {
         var allChildren = protocolTreeNode.flatTreeNodes()
                 .stream()
                 .filter(it -> it.getData() != null)

@@ -74,7 +74,7 @@ public class Pair<K, V> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(key, value);
+        return Objects.hashCode(key);
     }
 
     @Override

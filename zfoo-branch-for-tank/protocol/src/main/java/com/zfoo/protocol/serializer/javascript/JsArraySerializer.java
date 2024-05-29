@@ -19,7 +19,7 @@ import com.zfoo.protocol.registration.field.ArrayField;
 import com.zfoo.protocol.registration.field.IFieldRegistration;
 import com.zfoo.protocol.serializer.CodeLanguage;
 import com.zfoo.protocol.serializer.CutDownArraySerializer;
-import com.zfoo.protocol.serializer.typescript.GenerateTsUtils;
+import com.zfoo.protocol.serializer.typescript.CodeGenerateTypeScript;
 import com.zfoo.protocol.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -32,7 +32,7 @@ import static com.zfoo.protocol.util.FileUtils.LS;
 public class JsArraySerializer implements IJsSerializer {
     @Override
     public Triple<String, String, String> field(Field field, IFieldRegistration fieldRegistration) {
-        var type = StringUtils.format("Array<{}>", GenerateTsUtils.toTsClassName(field.getType().getComponentType().getSimpleName()));
+        var type = StringUtils.format("Array<{}>", CodeGenerateTypeScript.toTsClassName(field.getType().getComponentType().getSimpleName()));
         return new Triple<>(type, field.getName(), "[]");
     }
 
@@ -54,10 +54,10 @@ public class JsArraySerializer implements IJsSerializer {
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("buffer.writeInt({}.length);", objectStr)).append(LS);
 
-        String element = "element" + GenerateProtocolFile.index.getAndIncrement();
+        String element = "element" + GenerateProtocolFile.localVariableId++;
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("{}.forEach({} => {", objectStr, element)).append(LS);
-        GenerateJsUtils.jsSerializer(arrayField.getArrayElementRegistration().serializer())
+        CodeGenerateJavaScript.jsSerializer(arrayField.getArrayElementRegistration().serializer())
                 .writeObject(builder, element, deep + 2, field, arrayField.getArrayElementRegistration());
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append("});").append(LS);
@@ -74,12 +74,12 @@ public class JsArraySerializer implements IJsSerializer {
         }
 
         ArrayField arrayField = (ArrayField) fieldRegistration;
-        String result = "result" + GenerateProtocolFile.index.getAndIncrement();
+        String result = "result" + GenerateProtocolFile.localVariableId++;
 
         builder.append(StringUtils.format("const {} = [];", result)).append(LS);
 
-        String i = "index" + GenerateProtocolFile.index.getAndIncrement();
-        String size = "size" + GenerateProtocolFile.index.getAndIncrement();
+        String i = "index" + GenerateProtocolFile.localVariableId++;
+        String size = "size" + GenerateProtocolFile.localVariableId++;
 
         GenerateProtocolFile.addTab(builder, deep);
         builder.append(StringUtils.format("const {} = buffer.readInt();", size)).append(LS);
@@ -88,7 +88,7 @@ public class JsArraySerializer implements IJsSerializer {
         builder.append(StringUtils.format("if ({} > 0) {", size)).append(LS);
         GenerateProtocolFile.addTab(builder, deep + 1);
         builder.append(StringUtils.format("for (let {} = 0; {} < {}; {}++) {", i, i, size, i)).append(LS);
-        String readObject = GenerateJsUtils.jsSerializer(arrayField.getArrayElementRegistration().serializer())
+        String readObject = CodeGenerateJavaScript.jsSerializer(arrayField.getArrayElementRegistration().serializer())
                 .readObject(builder, deep + 2, field, arrayField.getArrayElementRegistration());
         GenerateProtocolFile.addTab(builder, deep + 2);
         builder.append(StringUtils.format("{}.push({});", result, readObject)).append(LS);

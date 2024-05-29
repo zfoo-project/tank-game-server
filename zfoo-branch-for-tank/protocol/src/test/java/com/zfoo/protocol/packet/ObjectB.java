@@ -25,9 +25,9 @@ public record ObjectB(
 
         boolean flag
 
-//        ,
-//        @Compatible(1)
-//        int innerCompatibleValue
+        ,
+        @Compatible(1)
+        int innerCompatibleValue
 
 ) {
 }

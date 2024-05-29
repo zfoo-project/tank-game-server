@@ -102,7 +102,7 @@ public class NetDefinitionParser implements BeanDefinitionParser {
         resolvePlaceholder("protocol-location", "protocolLocation", builder, element, parserContext);
 
         // 协议文件是否生成在同一个协议文件中
-        resolvePlaceholder("one-protocol", "oneProtocol", builder, element, parserContext);
+        resolvePlaceholder("merge-protocol", "mergeProtocol", builder, element, parserContext);
         // 文件是否折叠
         resolvePlaceholder("fold-protocol", "foldProtocol", builder, element, parserContext);
         // 生成各种语言的协议列表
@@ -149,6 +149,7 @@ public class NetDefinitionParser implements BeanDefinitionParser {
         var builder = BeanDefinitionBuilder.rootBeanDefinition(clazz);
 
         resolvePlaceholder("center", "center", builder, element, parserContext);
+        resolvePlaceholder("path", "path", builder, element, parserContext);
         resolvePlaceholder("user", "user", builder, element, parserContext);
         resolvePlaceholder("password", "password", builder, element, parserContext);
         var addressMap = parseAddress(element, parserContext);

@@ -1,16 +1,16 @@
-{}
+${protocol_imports}
 import IByteBuffer from "./IByteBuffer";
 
 const protocols = new Map<number, any>();
 
 // initProtocol
-{}
+${protocol_manager_registrations}
 
 class ProtocolManager {
     static getProtocol(protocolId: number): any {
         const protocol = protocols.get(protocolId);
         if (protocol === null) {
-            throw '[protocolId:' + protocolId + ']协议不存在';
+            throw '[protocolId:' + protocolId + '] not exist';
         }
         return protocol;
     }

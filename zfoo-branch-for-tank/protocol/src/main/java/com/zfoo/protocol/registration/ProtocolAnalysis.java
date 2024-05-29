@@ -25,15 +25,9 @@ import com.zfoo.protocol.generate.GenerateProtocolFile;
 import com.zfoo.protocol.generate.GenerateProtocolNote;
 import com.zfoo.protocol.generate.GenerateProtocolPath;
 import com.zfoo.protocol.registration.field.*;
-import com.zfoo.protocol.serializer.cpp.GenerateCppUtils;
-import com.zfoo.protocol.serializer.csharp.GenerateCsUtils;
 import com.zfoo.protocol.serializer.gdscript.GenerateGdUtils;
 import com.zfoo.protocol.serializer.go.GenerateGoUtils;
-import com.zfoo.protocol.serializer.javascript.GenerateJsUtils;
-import com.zfoo.protocol.serializer.lua.GenerateLuaUtils;
-import com.zfoo.protocol.serializer.python.GeneratePyUtils;
 import com.zfoo.protocol.serializer.reflect.*;
-import com.zfoo.protocol.serializer.typescript.GenerateTsUtils;
 import com.zfoo.protocol.util.*;
 import com.zfoo.protocol.xml.XmlProtocols;
 import javassist.CannotCompileException;
@@ -72,7 +66,7 @@ public class ProtocolAnalysis {
             , "Boolean", "Byte", "Short", "Integer", "Long", "Float", "Double", "String", "Character", "Object"
             , "Collections", "Iterator", "List", "ArrayList", "Map", "HashMap", "Set", "HashSet"
             , "DecodedPacketInfo", "EncodedPacketInfo"
-            , "Protocols", "ProtocolBase", "ProtocolWriter", "ProtocolReader");
+            , "Protocols");
 
     /**
      * EN: Temp field, unsupported type
@@ -131,16 +125,15 @@ public class ProtocolAnalysis {
     public static synchronized void analyzeAuto(List<Class<?>> protocolClassList, GenerateOperation generateOperation) {
         AssertionUtils.notNull(subProtocolIdMap, "[{}] initialization has already been completed, please do not repeat the initialization", ProtocolManager.class.getSimpleName());
         // 获取所有协议类
-        LinkedHashSet<Class> tempProtocolClassSet = new LinkedHashSet<>(protocolClassList);
+        var tempProtocolClassSet = new LinkedHashSet<Class<?>>(protocolClassList);
         //去重
         protocolClassList = new ArrayList<>();
-        for (Class clazz : tempProtocolClassSet) {
-            protocolClassList.add(clazz);
-        }
-        Set<Class> relevantClassList = new LinkedHashSet<>(protocolClassList);
+        protocolClassList.addAll(tempProtocolClassSet);
+
+        var relevantClassList = new LinkedHashSet<Class<?>>(protocolClassList);
         for (var clazz : protocolClassList) {
-            Set<Class<?>> classSet = ClassUtils.relevantClass(clazz);
-            for (Class cls : classSet) {
+            var classSet = ClassUtils.relevantClass(clazz);
+            for (var cls : classSet) {
                 if (!relevantClassList.contains(cls)) {
                     int protocolId = getProtocolIdAndCheckClass(cls);
                     if (protocolId >= 0) {
@@ -175,7 +168,7 @@ public class ProtocolAnalysis {
         }
 
         // 协议id和协议信息对应起来
-        for (Class protocolClass : relevantClassList) {
+        for (var protocolClass : relevantClassList) {
             var registration = parseProtocolRegistration(protocolClass, ProtocolModule.DEFAULT_PROTOCOL_MODULE);
             protocols[registration.protocolId()] = registration;
         }
@@ -401,15 +394,8 @@ public class ProtocolAnalysis {
 
         GenerateProtocolNote.clear();
         GenerateProtocolPath.clear();
-        GenerateProtocolFile.clear();
-        GenerateCppUtils.clear();
         GenerateGoUtils.clear();
-        GenerateCsUtils.clear();
-        GenerateJsUtils.clear();
-        GenerateTsUtils.clear();
-        GenerateLuaUtils.clear();
         GenerateGdUtils.clear();
-        GeneratePyUtils.clear();
     }
 
     public static List<Field> getFields(Class<?> clazz) {
@@ -478,7 +464,7 @@ public class ProtocolAnalysis {
                 registrationList.add(toRegistration(clazz, field));
             }
 
-            Constructor constructor;
+            Constructor<?> constructor;
             if (isRecord) {
                 constructor = ReflectionUtils.getConstructor(clazz, declaredFields.stream().map(p -> p.getType()).toList().toArray(new Class[]{}));
             } else {
@@ -640,7 +626,7 @@ public class ProtocolAnalysis {
      * CN: 此方法仅在生成协议的时候调用，一旦运行，不能调用
      */
     public static Set<Short> getFirstSubProtocolIds(short protocolId) {
-        return subProtocolIdMap.get(protocolId);
+        return subProtocolIdMap.getOrDefault(protocolId, Collections.emptySet());
     }
 
     /**

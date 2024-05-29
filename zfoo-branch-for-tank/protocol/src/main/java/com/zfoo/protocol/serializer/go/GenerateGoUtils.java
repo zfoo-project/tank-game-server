@@ -18,7 +18,6 @@ import com.zfoo.protocol.collection.ArrayUtils;
 import com.zfoo.protocol.generate.GenerateOperation;
 import com.zfoo.protocol.generate.GenerateProtocolFile;
 import com.zfoo.protocol.generate.GenerateProtocolNote;
-import com.zfoo.protocol.registration.IProtocolRegistration;
 import com.zfoo.protocol.registration.ProtocolRegistration;
 import com.zfoo.protocol.registration.field.IFieldRegistration;
 import com.zfoo.protocol.serializer.CodeLanguage;
@@ -84,7 +83,7 @@ public abstract class GenerateGoUtils {
     /**
      * 生成协议依赖的工具类
      */
-    public static void createProtocolManager(List<IProtocolRegistration> protocolList) throws IOException {
+    public static void createProtocolManager(List<ProtocolRegistration> protocolList) throws IOException {
         var list = List.of("go/ByteBuffer.go");
 
         for (var fileName : list) {
@@ -106,8 +105,6 @@ public abstract class GenerateGoUtils {
     }
 
     public static void createGoProtocolFile(ProtocolRegistration registration) throws IOException {
-        GenerateProtocolFile.index.set(0);
-
         var protocolId = registration.protocolId();
         var registrationConstructor = registration.getConstructor();
         var protocolClazzName = registrationConstructor.getDeclaringClass().getSimpleName();
@@ -117,7 +114,7 @@ public abstract class GenerateGoUtils {
                 : ClassUtils.getFileFromClassPathToString("go/ProtocolTemplate.go");
 
 
-        var classNote = GenerateProtocolNote.classNote(protocolId, CodeLanguage.Go);
+        var classNote = GenerateProtocolNote.classNote(protocolId, CodeLanguage.Go, TAB, 0);
         var fieldDefinition = fieldDefinition(registration);
         var writeObject = writeObject(registration);
         var readObject = readObject(registration);
@@ -151,9 +148,9 @@ public abstract class GenerateGoUtils {
 
             var propertyFullName = StringUtils.format("{} {}", fieldName, fieldType);
             // 生成注释
-            var filedNote = GenerateProtocolNote.fieldNote(protocolId, fieldName, CodeLanguage.Go);
-            if (StringUtils.isNotBlank(filedNote)) {
-                goBuilder.append(TAB).append(filedNote).append(LS);
+            var fieldNotes = GenerateProtocolNote.fieldNotes(protocolId, fieldName, CodeLanguage.Go);
+            for(var fieldNote : fieldNotes) {
+                goBuilder.append(TAB).append(fieldNote).append(LS);
             }
             goBuilder.append(TAB).append(propertyFullName).append(LS);
         }
@@ -161,6 +158,7 @@ public abstract class GenerateGoUtils {
     }
 
     private static String writeObject(ProtocolRegistration registration) {
+        GenerateProtocolFile.localVariableId = 0;
         var fields = registration.getFields();
         var fieldRegistrations = registration.getFieldRegistrations();
         var goBuilder = new StringBuilder();
@@ -182,6 +180,7 @@ public abstract class GenerateGoUtils {
     }
 
     private static String readObject(ProtocolRegistration registration) {
+        GenerateProtocolFile.localVariableId = 0;
         var fields = registration.getFields();
         var fieldRegistrations = registration.getFieldRegistrations();
         var goBuilder = new StringBuilder();

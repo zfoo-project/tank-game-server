@@ -14,6 +14,7 @@
 package com.zfoo.protocol;
 
 
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONB;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -40,6 +41,7 @@ import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author godotg
@@ -70,6 +72,7 @@ public class BenchmarkTesting {
 
             zfooTest();
             jsonbTest();
+            fastJson2Test();
             furyTest();
             kryoTest();
             protobufTest();
@@ -221,6 +224,43 @@ public class BenchmarkTesting {
     }
 
     @Test
+    public void fastJson2Test() {
+        try {
+            // 序列化和反序列化简单对象
+            long startTime = System.currentTimeMillis();
+            for (int i = 0; i < benchmark; i++) {
+                var str = JSON.toJSONString(simpleObject);
+                var mess = JSON.parseObject(str, SimpleObject.class);
+
+                // 这种通过流写入的方式速度奇慢
+                // JSONB.writeTo(output, normalObject);
+                // var mess = JSONB.parseObject(input, NormalObject.class);
+            }
+
+            System.out.println(StringUtils.format("[fastjson2]     [简单对象] [thread:{}] [size:{}] [time:{}]", Thread.currentThread().getName(), JSON.toJSONString(simpleObject).getBytes().length, System.currentTimeMillis() - startTime));
+
+            // 序列化和反序列化常规对象
+            startTime = System.currentTimeMillis();
+            for (int i = 0; i < benchmark; i++) {
+                var str = JSON.toJSONString(normalObject);
+                var mess = JSON.parseObject(str, NormalObject.class);
+            }
+
+            System.out.println(StringUtils.format("[fastjson2]     [常规对象] [thread:{}] [size:{}] [time:{}]", Thread.currentThread().getName(),JSON.toJSONString(normalObject).getBytes().length,System.currentTimeMillis() - startTime));
+
+            // 序列化和反序列化复杂对象
+            startTime = System.currentTimeMillis();
+            for (int i = 0; i < benchmark; i++) {
+                var str = JSON.toJSONString(complexObject);
+                var mess = JSON.parseObject(str, ComplexObject.class);
+            }
+            System.out.println(StringUtils.format("[fastjson2]     [复杂对象] [thread:{}] [size:{}] [time:{}]", Thread.currentThread().getName(), JSON.toJSONString(complexObject).getBytes().length, System.currentTimeMillis() - startTime));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Test
     public void kryoTest() {
         try {
             var kryo = kryos.get();
@@ -311,49 +351,69 @@ public class BenchmarkTesting {
     @Test
     public void zfooMultipleThreadTest() throws InterruptedException {
         var countdown = new CountDownLatch(threadNum);
+        var atomic = new AtomicLong();
         for (var i = 0; i < threadNum; i++) {
             executors[i].execute(() -> {
+                var startTime = System.currentTimeMillis();
                 zfooTest();
+                var endTime = System.currentTimeMillis();
+                atomic.addAndGet(endTime - startTime);
                 countdown.countDown();
             });
         }
         countdown.await();
+        System.out.println(StringUtils.format("----------------------------------------------------->zfoo total [time:{}]", atomic));
     }
 
     @Test
     public void furyMultipleThreadTest() throws InterruptedException {
         var countdown = new CountDownLatch(threadNum);
+        var atomic = new AtomicLong();
         for (var i = 0; i < threadNum; i++) {
             executors[i].execute(() -> {
+                var startTime = System.currentTimeMillis();
                 furyTest();
+                var endTime = System.currentTimeMillis();
+                atomic.addAndGet(endTime - startTime);
                 countdown.countDown();
             });
         }
         countdown.await();
+        System.out.println(StringUtils.format("----------------------------------------------------->fury total [time:{}]", atomic));
     }
 
     @Test
     public void kryoMultipleThreadTest() throws InterruptedException {
         var countdown = new CountDownLatch(threadNum);
+        var atomic = new AtomicLong();
         for (var i = 0; i < threadNum; i++) {
             executors[i].execute(() -> {
+                var startTime = System.currentTimeMillis();
                 kryoTest();
+                var endTime = System.currentTimeMillis();
+                atomic.addAndGet(endTime - startTime);
                 countdown.countDown();
             });
         }
         countdown.await();
+        System.out.println(StringUtils.format("----------------------------------------------------->kryo total [time:{}]", atomic));
     }
 
     @Test
     public void protobufMultipleThreadTest() throws InterruptedException {
         var countdown = new CountDownLatch(threadNum);
+        var atomic = new AtomicLong();
         for (var i = 0; i < threadNum; i++) {
             executors[i].execute(() -> {
+                var startTime = System.currentTimeMillis();
                 protobufTest();
+                var endTime = System.currentTimeMillis();
+                atomic.addAndGet(endTime - startTime);
                 countdown.countDown();
             });
         }
         countdown.await();
+        System.out.println(StringUtils.format("----------------------------------------------------->protobuf total [time:{}]", atomic));
     }
 
     public static final int threadNum = Runtime.getRuntime().availableProcessors() / 2;
@@ -446,10 +506,10 @@ public class BenchmarkTesting {
     public static final String[] stringArray = new String[]{"a", "b", "c", "d", "e"};
     public static final Map<Integer, String> mapWithInteger = new HashMap<>(Map.of(Integer.MIN_VALUE, "a", -99, "b", 0, "c", 99, "d", Integer.MAX_VALUE, "e"));
 
-    public static final ObjectB objectB = new ObjectB(true);
-    //    public static final ObjectB objectB = new ObjectB(true, 44);
-    public static final ObjectA objectA = new ObjectA(Integer.MAX_VALUE, mapWithInteger, objectB);
-    //    public static final ObjectA objectA = new ObjectA(Integer.MAX_VALUE, mapWithInteger, objectB, 66);
+//    public static final ObjectB objectB = new ObjectB(true);
+        public static final ObjectB objectB = new ObjectB(true, 44);
+//    public static final ObjectA objectA = new ObjectA(Integer.MAX_VALUE, mapWithInteger, objectB);
+        public static final ObjectA objectA = new ObjectA(Integer.MAX_VALUE, mapWithInteger, objectB, 66);
     public static final List<Integer> listWithInteger = new ArrayList<>(ArrayUtils.toList(intArray));
     public static final List<Integer> listWithInteger1 = new ArrayList<>(ArrayUtils.toList(intArray1));
     public static final List<Integer> listWithInteger2 = new ArrayList<>(ArrayUtils.toList(intArray2));

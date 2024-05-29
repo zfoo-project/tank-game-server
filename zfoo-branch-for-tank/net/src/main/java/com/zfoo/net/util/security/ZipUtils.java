@@ -12,12 +12,15 @@
 
 package com.zfoo.net.util.security;
 
+import com.zfoo.protocol.collection.CollectionUtils;
+import com.zfoo.protocol.util.FileUtils;
 import com.zfoo.protocol.util.IOUtils;
+import com.zfoo.protocol.util.StringUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.zip.*;
 
 /**
  * @author godotg
@@ -66,5 +69,82 @@ public abstract class ZipUtils {
         }
         return baos.toByteArray();
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * default charset is UTF-8
+     */
+    public static void zip(String[] sourceFilePaths, String zipFilePath) {
+        FileOutputStream fos = null;
+        ZipOutputStream zipOut = null;
+        try {
+            fos = new FileOutputStream(zipFilePath);
+            zipOut = new ZipOutputStream(fos);
+            for (var sourceFilePath : sourceFilePaths) {
+                var file = new File(sourceFilePath);
+                if (file.isDirectory()) {
+                    var files = FileUtils.getAllReadableFiles(file);
+                    for (var f : files) {
+                        if (f.isHidden()) {
+                            continue;
+                        }
+                        var fis = new FileInputStream(f);
+                        var subPath = StringUtils.substringAfterFirst(f.getAbsolutePath(), file.getParentFile().getAbsolutePath());
+                        subPath = StringUtils.substringAfterFirst(subPath, file.getName());
+                        ZipEntry zipEntry = new ZipEntry(file.getName() + subPath);
+                        zipOut.putNextEntry(zipEntry);
+                        IOUtils.copy(fis, zipOut);
+                        IOUtils.closeIO(fis);
+                    }
+                } else {
+                    var fis = new FileInputStream(file);
+                    ZipEntry zipEntry = new ZipEntry(file.getName());
+                    zipOut.putNextEntry(zipEntry);
+                    IOUtils.copy(fis, zipOut);
+                    IOUtils.closeIO(fis);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            IOUtils.closeIO(zipOut, fos);
+        }
+    }
+
+
+    /**
+     * default charset is UTF-8
+     */
+    public static void unzip(String zipFilePath, String destDirectory) {
+        try {
+            unzip(FileUtils.openInputStream(new File(zipFilePath)), destDirectory);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void unzip(InputStream zipFileInputStream, String destDirectory) throws IOException {
+        FileUtils.createDirectory(destDirectory);
+        var zipIn = new ZipInputStream(zipFileInputStream);
+        var entry = zipIn.getNextEntry();
+        // 遍历ZIP文件中的所有条目
+        while (entry != null) {
+            var filePath = destDirectory + File.separator + entry.getName();
+            if (!entry.isDirectory()) {
+                // 如果条目是文件，则解压该文件
+                var fileOutputStream = FileUtils.openOutputStream(new File(filePath), false);
+                IOUtils.copy(zipIn, fileOutputStream);
+                IOUtils.closeIO(fileOutputStream);
+            } else {
+                // 如果条目是目录，则创建目录
+                FileUtils.createDirectory(filePath);
+            }
+            zipIn.closeEntry();
+            entry = zipIn.getNextEntry();
+        }
+        zipIn.close();
+    }
+
 
 }

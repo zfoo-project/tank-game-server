@@ -14,12 +14,12 @@ package com.zfoo.protocol.generate;
 
 import com.zfoo.protocol.ProtocolManager;
 import com.zfoo.protocol.packet.*;
+import com.zfoo.protocol.packet.my.MyObject;
 import com.zfoo.protocol.serializer.CodeLanguage;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author godotg
@@ -31,13 +31,13 @@ public class GenerateTesting {
     public void generateAllProtocols() {
         var op = GenerateOperation.NO_OPERATION;
         op.setFoldProtocol(true);
-
         var generateLanguages = op.getGenerateLanguages();
 
         // generate the jsProtocol folder and its corresponding js protocol file in the current protocol directory
         generateLanguages.add(CodeLanguage.Cpp);
         generateLanguages.add(CodeLanguage.Go);
         generateLanguages.add(CodeLanguage.JavaScript);
+        generateLanguages.add(CodeLanguage.EcmaScript);
         generateLanguages.add(CodeLanguage.TypeScript);
         generateLanguages.add(CodeLanguage.Lua);
         generateLanguages.add(CodeLanguage.CSharp);

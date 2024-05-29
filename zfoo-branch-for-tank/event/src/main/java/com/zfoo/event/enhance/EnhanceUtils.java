@@ -57,13 +57,16 @@ public abstract class EnhanceUtils {
         CtClass enhanceClazz = classPool.makeClass(EnhanceUtils.class.getName() + StringUtils.capitalize(NamespaceHandler.EVENT) + UuidUtils.getLocalIntId());
         enhanceClazz.addInterface(classPool.get(IEventReceiver.class.getName()));
 
-        // 定义类中的一个成员
-        CtField field = new CtField(classPool.get(bean.getClass().getName()), "bean", enhanceClazz);
-        field.setModifiers(Modifier.PRIVATE);
+        // 定义类中的一个成员bean
+        CtClass beanClass = classPool.get(bean.getClass().getName());
+        CtField field = new CtField(beanClass, "bean", enhanceClazz);
+        field.setModifiers(Modifier.PRIVATE + Modifier.FINAL);
         enhanceClazz.addField(field);
 
         // 定义类的构造器
-        CtConstructor constructor = new CtConstructor(classPool.get(new String[]{bean.getClass().getName()}), enhanceClazz);
+        // 创建构造函数参数数组
+        CtClass[] parameterTypes = {beanClass};
+        CtConstructor constructor = new CtConstructor(parameterTypes, enhanceClazz);
         constructor.setBody("{this.bean=$1;}");
         constructor.setModifiers(Modifier.PUBLIC);
         enhanceClazz.addConstructor(constructor);
@@ -82,12 +85,18 @@ public abstract class EnhanceUtils {
         busMethod.setBody(busMethodBody);
         enhanceClazz.addMethod(busMethod);
 
+        // 定义类实现的接口方法getBean
+        CtMethod beanMethod = new CtMethod(classPool.get(Object.class.getName()), "getBean", null, enhanceClazz);
+        beanMethod.setModifiers(Modifier.PUBLIC + Modifier.FINAL);
+        String beanMethodBody = "{ return this.bean; }";
+        beanMethod.setBody(beanMethodBody);
+        enhanceClazz.addMethod(beanMethod);
+
         // 释放缓存
         enhanceClazz.detach();
 
         Class<?> resultClazz = enhanceClazz.toClass(IEventReceiver.class);
         Constructor<?> resultConstructor = resultClazz.getConstructor(bean.getClass());
-        IEventReceiver receiver = (IEventReceiver) resultConstructor.newInstance(bean);
-        return receiver;
+        return (IEventReceiver) resultConstructor.newInstance(bean);
     }
 }
