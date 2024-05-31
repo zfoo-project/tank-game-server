@@ -92,6 +92,8 @@ public class LoginController {
 
         var sid = session.getSid();
 
+        // 将玩家登录处理放入异步线程，避免了主线程阻塞，提高了系统的并发处理能力，使得服务器可以同时处理多个玩家的登录请求。
+        // 不使用EventBus.asyncExecute依然可以运行
         EventBus.asyncExecute(HashUtils.fnvHash(account), new Runnable() {
             @Override
             public void run() {
